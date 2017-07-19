@@ -6,7 +6,7 @@ import android.app.Application;
 
 
 /**
- * 镭卡app入口
+ * app入口
  * baseappliction
  */
 
