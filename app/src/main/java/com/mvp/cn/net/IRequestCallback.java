@@ -6,7 +6,7 @@ package com.mvp.cn.net;
 
 public interface IRequestCallback {
 
-    public void onSuccess(int reqesutCode, String response);
+     void onSuccess(int reqesutCode, String response);
 
-    public void onFailure(int requestCode, String responseBody);
+     void onFailure(int requestCode, String responseBody);
 }
