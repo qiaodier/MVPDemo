@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
 
     /**
      * 初始化被观察者
-     * Rx Android方式
+     * Rx Android  方式
      * @return
      */
     private Observable<String> createBtnClick(){
