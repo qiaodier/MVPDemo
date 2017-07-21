@@ -2,10 +2,14 @@ package com.mvp.cn.presenter;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.mvp.cn.interfacem.ILoginInterface;
 import com.mvp.cn.model.BaseResponseEntity;
 import com.mvp.cn.net.HttpRequestUtil;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +40,8 @@ public class LoginPresnter extends BasePresenter<ILoginInterface> {
         }
     };
 
+
+
     public LoginPresnter(ILoginInterface loginInterface) {
         this.mLoginInterface = loginInterface;
     }
@@ -48,7 +54,6 @@ public class LoginPresnter extends BasePresenter<ILoginInterface> {
             HttpRequestUtil.getOkClient().login(userPwd).enqueue(new Callback<BaseResponseEntity<String>>() {
                 @Override
                 public void onResponse(Call<BaseResponseEntity<String>> call, Response<BaseResponseEntity<String>> response) {
-
                     mHandler.sendEmptyMessage(1);
                 }
 
