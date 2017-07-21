@@ -24,6 +24,7 @@ public class LoginPresnter extends BasePresenter<ILoginInterface> {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            mLoginInterface.dismissLoadingDialog();
             switch (msg.what){
                 case 1:
                     mLoginInterface.requestSuccess();
@@ -47,6 +48,7 @@ public class LoginPresnter extends BasePresenter<ILoginInterface> {
             HttpRequestUtil.getOkClient().login(userPwd).enqueue(new Callback<BaseResponseEntity<String>>() {
                 @Override
                 public void onResponse(Call<BaseResponseEntity<String>> call, Response<BaseResponseEntity<String>> response) {
+
                     mHandler.sendEmptyMessage(1);
                 }
 
