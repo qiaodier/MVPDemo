@@ -10,6 +10,7 @@ import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 
 /**
@@ -17,7 +18,7 @@ import retrofit2.Call;
  * 时间： 2017/7/19 14:13
  * 说明：HttpRequestUtil
  */
-public class HttpRequestUtil extends OkHttpClientUtils {
+public class HttpRequestUtil extends OkHttpClientUtils  {
 
     public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
     public volatile static HttpRequestUtil requestUtil;
@@ -45,13 +46,10 @@ public class HttpRequestUtil extends OkHttpClientUtils {
 //        String json = new Gson().toJson(requestEntity);
 //        RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
         Map<String,String> map = new HashMap<String,String>();
-        map.put("platform","windows");
+        map.put("platform","android");
         map.put("version","V1.1.1");
         return apiService.login(map);
     }
-
-
-
 
 
 

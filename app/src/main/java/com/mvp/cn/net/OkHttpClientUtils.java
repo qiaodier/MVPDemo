@@ -2,6 +2,7 @@ package com.mvp.cn.net;
 
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mvp.cn.comm.CommManager;
@@ -30,6 +31,7 @@ import javax.net.ssl.X509TrustManager;
 
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,8 +41,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 后期需要加网络请求缓存
  */
 
-public class OkHttpClientUtils {
+public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger{
 
+    private HttpLoggingInterceptor mHttpLoggingInterceptor;
     protected IHttpRequestService getRequestClient() {
         X509TrustManager xtm = new X509TrustManager() {
             @Override
@@ -75,6 +78,9 @@ public class OkHttpClientUtils {
                 return true;
             }
         };
+        mHttpLoggingInterceptor = new HttpLoggingInterceptor(this);
+        //打印http的body体
+        mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient  okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -83,6 +89,7 @@ public class OkHttpClientUtils {
                 .sslSocketFactory(sslContext.getSocketFactory())
                 .hostnameVerifier(DO_NOT_VERIFY)
                 .addInterceptor(new CustomInterceptor())
+                .addInterceptor(mHttpLoggingInterceptor)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -95,13 +102,8 @@ public class OkHttpClientUtils {
     }
 
 
-
-
-
-
-
-
-
-
-
+    @Override
+    public void log(String message) {
+        Log.e("OKHTTP", "RequestLog: " + message);
+    }
 }

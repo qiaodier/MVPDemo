@@ -24,15 +24,13 @@ public class CustomInterceptor implements Interceptor {
                 .addHeader("accept", "*/*")
                 .addHeader("Connection", "Keep-Alive")
                 .build();
-//        LogUtil.e("header",newrequest.headers().toString()+"");
-//        LogUtil.e("Interceptor", "responseJson=====>" + chain.proceed(request).body().string());
-        Response response = chain.proceed(newrequest);
-        ResponseBody responseBody = response.peekBody(1024*1024);
-        Log.e("Interceptor",String.format("接收响应: [%s] %n返回json:%s %n头部%s",
-                response.request().url(),
-                responseBody.string(),
-                response.headers()));
-        return response;
+//        Response response = chain.proceed(newrequest);
+//        ResponseBody responseBody = response.peekBody(1024*1024);
+//        Log.e("Interceptor",String.format("接收响应: [%s] %n返回json:%s %n头部%s",
+//                response.request().url(),
+//                responseBody.string(),
+//                response.headers()));
+        return chain.proceed(newrequest);
     }
 
 
