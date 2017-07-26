@@ -5,6 +5,9 @@ import com.mvp.cn.model.BaseRequestEntity;
 import com.mvp.cn.model.BaseResponseEntity;
 import com.mvp.cn.model.LoginEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -34,14 +37,17 @@ public class HttpRequestUtil extends OkHttpClientUtils {
     }
 
 
-    public Call<BaseResponseEntity<String>> login(String pwd){
-        BaseRequestEntity<LoginEntity> requestEntity = new BaseRequestEntity<LoginEntity>();
-        LoginEntity loginEntity = new LoginEntity();
-        loginEntity.setLoginPwd(pwd);
-        requestEntity.setBusiReqInfo(loginEntity);
-        String json = new Gson().toJson(requestEntity);
-        RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
-        return apiService.login(body);
+    public Call<String> login(String pwd){
+//        BaseRequestEntity<LoginEntity> requestEntity = new BaseRequestEntity<LoginEntity>();
+//        LoginEntity loginEntity = new LoginEntity();
+//        loginEntity.setLoginPwd(pwd);
+//        requestEntity.setBusiReqInfo(loginEntity);
+//        String json = new Gson().toJson(requestEntity);
+//        RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("platform","windows");
+        map.put("version","V1.1.1");
+        return apiService.login(map);
     }
 
 

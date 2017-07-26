@@ -22,8 +22,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layoutResID());
-        initViews();
         initPresenter();
+        initViews();
     }
 
     // 该方法必须重写，返回acitivity中对应的xml的id

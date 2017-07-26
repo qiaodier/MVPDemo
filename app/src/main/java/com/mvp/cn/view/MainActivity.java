@@ -30,42 +30,15 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
         mUserName = (EditText) findViewById(R.id.et_user_name);
         mUserPwd = (EditText) findViewById(R.id.et_user_pwd);
         mLoginBtn = (Button) findViewById(R.id.btn_login);
-        Observable btnObservable = createBtnClick();
-        //被观察者对象订阅
-        btnObservable.subscribe(new Consumer() {
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void accept(Object o) throws Exception {
+            public void onClick(View v) {
+                //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
                 mLoginPresenter.login();
             }
         });
     }
 
-    /**
-     * 初始化被观察者
-     * Rx Android  方式
-     * @return
-     */
-    private Observable<String> createBtnClick(){
-        return Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(final ObservableEmitter<String> e) throws Exception {
-                mLoginBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
-                        e.onNext(null);
-                    }
-                });
-                //解除onclick事件
-                e.setCancellable(new Cancellable() {
-                    @Override
-                    public void cancel() throws Exception {
-                        mLoginBtn.setOnClickListener(null);
-                    }
-                });
-            }
-        });
-    }
 
 
 
@@ -89,17 +62,17 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
 
     @Override
     public void showLoadingDialog() {
-        showLoadingDialog();
+
     }
 
     @Override
     public void dismissLoadingDialog() {
-        dismissLoaddingDialog();
+
     }
 
     @Override
     public void showAlertMessage(String content) {
-        showMessage(content);
+
     }
 
     @Override

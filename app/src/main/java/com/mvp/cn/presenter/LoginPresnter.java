@@ -50,15 +50,14 @@ public class LoginPresnter extends BasePresenter<ILoginInterface> {
         String userName = mLoginInterface.getUserName();
         String userPwd = mLoginInterface.getUserPwd();
         if (userName != null && !userName.equals("") && userPwd != null && !userPwd.equals("")) {
-            mLoginInterface.showLoadingDialog();
-            HttpRequestUtil.getOkClient().login(userPwd).enqueue(new Callback<BaseResponseEntity<String>>() {
+            HttpRequestUtil.getOkClient().login(userPwd).enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<BaseResponseEntity<String>> call, Response<BaseResponseEntity<String>> response) {
+                public void onResponse(Call<String> call, Response<String> response) {
                     mHandler.sendEmptyMessage(1);
                 }
 
                 @Override
-                public void onFailure(Call<BaseResponseEntity<String>> call, Throwable t) {
+                public void onFailure(Call<String> call, Throwable t) {
                     mHandler.sendEmptyMessage(2);
                 }
             });
