@@ -26,8 +26,13 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:id="@+id/btn_login"
-        android:text="登录"
+        android:id="@+id/btn_login_qq"
+        android:text="QQ登录"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_login_weixin"
+        android:text="微信登录"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

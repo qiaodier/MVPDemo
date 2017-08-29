@@ -1,16 +1,9 @@
 package com.mvp.cn.net;
 
-import com.google.gson.Gson;
-import com.mvp.cn.model.BaseRequestEntity;
-import com.mvp.cn.model.BaseResponseEntity;
-import com.mvp.cn.model.LoginEntity;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 
 /**
@@ -28,13 +21,17 @@ public class HttpRequestUtil extends OkHttpClientUtils  {
         apiService = getRequestClient();
     }
 
+    /**
+     * 单例模式（推荐使用）
+     * 定义一个私有的内部类，在第一次用这个嵌套类时，会创建一个实例。而类型为SingletonHolder的类，只有在HttpRequestUtil.getOkClient()中调用，由于私有的属性，他人无法使用SingleHolder，不调用HttpRequestUtil.getOkClient()就不会创建实例。
+     * 优点：达到了lazy loading的效果，即按需创建实例。
+     */
+    private static class SingletonHolder{
+        private final static HttpRequestUtil instance=new HttpRequestUtil();
+    }
+
     public static HttpRequestUtil getOkClient() {
-        if (requestUtil == null) {
-            synchronized (HttpRequestUtil.class){
-                requestUtil = new HttpRequestUtil();
-            }
-        }
-        return requestUtil;
+        return SingletonHolder.instance;
     }
 
 
