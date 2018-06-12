@@ -18,6 +18,10 @@ public class BaseApplication extends Application {
     public final static String AppSecret_WX= "dbffdd9bb7940fec77168a74c892d500";
     public final static String APPID_QQ= "1104951123";
     public final static String AppKEY_QQ= "FwOJSUJTYSOzE8Uc";
+    public final static String TOKEN_VALUES = "";
+    public final static String PRO_BASE_URL = "";
+    public final static String DEV_BASE_URL = "";
+    public static String BASE_URL=DEV_BASE_URL;
 
     {
         PlatformConfig.setWeixin(APPID_WX, AppSecret_WX);

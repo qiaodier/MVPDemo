@@ -12,17 +12,28 @@ import okhttp3.ResponseBody;
 
 /**
  * Created by qiaohao on 2016/7/11.
- * 说明：okhttp的拦截器  设置了请求头内容
+ * 说明：okhttp的拦截器
+ *  设置了请求头内容{token}
  */
 public class CustomInterceptor implements Interceptor {
 
+
+    private String mToken;
+    public CustomInterceptor(String token) {
+        mToken = token;
+    }
+
+    public CustomInterceptor() {
+        mToken="";
+    }
+
     @Override
     public Response intercept(Chain chain) throws IOException {
-
         Request newrequest = chain.request().newBuilder()
                 .addHeader("Content-Type", "text/html; charset=UTF-8")
                 .addHeader("accept", "*/*")
                 .addHeader("Connection", "Keep-Alive")
+                .addHeader("token",mToken)
                 .build();
 //        Response response = chain.proceed(newrequest);
 //        ResponseBody responseBody = response.peekBody(1024*1024);

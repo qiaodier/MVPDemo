@@ -10,6 +10,7 @@ public interface ILoginInterface extends IBaseUIOper {
 
     String getUserName();
 
+    void onProgress(int progress);
     String getUserPwd();
 
 }
