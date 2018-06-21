@@ -2,9 +2,10 @@ package com.mvp.cn.net;
 
 import java.util.Map;
 
+import com.mvp.cn.model.BaseRequestEntity;
+import com.mvp.cn.model.LoginEntity;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.QueryMap;
+import retrofit2.http.*;
 
 /**
  * 作者： qiaohao
@@ -15,5 +16,8 @@ public interface IHttpRequestService {
 
     @GET("getpushmsg")
     Call<String> login(@QueryMap Map<String,String> login);
+
+    @POST("login")
+    Call<String> login(@Body BaseRequestEntity<LoginEntity> baseRequestEntity);
 
 }

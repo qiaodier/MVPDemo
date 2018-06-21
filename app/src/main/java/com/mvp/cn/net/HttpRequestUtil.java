@@ -1,11 +1,15 @@
 package com.mvp.cn.net;
 
+import com.google.gson.Gson;
 import com.mvp.cn.BaseApplication;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mvp.cn.model.BaseRequestEntity;
+import com.mvp.cn.model.LoginEntity;
 import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 
 /**
@@ -40,16 +44,14 @@ public class HttpRequestUtil extends OkHttpClientUtils {
 
 
     public Call<String> login(String pwd) {
-//        BaseRequestEntity<LoginEntity> requestEntity = new BaseRequestEntity<LoginEntity>();
-//        LoginEntity loginEntity = new LoginEntity();
-//        loginEntity.setLoginPwd(pwd);
-//        requestEntity.setBusiReqInfo(loginEntity);
-//        String json = new Gson().toJson(requestEntity);
-//        RequestBody body = RequestBody.create(MEDIA_TYPE_JSON, json);
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("platform", "android");
-        map.put("version", "V1.1.1");
-        return apiService.login(map);
+        BaseRequestEntity<LoginEntity> requestEntity = new BaseRequestEntity<LoginEntity>();
+        LoginEntity loginEntity = new LoginEntity();
+        loginEntity.setLoginPwd(pwd);
+        requestEntity.setBusiReqInfo(loginEntity);
+//        Map<String, String> map = new HashMap<String, String>();
+//        map.put("platform", "android");
+//        map.put("version", "V1.1.1");
+        return apiService.login(requestEntity);
     }
 
 
