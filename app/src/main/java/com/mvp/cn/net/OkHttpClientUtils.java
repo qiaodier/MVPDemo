@@ -43,7 +43,7 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger{
     private boolean isSupportSSL;
     //设置是否支持日志打印 默认true:支持网络请求日志显示
     private boolean isSupportLogcat = true;
-    private OkHttpClient okHttpClient;
+    private OkHttpClient.Builder okHttpClient;
     private Retrofit retrofit;
 
     public void setSupportLogcat(boolean supportLogcat) {
@@ -66,6 +66,10 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger{
     protected IHttpRequestService getRequestClient() {
         IHttpRequestService iHttpRequestService;
         if (okHttpClient==null&&retrofit==null) {
+            okHttpClient = new OkHttpClient.Builder();
+            okHttpClient.connectTimeout(20, TimeUnit.SECONDS)
+                    .readTimeout(20, TimeUnit.SECONDS)
+                    .writeTimeout(20, TimeUnit.SECONDS);
             //判断是否要请求header带token
             CustomInterceptor customInterceptor;
             if (isSupportHeaderToken){
@@ -73,6 +77,7 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger{
             }else{
                 customInterceptor =new CustomInterceptor();
             }
+            okHttpClient.addInterceptor(customInterceptor);
             //判断是否增加https ssl 验证
             SSLSocketFactory sslSocketFactory;
             HostnameVerifier DO_NOT_VERIFY;
@@ -111,9 +116,9 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger{
                     }
                 };
                 sslSocketFactory = sslContext.getSocketFactory();
-            }else{
-                sslSocketFactory = null;
-                DO_NOT_VERIFY = null;
+                //添加拦截器
+                okHttpClient.sslSocketFactory(sslSocketFactory)
+                        .hostnameVerifier(DO_NOT_VERIFY);
             }
             //判断是否显示日志
             HttpLoggingInterceptor mHttpLoggingInterceptor;
@@ -121,22 +126,11 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger{
                 mHttpLoggingInterceptor = new HttpLoggingInterceptor(this);
                 //打印http的body体
                 mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            }else{
-                mHttpLoggingInterceptor = null;
+                okHttpClient.addInterceptor(mHttpLoggingInterceptor);
             }
-            okHttpClient = new OkHttpClient().newBuilder()
-                    .connectTimeout(20, TimeUnit.SECONDS)
-                    .readTimeout(20, TimeUnit.SECONDS)
-                    .writeTimeout(20, TimeUnit.SECONDS)
-                    //添加拦截器
-                    .sslSocketFactory(sslSocketFactory)
-                    .hostnameVerifier(DO_NOT_VERIFY)
-                    .addInterceptor(customInterceptor)
-                    .addInterceptor(mHttpLoggingInterceptor)
-                    .build();
             retrofit = new Retrofit.Builder()
                     .baseUrl(BaseApplication.BASE_URL)//baseurl
-                    .client(okHttpClient) // 传入请求客户端
+                    .client(okHttpClient.build()) // 传入请求客户端
                     .addConverterFactory(GsonConverterFactory.create()) // 添加Gson转换工厂
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // 添加RxJava2调用适配工厂
                     .build();
