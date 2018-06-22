@@ -22,6 +22,7 @@ public class BaseApplication extends Application {
     public final static String PRO_BASE_URL = "";
     public final static String DEV_BASE_URL = "";
     public static String BASE_URL=DEV_BASE_URL;
+    public static String BASE_TEST_URL="";
 
     {
         PlatformConfig.setWeixin(APPID_WX, AppSecret_WX);

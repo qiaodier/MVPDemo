@@ -4,11 +4,12 @@ import android.util.Log;
 
 
 import java.io.IOException;
+import java.util.List;
 
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import com.mvp.cn.BaseApplication;
+import okhttp3.*;
+
+import static com.mvp.cn.BaseApplication.BASE_TEST_URL;
 
 /**
  * Created by qiaohao on 2016/7/11.
@@ -29,19 +30,43 @@ public class CustomInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request newrequest = chain.request().newBuilder()
-                .addHeader("Content-Type", "text/html; charset=UTF-8")
+        //获取request
+        Request request = chain.request();
+        //获取request的创建者builder
+        Request.Builder builder = request.newBuilder();
+        //从request中获取headers，通过给定的键url_name
+        List<String> headerValues = request.headers("url_name");
+        if (headerValues != null && headerValues.size() > 0) {
+            //如果有这个header，先将配置的header删除，因此header仅用作app和okhttp之间使用
+            builder.removeHeader("url_name");
+            //匹配获得新的BaseUrl
+            String headerValue = headerValues.get(0);
+            HttpUrl newBaseUrl = null;
+            if ("test".equals(headerValue)) {
+                newBaseUrl = HttpUrl.parse(BaseApplication.BASE_TEST_URL);
+            }  else{
+                newBaseUrl = HttpUrl.parse(BaseApplication.BASE_URL);
+            }
+            //从request中获取原有的HttpUrl实例oldHttpUrl
+            HttpUrl oldHttpUrl = request.url();
+            //重建新的HttpUrl，修改需要修改的url部分
+            HttpUrl newFullUrl = oldHttpUrl
+                    .newBuilder()
+                    .scheme(newBaseUrl.scheme())
+                    .host(newBaseUrl.host())
+                    .port(newBaseUrl.port())
+                    .build();
+            //重建这个request，通过builder.url(newFullUrl).build()；
+            //然后返回一个response至此结束修改
+            builder = builder.url(newFullUrl);
+        }
+        builder.addHeader("Content-Type", "text/html; charset=UTF-8")
                 .addHeader("accept", "*/*")
                 .addHeader("Connection", "Keep-Alive")
                 .addHeader("token",mToken)
                 .build();
-//        Response response = chain.proceed(newrequest);
-//        ResponseBody responseBody = response.peekBody(1024*1024);
-//        Log.e("Interceptor",String.format("接收响应: [%s] %n返回json:%s %n头部%s",
-//                response.request().url(),
-//                responseBody.string(),
-//                response.headers()));
-        return chain.proceed(newrequest);
+        return chain.proceed(builder.build());
+
     }
 
 

@@ -13,7 +13,7 @@ import retrofit2.http.*;
  * 说明：IHttpRequestService 接口
  */
 public interface IHttpRequestService {
-
+    @Headers({"url_name:test"})
     @GET("getpushmsg")
     Call<String> login(@QueryMap Map<String,String> login);
 
