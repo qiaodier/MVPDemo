@@ -1,52 +1,143 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+
+// 打包时间
+static def buildTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+}
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "27.0.2"
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
     defaultConfig {
-        applicationId "com.mvp.cn"
-        minSdkVersion 19
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        applicationId rootProject.ext.android["applicationId"]
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        flavorDimensions rootProject.ext.android["flavorDimensions"]
+        testInstrumentationRunner rootProject.ext.android["testInstrumentationRunner"]
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
         ndk {
             moduleName "InfoJni"          //生成的so名字,这个可以随意取名
             abiFilters "armeabi", "armeabi-v7a", "x86" //输出指定三种abi体系结构下的so库，目前可有可无。
         }
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            minifyEnabled true
+            shrinkResources true
+            //解决3.1.2 版本studio打包遇到aapt2的问题
+            aaptOptions.cruncherEnabled = false
+            aaptOptions.useNewCruncher = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //签名配置
+    signingConfigs {
+        //发布版本
+        release {
+            storeFile file(rootProject.ext.signing["release-store-file"])
+            storePassword rootProject.ext.signing["release-storePassword"]
+            keyAlias rootProject.ext.signing["release-keyAlias"]
+            keyPassword rootProject.ext.signing["release-keyPassword"]
+        }
+        //开发版本配置
+        debug {
+            storeFile file(rootProject.ext.signing["release-store-file"])
+            storePassword rootProject.ext.signing["release-storePassword"]
+            keyAlias rootProject.ext.signing["release-keyAlias"]
+            keyPassword rootProject.ext.signing["release-keyPassword"]
+        }
+    }
+    //打包后apk重命名
+    android.applicationVariants.all { variant ->
+        def outputName
+        def productName
+        if (project.hasProperty("APK_NAME")) {
+            outputName = APK_NAME
+        } else {
+            outputName = parent.name
+        }
+        variant.productFlavors.each { product ->
+            productName = product.name
+        }
+
+        variant.outputs.all { output ->
+            outputFileName = "${outputName}-${productName}-${buildType.name}-${defaultConfig.versionName}-${defaultConfig.versionCode}-${buildTime()}.apk"
+        }
+    }
+    //渠道配置
+    productFlavors {
+        product {
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "PAY_MODE", "false"
+            //服务器商用url
+            buildConfigField "String", "BASE_URL", '""'
+        }
+        //商用支付宝1分钱
+        productTest {
+            signingConfig signingConfigs.release
+
+            buildConfigField "boolean", "PAY_MODE", "true"
+            //服务器商用url
+            buildConfigField "String", "BASE_URL", '""'
+        }
+        dev {
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "PAY_MODE", "false"
+            //服务器测试url
+            buildConfigField "String", "BASE_URL", '""'
+        }
+        //开发支付1分钱
+        devTest{
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "PAY_MODE", "true"
+            //服务器测试url
+            buildConfigField "String", "BASE_URL", '""'
+        }
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    testCompile 'junit:junit:4.12'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    compile 'com.squareup.okio:okio:1.10.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.1'
-    compile files('libs/SocialSDK_QQ_Simplify.jar')
-    compile files('libs/SocialSDK_WeChat_Simplify.jar')
-    compile files('libs/umeng_social_api.jar')
-    compile files('libs/umeng_social_net.jar')
-    compile files('libs/umeng_social_tool.jar')
+    implementation 'com.jakewharton:butterknife:9.0.0-rc2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc2'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.squareup.okio:okio:1.10.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
+    implementation files('libs/SocialSDK_QQ_Simplify.jar')
+    implementation files('libs/SocialSDK_WeChat_Simplify.jar')
+    implementation files('libs/umeng_social_api.jar')
+    implementation files('libs/umeng_social_net.jar')
+    implementation files('libs/umeng_social_tool.jar')
+    implementation 'com.orhanobut:logger:1.15'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
 }

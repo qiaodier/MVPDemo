@@ -1,6 +1,7 @@
 package com.mvp.cn;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.mvp.cn.utils.CrashHandler;
 import com.umeng.socialize.Config;
@@ -23,6 +24,7 @@ public class BaseApplication extends Application {
     public final static String DEV_BASE_URL = "";
     public static String BASE_URL=DEV_BASE_URL;
     public static String BASE_TEST_URL="";
+    private static Context mContext;
 
     {
         PlatformConfig.setWeixin(APPID_WX, AppSecret_WX);
@@ -30,6 +32,9 @@ public class BaseApplication extends Application {
     }
     public static BaseApplication instance;
 
+    public static Context getInstance() {
+        return mContext;
+    }
     @Override
     public void onCreate() {
         super.onCreate();

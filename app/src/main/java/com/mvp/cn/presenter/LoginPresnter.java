@@ -2,19 +2,8 @@ package com.mvp.cn.presenter;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.mvp.cn.interfacem.ILoginInterface;
-import com.mvp.cn.model.BaseResponseEntity;
-import com.mvp.cn.net.HttpRequestUtil;
-import com.mvp.cn.utils.DownloadUtil;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 作者： qiaohao
@@ -69,27 +58,7 @@ public class LoginPresnter extends BasePresenter<ILoginInterface> {
 //
 //
 //        }
-        Log.e("下载进度","开始");
-        DownloadUtil.get().download("http://192.168.11.127:9000/equ.apk", "download", new DownloadUtil.OnDownloadListener() {
-            @Override
-            public void onDownloadSuccess() {
-                Log.e("下载进度","完成");
-                mHandler.sendEmptyMessage(1);
-            }
-            @Override
-            public void onDownloading(int progress) {
-                Log.e("下载进度","正在   "+progress);
-                Message msg = new Message();
-                msg.obj=progress;
-                msg.what=3;
-                mHandler.sendMessage(msg);
-            }
-            @Override
-            public void onDownloadFailed() {
-                Log.e("下载进度","失败");
-                mHandler.sendEmptyMessage(2);
-            }
-        });
+
 
     }
 }

@@ -1,0 +1,23 @@
+ext {
+    //android 相关
+    android = [
+            "applicationId"            : "com.mvp.cn",
+            "compileSdkVersion"        : 28,
+            "buildToolsVersion"        : "28.0.3",
+            "minSdkVersion"            : 22,
+            "targetSdkVersion"         : 28,
+            "versionCode"              : 1,
+            "versionName"              : "1.0",
+            "flavorDimensions"         : "versionCode",
+            "testInstrumentationRunner": "android.support.test.runner.AndroidJUnitRunner"
+    ]
+    //签名相关
+    signing = [
+            "release-store-file"   : "../aaa.jks",
+            "release-storePassword": "aaa",
+            "release-keyAlias"     : "aaa",
+            "release-keyPassword"  : "aaa"
+    ]
+
+
+}
