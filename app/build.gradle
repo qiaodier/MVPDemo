@@ -112,7 +112,15 @@ android {
             buildConfigField "String", "BASE_URL", '""'
         }
     }
+
+    sourceSets{
+        main{
+            jniLibs.srcDirs=['libs']
+        }
+    }
 }
+
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
