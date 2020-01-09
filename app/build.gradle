@@ -90,7 +90,6 @@ android {
             //服务器商用url
             buildConfigField "String", "BASE_URL", '""'
         }
-        //商用支付宝1分钱
         productTest {
             signingConfig signingConfigs.release
 
