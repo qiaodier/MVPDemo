@@ -15,11 +15,15 @@ import android.widget.Toast;
 import com.mvp.cn.R;
 import com.mvp.cn.interfacem.ILoginInterface;
 import com.mvp.cn.presenter.LoginPresnter;
+import com.mvp.cn.service.InstallService;
+import com.mvp.cn.utils.InstallApkUtils;
+import com.mvp.cn.utils.Utils;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.utils.Log;
 
+import java.io.File;
 import java.util.Map;
 
 public class MainActivity extends BaseActivity implements ILoginInterface {
@@ -30,6 +34,12 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
     private Button mLoginBtn;
     private LoginPresnter mLoginPresenter;
     private int count;
+    private Intent installService;
+    /**
+     * upadateApkPath 更新apk存放路径  /data/cache/update.apk
+     */
+    private String upadateApkPath = Utils.getApp().getExternalCacheDir() + "/update.apk";
+
     @Override
     protected int layoutResID() {
         return R.layout.activity_main;
@@ -45,7 +55,6 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
     }
 
 
-
     private void initData() {
         mUserName = (EditText) findViewById(R.id.et_user_name);
 //        mUserName.setText(JNIUtil.getAPPInfo(this));
@@ -58,14 +67,25 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
                 authorization(SHARE_MEDIA.WEIXIN);
             }
         });
-        mLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
-                mLoginPresenter.login();
+        mLoginBtn.setOnClickListener((View v) -> {
+            //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
+            mLoginPresenter.login();
 //                authorization(SHARE_MEDIA.QQ);
-            }
+            //调用自动安装逻辑之前，需要引导用户开启智能安装服务，否则无法实现自动安装
+            //Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            // startActivity(intent);
+            //安装apk调用示例代码
+            InstallApkUtils.installAPK(this, new File(upadateApkPath));
+            //启动模拟点击安装服务
+            installService = new Intent(this, InstallService.class);
+            startService(installService);
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(installService);
+        super.onDestroy();
     }
 
     //授权
@@ -111,13 +131,13 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        if (requestCode ==REQUEST_CODE_WRITE_SETTINGS ) {
+        if (requestCode == REQUEST_CODE_WRITE_SETTINGS) {
             if (Settings.System.canWrite(this)) {
                 if (Build.VERSION.SDK_INT >= 23) {
                     String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
                     ActivityCompat.requestPermissions(this, mPermissionList, 123);
-                    count=0;
-                }else{
+                    count = 0;
+                } else {
                     initData();
                 }
             }
@@ -135,7 +155,7 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
                 }
             }
             if (count == permissions.length) {
-               initData();
+                initData();
             } else {
                 showMessage("权限未获取");
                 finish();
@@ -157,7 +177,7 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
 
     @Override
     public void onProgress(int progress) {
-        Log.e("下载进度",""+progress);
+        Log.e("下载进度", "" + progress);
     }
 
     @Override
@@ -191,10 +211,6 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
         //登录失败
 
     }
-
-
-
-
 
 
 }
