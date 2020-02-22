@@ -10,7 +10,7 @@ import com.mvp.cn.R;
 import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.LoginModel;
 import com.mvp.cn.mvp.presenter.LoginPresnter;
-import com.mvp.cn.ui.BaseActivity;
+import com.mvp.cn.mvp.base.BaseActivity;
 import com.mvp.cn.utils.Utils;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 

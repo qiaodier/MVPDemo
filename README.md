@@ -1,3 +1,8 @@
+
+# 2020-02-22 更新内容：优化mvp架构代码
+   * 去掉之前一些无关代码；
+   * mvp架构代码都在com.mvp.cn.mvp包下
+   * 增加jetpack组件Lifecycle对Activity生命周期监听
 # 2020-02-18 更新内容:应用实现自动安装
   * 增加日志打印类（包括将log输出到文件中功能）
   + 应用实现自动安装（模拟用户点击效果来实现自动安装，会有系统安装应用过程的展示页面，并非静默安装）
@@ -7,6 +12,5 @@
   * 使用自定义注解和反射的方式实现对switch语句中多个case的优化
   + 调用示例
      - RunTaskFactory.buildRunTask(type,content);
-
 # MVPDemo
 mvpDemo试写；

@@ -1,11 +1,9 @@
-package com.mvp.cn.ui;
+package com.mvp.cn.mvp.base;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.mvp.cn.mvp.base.BasePresenter;
-import com.mvp.cn.mvp.base.IBaseView;
 import com.mvp.cn.utils.CustomDialogUtils;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
