@@ -3,17 +3,17 @@ package com.mvp.cn.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import com.mvp.cn.interfacem.ILoginInterface;
+import com.mvp.cn.iview.ILoginView;
 
 /**
  * 作者： qiaohao
  * 时间： 2017/4/27 14:02
  * 说明：LoginPresnter
  */
-public class LoginPresnter extends BasePresenter<ILoginInterface> {
+public class LoginPresnter extends BasePresenter<ILoginView> {
 
     private static final int LOGIN_REQUEST_CODE = 0x01;
-    public ILoginInterface mLoginInterface;
+    public ILoginView mLoginInterface;
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -36,7 +36,7 @@ public class LoginPresnter extends BasePresenter<ILoginInterface> {
 
 
 
-    public LoginPresnter(ILoginInterface loginInterface) {
+    public LoginPresnter(ILoginView loginInterface) {
         this.mLoginInterface = loginInterface;
     }
 

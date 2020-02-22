@@ -1,4 +1,4 @@
-package com.mvp.cn.view;
+package com.mvp.cn.ui;
 
 
 import android.Manifest;
@@ -13,20 +13,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mvp.cn.R;
-import com.mvp.cn.interfacem.ILoginInterface;
-import com.mvp.cn.presenter.LoginPresnter;
-import com.mvp.cn.service.InstallService;
-import com.mvp.cn.utils.InstallApkUtils;
+import com.mvp.cn.mvp.contract.LoginContract;
+import com.mvp.cn.mvp.model.LoginModel;
+import com.mvp.cn.mvp.presenter.LoginPresnter;
 import com.mvp.cn.utils.Utils;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.utils.Log;
 
-import java.io.File;
 import java.util.Map;
+import java.util.Optional;
 
-public class MainActivity extends BaseActivity implements ILoginInterface {
+public class LoginActivity extends BaseActivity<LoginPresnter,LoginContract.View> implements LoginContract.View {
 
     private static final int REQUEST_CODE_WRITE_SETTINGS = 10000;
     private static final String TAG = "umeng登录测试";
@@ -69,22 +69,27 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
         });
         mLoginBtn.setOnClickListener((View v) -> {
             //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
-            mLoginPresenter.login();
+            mLoginPresenter.login(mUserName.getText().toString(), mUserPwd.getText().toString());
 //                authorization(SHARE_MEDIA.QQ);
             //调用自动安装逻辑之前，需要引导用户开启智能安装服务，否则无法实现自动安装
             //Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             // startActivity(intent);
             //安装apk调用示例代码
-            InstallApkUtils.installAPK(this, new File(upadateApkPath));
+//            InstallApkUtils.installAPK(this, new File(upadateApkPath));
             //启动模拟点击安装服务
-            installService = new Intent(this, InstallService.class);
-            startService(installService);
+//            installService = new Intent(this, InstallService.class);
+//            startService(installService);
         });
     }
 
     @Override
     protected void onDestroy() {
         stopService(installService);
+        Optional
+                .ofNullable(mLoginPresenter)
+                .ifPresent(loginPresnter -> {
+                    loginPresnter.detachView();
+                });
         super.onDestroy();
     }
 
@@ -165,50 +170,49 @@ public class MainActivity extends BaseActivity implements ILoginInterface {
 
 
     @Override
-    protected void initPresenter() {
-        mLoginPresenter = new LoginPresnter(this);
+    protected LoginPresnter initPresenter() {
+       return new LoginPresnter(new LoginModel());
     }
 
 
-    @Override
-    public String getUserName() {
-        return mUserName.getText().toString();
-    }
-
-    @Override
-    public void onProgress(int progress) {
-        Log.e("下载进度", "" + progress);
-    }
-
-    @Override
-    public String getUserPwd() {
-        return mUserPwd.getText().toString();
-    }
-
-    @Override
-    public void showLoadingDialog() {
-
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-
-    }
-
-    @Override
-    public void showAlertMessage(String content) {
-
-    }
-
+    /**
+     * 请求成功
+     */
     @Override
     public void requestSuccess() {
-        //登录成功
 
     }
 
     @Override
-    public void requestFail() {
-        //登录失败
+    public RxAppCompatActivity getActivity() {
+        return this;
+    }
+
+    @Override
+    public void showLoading() {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void hideLoading() {
+        dismissLoaddingDialog();
+    }
+
+    /**
+     * 请求失败
+     *
+     * @param msg
+     */
+    @Override
+    public void requestFail(String msg) {
+
+    }
+
+    /**
+     * 请求完成
+     */
+    @Override
+    public void requestComplete() {
 
     }
 
