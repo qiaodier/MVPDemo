@@ -4,7 +4,7 @@ ext {
             "applicationId"            : "com.mvp.cn",
             "compileSdkVersion"        : 28,
             "buildToolsVersion"        : "28.0.3",
-            "minSdkVersion"            : 22,
+            "minSdkVersion"            : 24,
             "targetSdkVersion"         : 28,
             "versionCode"              : 1,
             "versionName"              : "1.0",

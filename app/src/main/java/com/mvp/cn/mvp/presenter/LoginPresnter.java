@@ -1,63 +1,77 @@
-package com.mvp.cn.presenter;
+package com.mvp.cn.mvp.presenter;
 
-import android.os.Handler;
-import android.os.Message;
+import com.mvp.cn.bean.BaseRespEntity;
+import com.mvp.cn.bean.LoginEntity;
+import com.mvp.cn.mvp.base.BasePresenter;
+import com.mvp.cn.mvp.contract.LoginContract;
+import com.mvp.cn.utils.LogUtil;
 
-import com.mvp.cn.iview.ILoginView;
+import java.util.Optional;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者： qiaohao
  * 时间： 2017/4/27 14:02
  * 说明：LoginPresnter
  */
-public class LoginPresnter extends BasePresenter<ILoginView> {
-
-    private static final int LOGIN_REQUEST_CODE = 0x01;
-    public ILoginView mLoginInterface;
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            mLoginInterface.dismissLoadingDialog();
-            switch (msg.what){
-                case 1:
-                    mLoginInterface.requestSuccess();
-                    break;
-                case 3:
-                    int progress = (int) msg.obj;
-                    mLoginInterface.onProgress(progress);
-                    break;
-                case 2:
-                    mLoginInterface.requestFail();
-                    break;
-            }
-        }
-    };
+public class LoginPresnter extends BasePresenter<LoginContract.Model, LoginContract.View> {
 
 
-
-    public LoginPresnter(ILoginView loginInterface) {
-        this.mLoginInterface = loginInterface;
+    public LoginPresnter(LoginContract.Model model) {
+        init(model);
     }
 
-    public void login() {
-//        String userName = mLoginInterface.getUserName();
-//        String userPwd = mLoginInterface.getUserPwd();
-//        if (userName != null && !userName.equals("") && userPwd != null && !userPwd.equals("")) {
-//            HttpRequestUtil.getOkClient().login(userPwd).enqueue(new Callback<String>() {
-//                @Override
-//                public void onResponse(Call<String> call, Response<String> response) {
-//                    mHandler.sendEmptyMessage(1);
-//                }
-//
-//                @Override
-//                public void onFailure(Call<String> call, Throwable t) {
-//                    mHandler.sendEmptyMessage(2);
-//                }
-//            });
-//
-//
-//        }
+    public void login(String name, String pwd) {
+        mModel.login(new LoginEntity(name, pwd))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(mView.get().getActivity().bindToLifecycle())
+                .subscribe(new Observer<BaseRespEntity>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.get().showLoading();
+                        LogUtil.e("LoginPresenter", "showLoading");
+                    }
+
+                    @Override
+                    public void onNext(BaseRespEntity baseRespEntity) {
+                        LogUtil.e("LoginPresenter", "onNext");
+                        int status = Optional
+                                .ofNullable(baseRespEntity)
+                                .map(BaseRespEntity::getStatus)
+                                .orElse(0);
+                        if (status == 1) {
+                            mView.get().requestSuccess();
+                        } else {
+                            String msg = Optional
+                                    .ofNullable(baseRespEntity)
+                                    .map(BaseRespEntity::getMessage)
+                                    .orElse("请求失败");
+                            mView.get().requestFail(msg);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.get().hideLoading();
+                        LogUtil.e("LoginPresenter", "onError");
+                        mView.get().requestFail(Optional
+                                .ofNullable(e)
+                                .map(Throwable::getLocalizedMessage)
+                                .orElse("请求错误"));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        LogUtil.e("LoginPresenter", "onComplete");
+                        mView.get().hideLoading();
+                        mView.get().requestComplete();
+                    }
+                });
 
 
     }

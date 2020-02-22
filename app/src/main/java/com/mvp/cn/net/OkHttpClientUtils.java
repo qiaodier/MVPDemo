@@ -1,6 +1,7 @@
 package com.mvp.cn.net;
 
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mvp.cn.BuildConfig;
 import com.mvp.cn.utils.JsonUtil;
 import com.orhanobut.logger.Logger;
@@ -9,10 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLSession;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,7 +26,6 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
 
     private OkHttpClient.Builder okHttpClient;
     private Retrofit retrofit;
-    private String token = "";
     private StringBuilder mMessage = new StringBuilder();
 
     /**
@@ -48,30 +45,16 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
         return SingletonHolder.instance;
     }
 
-    public OkHttpClientUtils() {
-//        getRequestClient();
-    }
-
-    /**
-     * 更新token方法
-     *
-     * @param token
-     */
-    public void setToken(String token) {
-        this.token = token;
-        okHttpClient = null;
-    }
-
-    public  OkHttpClient getOk(){
+    public OkHttpClient getOk() {
         return okHttpClient.build();
     }
 
-
     public IHttpRequestService getRequestClient() {
-        IHttpRequestService iHttpRequestService = null;
+        IHttpRequestService iHttpRequestService;
         if (okHttpClient == null) {
             okHttpClient = new OkHttpClient.Builder();
-            okHttpClient.connectTimeout(10, TimeUnit.SECONDS)
+            okHttpClient
+                    .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .writeTimeout(10, TimeUnit.SECONDS);
             if (SSLManager.createAllSSLSocketFactory() != null) {
@@ -81,27 +64,18 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
 //            //打印http的body体
             mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             okHttpClient.addNetworkInterceptor(mHttpLoggingInterceptor);
-//            HttpLoggerInterceptor httpLoggerInterceptor = new HttpLoggerInterceptor();
-//            httpLoggerInterceptor.setLevel(HttpLoggerInterceptor.Level.BODY);
-//            okHttpClient.addInterceptor(httpLoggerInterceptor);
-            okHttpClient.hostnameVerifier((String hostname, SSLSession session)-> {
+            okHttpClient.hostnameVerifier((String hostname, SSLSession session) -> {
                 return true;
             });
-            okHttpClient.addInterceptor((Interceptor.Chain chain) -> {
-                //获取request的创建者builder
-                Request request = chain.request().newBuilder().addHeader("token", token)
-                        .addHeader("Content-Type", "text/html; charset=UTF-8")
-                        .build();
-                Response response = chain.proceed(request);
-                return response;
-            });
         }
-
-
         retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)//baseurl
-                .client(okHttpClient.build()) // 传入请求客户端
-                .addConverterFactory(GsonConverterFactory.create()) // 添加Gson转换工厂
+                //baseurl
+                .baseUrl(BuildConfig.BASE_URL)
+                // 传入请求客户端
+                .client(okHttpClient.build())
+                // 添加Gson转换工厂
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         iHttpRequestService = retrofit.create(IHttpRequestService.class);
         return iHttpRequestService;

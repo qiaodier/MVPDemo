@@ -2,7 +2,7 @@ package com.mvp.cn.net;
 
 
 
-import com.mvp.cn.model.BaseRespEntity;
+import com.mvp.cn.bean.BaseRespEntity;
 
 import java.io.EOFException;
 import java.net.ConnectException;

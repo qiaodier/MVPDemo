@@ -1,26 +1,15 @@
-package com.mvp.cn.view;
+package com.mvp.cn.ui;
 
 import android.app.Dialog;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mvp.cn.R;
 import com.mvp.cn.mvp.base.BasePresenter;
 import com.mvp.cn.mvp.base.IBaseView;
 import com.mvp.cn.utils.CustomDialogUtils;
-import com.mvp.cn.utils.NavigationBarUtil;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
-import java.lang.reflect.Field;
 import java.util.Optional;
-
-import butterknife.BindView;
 
 
 /**
@@ -35,26 +24,12 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
 
     protected T mPrensenter;
 
-    /**
-     * titlebar 内容
-     */
-    @BindView(R.id.tv_title_content)
-    TextView titleContent;
-    @BindView(R.id.iv_icon_back)
-    ImageView imageBack;
-    @BindView(R.id.ll_padding_layout)
-    LinearLayout paddingLayout;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layoutResID());
-
-        if (NavigationBarUtil.hasNavigationBar(this)) {
-            NavigationBarUtil.initActivity(findViewById(android.R.id.content));
-        }
-        initStatusBar();
         mPrensenter = initPresenter();
+        getLifecycle().addObserver(mPrensenter);
         mPrensenter.attachView((V) this);
         initViews();
     }
@@ -78,46 +53,6 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
     //初始化presenter操作类
     protected abstract T initPresenter();
 
-
-    public void setImageBackDisplay(boolean flag) {
-        imageBack.setVisibility(flag ? View.VISIBLE : View.GONE);
-    }
-
-    public void initStatusBar() {
-        //当系统版本为4.4或者4.4以上时可以使用沉浸式状态栏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            //
-            paddingLayout.setVisibility(View.VISIBLE);
-            //获取到状态栏的高度
-            int statusHeight = getStatusBarHeight();
-            //动态的设置隐藏布局的高度
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) paddingLayout.getLayoutParams();
-            params.height = statusHeight;
-            paddingLayout.setLayoutParams(params);
-        }
-    }
-
-    /**
-     * 通过反射的方式获取状态栏高度
-     *
-     * @return
-     */
-    private int getStatusBarHeight() {
-        try {
-            Class<?> c = Class.forName("com.android.internal.R$dimen");
-            Object obj = c.newInstance();
-            Field field = c.getField("status_bar_height");
-            int x = Integer.parseInt(field.get(obj).toString());
-            return getResources().getDimensionPixelSize(x);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
 
     /**
      * toast参数是字符串

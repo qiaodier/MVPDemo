@@ -1,6 +1,13 @@
 package com.mvp.cn.net;
 
 
+import com.mvp.cn.bean.BaseRespEntity;
+import com.mvp.cn.bean.LoginEntity;
+
+import io.reactivex.Observable;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
 /**
  * 作者： qiaohao
  * 时间： 2017/7/19 14:08
@@ -8,5 +15,6 @@ package com.mvp.cn.net;
  */
 public interface IHttpRequestService {
 
-
+    @POST("user/login")
+    Observable<BaseRespEntity> login(@Body LoginEntity loginEntity);
 }

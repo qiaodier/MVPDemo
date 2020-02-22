@@ -1,6 +1,6 @@
-package com.mvp.cn.mvp.view;
+package com.mvp.cn.mvp.base;
 
-import android.app.Activity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 /**
  * 作者： qiaohao
@@ -13,21 +13,28 @@ public interface IBaseView {
      *
      * @return
      */
-    Activity getActivity();
+    RxAppCompatActivity getActivity();
 
     /**
      * 显示loading
      */
-    default void showLoading() {
-
-    }
-
+    void showLoading();
     /**
      * 隐藏loading
      */
-    default void hideLoading() {
+    void hideLoading();
 
-    }
+    /**
+     * 请求失败
+     *
+     * @param msg
+     */
+    void requestFail(String msg);
+
+    /**
+     * 请求完成
+     */
+    void requestComplete();
 
 
 }

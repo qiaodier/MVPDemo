@@ -1,14 +1,9 @@
 package com.mvp.cn.net;
 
-import com.mvp.cn.BaseApplication;
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
-import java.security.KeyManagementException;
 import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -60,26 +55,26 @@ public class SSLManager {
     }
 
 
-    public static SSLSocketFactory createSSLSocketFactory() {
-        SSLSocketFactory ssfFactory = null;
-        X509TrustManager trustManager;
-        try {
-            InputStream inputStream = BaseApplication.getInstance().getAssets().open("server.cer");
-            trustManager = trustManagerForCertificates(inputStream);
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, new TrustManager[]{trustManager}, null);
-            ssfFactory = sc.getSocketFactory();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ssfFactory;
-    }
+//    public static SSLSocketFactory createSSLSocketFactory() {
+//        SSLSocketFactory ssfFactory = null;
+//        X509TrustManager trustManager;
+//        try {
+//            InputStream inputStream = BaseApplication.getInstance().getAssets().open("server.cer");
+//            trustManager = trustManagerForCertificates(inputStream);
+//            SSLContext sc = SSLContext.getInstance("TLS");
+//            sc.init(null, new TrustManager[]{trustManager}, null);
+//            ssfFactory = sc.getSocketFactory();
+//        } catch (KeyManagementException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        } catch (GeneralSecurityException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return ssfFactory;
+//    }
 
 
     private static X509TrustManager trustManagerForCertificates(InputStream in)

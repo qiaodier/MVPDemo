@@ -39,6 +39,9 @@ public class LogUtil {
     private static final String FILE_SEP = System.getProperty("file.separator");
     private static final LogUtil.Config CONFIG = new LogUtil.Config();
 
+    /**
+     * 日志存放路径  /storage/emulated/0/Android/data/com.mvp.cn/cache/log/log-02-22.txt
+     */
     private LogUtil() {
         throw new IllegalStateException("you can't instantiate me!");
     }
@@ -164,7 +167,7 @@ public class LogUtil {
         String date = format.substring(0, 5);
         String time = format.substring(6);
         String fullPath = (CONFIG.mDir == null ? CONFIG.mDefaultDir : CONFIG.mDir) + CONFIG.mFilePrefix + "-" + date + ".txt";
-        Log.e("日志存放路径",fullPath+"");
+
         if (!createOrExistsFile(fullPath)) {
             e("create " + fullPath + " failed!");
         } else {

@@ -1,25 +1,31 @@
-package com.mvp.cn.model;
+package com.mvp.cn.bean;
 
 /**
  * Created by qiaohao on 2016/9/20.
  * 说明：
  */
 public class LoginEntity {
-    private String loginPwd;
+   private String name;
+   private String pwd;
 
-
-    public String getLoginPwd() {
-        return loginPwd;
+    public LoginEntity(String name, String pwd) {
+        this.name = name;
+        this.pwd = pwd;
     }
 
-    public void setLoginPwd(String loginPwd) {
-        this.loginPwd = loginPwd;
+    public String getName() {
+        return name;
     }
 
-    public LoginEntity() {
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public LoginEntity(String loginPwd) {
-        this.loginPwd = loginPwd;
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }

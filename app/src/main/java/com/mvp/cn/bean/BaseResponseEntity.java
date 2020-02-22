@@ -1,4 +1,4 @@
-package com.mvp.cn.model;
+package com.mvp.cn.bean;
 
 /**
  * Created by qiaohao on 2016/9/13.
