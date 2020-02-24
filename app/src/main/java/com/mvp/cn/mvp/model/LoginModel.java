@@ -15,6 +15,6 @@ public class LoginModel implements LoginContract.Model {
 
     @Override
     public Observable<BaseRespEntity> login(LoginEntity entity) {
-        return OkHttpClientUtils.getInstance().getRequestClient().login(entity);
+        return OkHttpClientUtils.getInstance().getRequest().login(entity);
     }
 }

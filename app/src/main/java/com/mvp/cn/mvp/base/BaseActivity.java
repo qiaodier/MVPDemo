@@ -27,8 +27,10 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
         super.onCreate(savedInstanceState);
         setContentView(layoutResID());
         mPrensenter = initPresenter();
-        getLifecycle().addObserver(mPrensenter);
-        mPrensenter.attachView((V) this);
+        Optional.ofNullable(mPrensenter).ifPresent(prensenter->{
+            getLifecycle().addObserver(prensenter);
+            prensenter.attachView((V) this);
+        });
         initViews();
     }
 

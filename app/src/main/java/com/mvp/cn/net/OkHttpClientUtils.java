@@ -25,8 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
 
     private OkHttpClient.Builder okHttpClient;
-    private Retrofit retrofit;
     private StringBuilder mMessage = new StringBuilder();
+    private IHttpRequestService iHttpRequestService;
 
     /**
      * 单例模式（推荐使用）
@@ -45,30 +45,36 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
         return SingletonHolder.instance;
     }
 
+    public OkHttpClientUtils() {
+        iHttpRequestService = this.init();
+    }
+
+    public IHttpRequestService getRequest() {
+        return iHttpRequestService;
+    }
+
     public OkHttpClient getOk() {
         return okHttpClient.build();
     }
 
-    public IHttpRequestService getRequestClient() {
+    private IHttpRequestService init() {
         IHttpRequestService iHttpRequestService;
-        if (okHttpClient == null) {
-            okHttpClient = new OkHttpClient.Builder();
-            okHttpClient
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(10, TimeUnit.SECONDS)
-                    .writeTimeout(10, TimeUnit.SECONDS);
-            if (SSLManager.createAllSSLSocketFactory() != null) {
-                okHttpClient.sslSocketFactory(SSLManager.createAllSSLSocketFactory());
-            }
-            HttpLoggingInterceptor mHttpLoggingInterceptor = new HttpLoggingInterceptor(this);
-//            //打印http的body体
-            mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            okHttpClient.addNetworkInterceptor(mHttpLoggingInterceptor);
-            okHttpClient.hostnameVerifier((String hostname, SSLSession session) -> {
-                return true;
-            });
+        okHttpClient = new OkHttpClient.Builder();
+        okHttpClient
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS);
+        if (SSLManager.createAllSSLSocketFactory() != null) {
+            okHttpClient.sslSocketFactory(SSLManager.createAllSSLSocketFactory());
         }
-        retrofit = new Retrofit.Builder()
+        HttpLoggingInterceptor mHttpLoggingInterceptor = new HttpLoggingInterceptor(this);
+//            //打印http的body体
+        mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okHttpClient.addNetworkInterceptor(mHttpLoggingInterceptor);
+        okHttpClient.hostnameVerifier((String hostname, SSLSession session) -> {
+            return true;
+        });
+        Retrofit retrofit = new Retrofit.Builder()
                 //baseurl
                 .baseUrl(BuildConfig.BASE_URL)
                 // 传入请求客户端

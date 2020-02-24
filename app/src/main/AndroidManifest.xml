@@ -4,10 +4,8 @@
     package="com.mvp.cn">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,14 +16,13 @@
 
     <application
         android:name="com.mvp.cn.BaseApplication"
-        android:allowBackup="true"
+        android:appComponentFactory=""
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:appComponentFactory=""
         tools:replace="android:appComponentFactory"
-        >
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".mvp.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +43,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".mvp.view.MainActivity" />
 
 
         <!--        这里如果当前已适配Android 10  则使用 androidx.core.content.FileProvider    -->

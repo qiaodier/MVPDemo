@@ -19,7 +19,7 @@ android {
         versionName rootProject.ext.android["versionName"]
         flavorDimensions rootProject.ext.android["flavorDimensions"]
         testInstrumentationRunner rootProject.ext.android["testInstrumentationRunner"]
-        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
         ndk {
             moduleName "InfoJni"          //生成的so名字,这个可以随意取名
             abiFilters "armeabi", "armeabi-v7a", "x86" //输出指定三种abi体系结构下的so库，目前可有可无。
@@ -76,7 +76,7 @@ android {
         }
 
         variant.outputs.all { output ->
-            outputFileName = "${outputName}-${productName}-${buildType.name}-${defaultConfig.versionName}-${defaultConfig.versionCode}-${buildTime()}.apk"
+            outputFileName = "${outputName}-${productName}-${buildType.name}-${variant.versionName}-${variant.versionCode}-${buildTime()}.apk"
         }
     }
     //渠道配置
@@ -89,25 +89,26 @@ android {
 
         dev {
             signingConfig signingConfigs.release
-
             //服务器测试url
             buildConfigField "String", "BASE_URL", '"https:www.baidu.com/"'
         }
 
     }
 
-    sourceSets{
-        main{
-            jniLibs.srcDirs=['libs']
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
         }
     }
 }
 
 
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation'androidx.test.espresso:espresso-core:3.1.1'
+    //自定义注解处理器
+    annotationProcessor project(':router-compiler')
+    annotationProcessor "com.neenbedankt.gradle.plugins:android-apt:1.8"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.jakewharton:butterknife:10.2.0'
@@ -127,8 +128,12 @@ dependencies {
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
     // If you want pre-written Activities and Fragments you can subclass as providers
-    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
+    annotationProcessor 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
 
     implementation 'com.orhanobut:logger:1.15'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation project(':router-compiler')
+
+
 }
