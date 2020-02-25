@@ -1,4 +1,4 @@
-package com.mvp.cn.bean;
+package com.mvp.cn.mvp.model.bean;
 
 import java.io.Serializable;
 

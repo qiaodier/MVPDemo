@@ -1,7 +1,7 @@
 package com.mvp.cn.mvp.contract;
 
-import com.mvp.cn.bean.BaseRespEntity;
-import com.mvp.cn.bean.LoginEntity;
+import com.mvp.cn.mvp.model.bean.BaseRespEntity;
+import com.mvp.cn.mvp.model.bean.LoginEntity;
 import com.mvp.cn.mvp.base.IBaseModel;
 import com.mvp.cn.mvp.base.IBaseView;
 

@@ -1,9 +1,13 @@
 package com.mvp.compile;
 
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -16,6 +20,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
@@ -70,6 +75,7 @@ public class RouterProcessor extends AbstractProcessor {
                 try {
                     JavaFileObject javaFileObject = mFiler.createSourceFile("com.mvp.cn.routerregiste." + element.getSimpleName() + "RouterImp");
                     Writer writer = javaFileObject.openWriter();
+//                    writer.write(createJavaFile(element.getSimpleName().toString(), value));
                     writer.write(content);
                     writer.flush();
                     writer.close();
@@ -85,6 +91,28 @@ public class RouterProcessor extends AbstractProcessor {
             mMessager.printMessage(Diagnostic.Kind.ERROR, "Router: " + e.getMessage());
         }
         return true;
+    }
+
+
+    private String createJavaFile(String className, String routerKey) {
+        //构建类
+        ClassName superClassName = ClassName.bestGuess("com.mvp.cn.router.IRouterListener");
+        TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className + "RouterImp")
+                .addModifiers(Modifier.PUBLIC)
+                .addSuperinterface(superClassName);
+        //构建方法
+        ClassName override = ClassName.get("java.lang", "Override");
+        MethodSpec register = MethodSpec.methodBuilder("register")
+                .addAnnotation(override)
+                .returns(void.class)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(Map.class, "routerMap")
+                .addStatement("routerMap.put(\"" + routerKey + "\"," + className + ".class)").build();
+        //整合整个类
+        TypeSpec impClass = classBuilder
+                .addMethod(register)
+                .build();
+        return impClass.toString();
     }
 
 

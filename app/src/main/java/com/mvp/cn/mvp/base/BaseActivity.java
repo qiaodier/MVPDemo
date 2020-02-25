@@ -1,6 +1,7 @@
 package com.mvp.cn.mvp.base;
 
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -27,21 +28,35 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
         super.onCreate(savedInstanceState);
         setContentView(layoutResID());
         mPrensenter = initPresenter();
-        Optional.ofNullable(mPrensenter).ifPresent(prensenter->{
-            getLifecycle().addObserver(prensenter);
-            prensenter.attachView((V) this);
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Optional.ofNullable(mPrensenter).ifPresent(prensenter -> {
+                getLifecycle().addObserver(prensenter);
+                prensenter.attachView((V) this);
+            });
+        } else {
+            if (mPrensenter != null) {
+                getLifecycle().addObserver(mPrensenter);
+                mPrensenter.attachView((V) this);
+            }
+        }
         initViews();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Optional
-                .ofNullable(mPrensenter)
-                .ifPresent(t -> {
-                    t.detachView();
-                });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Optional
+                    .ofNullable(mPrensenter)
+                    .ifPresent(t -> {
+                        t.detachView();
+                    });
+        } else {
+            if (mPrensenter != null) {
+                mPrensenter.detachView();
+            }
+        }
+
     }
 
     // 该方法必须重写，返回acitivity中对应的xml的id

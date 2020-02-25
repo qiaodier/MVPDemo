@@ -1,4 +1,4 @@
-package com.mvp.cn.test;
+package com.mvp.cn.annotation;
 
 import android.util.Log;
 /**

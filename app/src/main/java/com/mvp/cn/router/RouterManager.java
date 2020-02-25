@@ -30,6 +30,7 @@ public class RouterManager {
         routerMap = new HashMap<>();
         this.application = application;
         try {
+
             loadInfo();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -81,6 +82,13 @@ public class RouterManager {
         application.startActivity(routeIntent);
     }
 
+    /**
+     * 扫描到自动生成的注册代码类之后，自动执行registe方法
+     * @throws ClassNotFoundException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     private void loadInfo() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         //获得所有 apt生成的路由类的(路由表)
         Set<String> routerSetMap = getClassName("com.mvp.cn.routerregiste");

@@ -1,8 +1,8 @@
 package com.mvp.cn.net;
 
 
-import com.mvp.cn.bean.BaseRespEntity;
-import com.mvp.cn.bean.LoginEntity;
+import com.mvp.cn.mvp.model.bean.BaseRespEntity;
+import com.mvp.cn.mvp.model.bean.LoginEntity;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;

@@ -12,7 +12,9 @@ import java.util.Map;
 
 /**
  * Created by iqiao on 2020-02-18 09:03
- * Desc:
+ * Desc: 模拟用户点击操作的service
+ *
+ * @author iqiao
  */
 public class InstallService extends AccessibilityService {
 
