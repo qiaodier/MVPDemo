@@ -19,6 +19,7 @@ import dalvik.system.DexFile;
  * Created by iqiao on 2020-02-23 22:32
  * Desc: 路由管理类：当前类负责存储所有Activity以及对应的key
  * 提供启动activity的功能
+ * @author iqiao
  */
 public class RouterManager {
 
@@ -76,14 +77,19 @@ public class RouterManager {
      * @param routeName
      */
     public void navigation(String routeName) {
-        Class<?> routeClass = this.routerMap.get(routeName);
-        Intent routeIntent = new Intent(application, routeClass);
-        routeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        application.startActivity(routeIntent);
+        if (routerMap != null && application != null) {
+            Class<?> routeClass = this.routerMap.get(routeName);
+            Intent routeIntent = new Intent(application, routeClass);
+            routeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            application.startActivity(routeIntent);
+        }else{
+            LogUtil.e("RouterManager","RouterManager Uninitialized");
+        }
     }
 
     /**
      * 扫描到自动生成的注册代码类之后，自动执行registe方法
+     *
      * @throws ClassNotFoundException
      * @throws NoSuchMethodException
      * @throws IllegalAccessException

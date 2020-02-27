@@ -60,20 +60,21 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
     private IHttpRequestService init() {
         IHttpRequestService iHttpRequestService;
         okHttpClient = new OkHttpClient.Builder();
-        okHttpClient
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.connectTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.readTimeout(10, TimeUnit.SECONDS);
+        okHttpClient.writeTimeout(10, TimeUnit.SECONDS);
         if (SSLManager.createAllSSLSocketFactory() != null) {
             okHttpClient.sslSocketFactory(SSLManager.createAllSSLSocketFactory());
         }
+        //打印http的body体
         HttpLoggingInterceptor mHttpLoggingInterceptor = new HttpLoggingInterceptor(this);
-//            //打印http的body体
         mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClient.addNetworkInterceptor(mHttpLoggingInterceptor);
         okHttpClient.hostnameVerifier((String hostname, SSLSession session) -> {
             return true;
         });
+        //如果有需要
+//        okHttpClient.dns(CustomeDNS.getInstance());
         Retrofit retrofit = new Retrofit.Builder()
                 //baseurl
                 .baseUrl(BuildConfig.BASE_URL)

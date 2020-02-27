@@ -2,6 +2,7 @@ package com.mvp.cn.mvp.view;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +14,10 @@ import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.LoginModel;
 import com.mvp.cn.mvp.presenter.LoginPresnter;
 import com.mvp.cn.router.RouterManager;
+import com.mvp.cn.utils.LogUtil;
 import com.mvp.cn.utils.Utils;
 import com.mvp.compile.Route;
+import com.tencent.mmkv.MMKV;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Optional;
@@ -44,7 +47,34 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
 //        intent.setData(Uri.parse("package:" + getPackageName()));
 //        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS );
         initData();
+        testMMKV();
+        testSP();
+    }
 
+    private void testMMKV() {
+        MMKV mmkv = MMKV.defaultMMKV();
+        LogUtil.e("test", "testMMKV");
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) {
+            mmkv.encode("" + i, "" + i);
+        }
+        //耗时11ms
+        LogUtil.e("test", (System.currentTimeMillis() - start) + "ms");
+    }
+
+    private void testSP() {
+        SharedPreferences sp = getSharedPreferences("test", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        LogUtil.e("test", "testSP");
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) {
+            editor.putString("" + i, "" + i);
+            //使用commit 耗时77ms
+            editor.commit();
+//            使用apply 耗时 187ms
+//            editor.apply();
+        }
+        LogUtil.e("test", (System.currentTimeMillis() - start) + "ms");
     }
 
 

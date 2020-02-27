@@ -106,15 +106,19 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //自定义注解处理器
+    implementation project(':router-compiler')
     annotationProcessor project(':router-compiler')
+    //apt
     annotationProcessor "com.neenbedankt.gradle.plugins:android-apt:1.8"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    //butterknife
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     testImplementation 'junit:junit:4.12'
+    //okhttp + retrofit
     implementation 'com.squareup.okhttp3:okhttp:3.4.1'
     implementation 'com.squareup.okio:okio:1.10.0'
     implementation 'com.google.code.gson:gson:2.8.0'
@@ -123,17 +127,20 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     implementation 'com.squareup.retrofit2:converter-scalars:2.2.0'
+    //rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
+    //rxlifecycle3
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
-    // If you want pre-written Activities and Fragments you can subclass as providers
     annotationProcessor 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
-
+    //logger
     implementation 'com.orhanobut:logger:1.15'
+    //glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    implementation project(':router-compiler')
+    // mmkv
+    implementation 'com.tencent:mmkv-static:1.0.24'
 
 
 }
