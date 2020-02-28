@@ -72,37 +72,37 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> i
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getLocalClassName(), "onCreate");
+        Log.i(mView.get().getActivity().getClass().getName(), "onCreate");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     void onStart(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getLocalClassName(), "onStart");
+        Log.i(mView.get().getActivity().getClass().getName(), "onStart");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void onResume(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getLocalClassName(), "onResume");
+        Log.i(mView.get().getActivity().getClass().getName(), "onResume");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     void onPause(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getLocalClassName(), "onPause");
+        Log.i(mView.get().getActivity().getClass().getName(), "onPause");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     void onStop(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getLocalClassName(), "onStop");
+        Log.i(mView.get().getActivity().getClass().getName(), "onStop");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void onDestroy(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getLocalClassName(), "onDestroy");
+        Log.i(mView.get().getActivity().getClass().getName(), "onDestroy");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     void onAny(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getLocalClassName(), "onAny");
+        Log.i(mView.get().getActivity().getClass().getName(), "onAny");
     }
 
 

@@ -27,7 +27,7 @@ import java.util.Optional;
 @Route("/login")
 public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.View> implements LoginContract.View {
 
-    private final String TAG = this.getLocalClassName();
+    private final String TAG = LoginActivity.this.getClass().getName();
     private EditText mUserName, mUserPwd;
     private Button mLoginBtn;
     private int count;

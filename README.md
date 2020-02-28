@@ -7,7 +7,7 @@
    * 集成微信xLog框架，并输出到文件(源码中已经编译出arm64-v8a、armeabi-v7a、x86、x86-64架构的so库可直接使用)
    * 自定义OKHTTPDns解析类
    * 应用保活简单实现：APP保活(拉活)代码都在com.mvp.cn.keep包下
-   * 使用自定义注解处理器完成对模板代码的自动生成（目前模板代码还未使用javapoet）
+   * 使用自定义注解处理器完成对模板代码的自动生成（目前模板代码还未使用javapoet,javapoet正在学习中...）
    * 使用自定义注解和反射的方式实现对switch语句中多个case的优化
         + 调用示例 RunTaskFactory.buildRunTask(type,content);
    * ~~增加日志打印类（包括将log输出到文件中功能）~~

@@ -97,7 +97,7 @@ public class RouterManager {
      */
     private void loadInfo() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         //获得所有 apt生成的路由类的(路由表)
-        Set<String> routerSetMap = getClassName("com.mvp.cn.routerregiste");
+        Set<String> routerSetMap = getClassName(application.getPackageName()+".register");
         for (String className : routerSetMap) {
             //root中注册的是分组信息 将分组信息加入仓库中
             try {
