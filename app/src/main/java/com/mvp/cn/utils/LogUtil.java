@@ -23,7 +23,9 @@ import java.util.concurrent.Future;
 /**
  * Created by iqiao on 2020-02-17 13:10
  * Desc:
+ * @author iqiao
  */
+@Deprecated
 public class LogUtil {
     public static final int LEVEL_LOG_I = 1;
     public static final int LEVEL_LOG_D = 2;
