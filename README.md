@@ -4,7 +4,7 @@
    * MVP架构代码简单实现(目前还未使用Dagger2框架)
    * 增加jetpack组件Lifecycle对Activity生命周期监听
    * 集成微信MMKV框架，LoginActivity做了MMKV和Sharedpreference的写入1000次数据的耗时对比(MMKV进阶使用请参考[MMKV进阶使用指南](https://github.com/Tencent/MMKV/wiki/android_advance_cn)
-   * 集成微信xLog框架，并输出到文件(源码中已经编译出arm64-v8a、armeabi-v7a、x86、x86—64架构的so库可直接使用)
+   * 集成微信xLog框架，并输出到文件(源码中已经编译出arm64-v8a、armeabi-v7a、x86、x86-64架构的so库可直接使用)
    * 自定义OKHTTPDns解析类
    * 应用保活简单实现：APP保活(拉活)代码都在com.mvp.cn.keep包下
    * 使用自定义注解处理器完成对模板代码的自动生成（目前模板代码还未使用javapoet）
