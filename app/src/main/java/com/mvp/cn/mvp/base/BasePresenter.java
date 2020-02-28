@@ -1,7 +1,9 @@
 package com.mvp.cn.mvp.base;
 
 
-import com.mvp.cn.utils.LogUtil;
+import android.os.Build;
+
+import com.tencent.mars.xlog.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.Optional;
@@ -44,11 +46,18 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> i
      * 解绑
      */
     public void detachView() {
-        Optional
-                .ofNullable(mView)
-                .ifPresent((WeakReference<V> vWeakReference) -> {
-                    vWeakReference.clear();
-                });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Optional
+                    .ofNullable(mView)
+                    .ifPresent((WeakReference<V> vWeakReference) -> {
+                        vWeakReference.clear();
+                    });
+        }else{
+            if (mView!=null){
+                mView.clear();
+            }
+        }
+
     }
 
 
@@ -63,37 +72,37 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> i
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate(LifecycleOwner owner) {
-        LogUtil.i(mView.get().getActivity().getLocalClassName(), "onCreate");
+        Log.i(mView.get().getActivity().getLocalClassName(), "onCreate");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     void onStart(LifecycleOwner owner) {
-        LogUtil.i(mView.get().getActivity().getLocalClassName(), "onStart");
+        Log.i(mView.get().getActivity().getLocalClassName(), "onStart");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void onResume(LifecycleOwner owner) {
-        LogUtil.i(mView.get().getActivity().getLocalClassName(), "onResume");
+        Log.i(mView.get().getActivity().getLocalClassName(), "onResume");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     void onPause(LifecycleOwner owner) {
-        LogUtil.i(mView.get().getActivity().getLocalClassName(), "onPause");
+        Log.i(mView.get().getActivity().getLocalClassName(), "onPause");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     void onStop(LifecycleOwner owner) {
-        LogUtil.i(mView.get().getActivity().getLocalClassName(), "onStop");
+        Log.i(mView.get().getActivity().getLocalClassName(), "onStop");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void onDestroy(LifecycleOwner owner) {
-        LogUtil.i(mView.get().getActivity().getLocalClassName(), "onDestroy");
+        Log.i(mView.get().getActivity().getLocalClassName(), "onDestroy");
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     void onAny(LifecycleOwner owner) {
-        LogUtil.i(mView.get().getActivity().getLocalClassName(), "onAny");
+        Log.i(mView.get().getActivity().getLocalClassName(), "onAny");
     }
 
 

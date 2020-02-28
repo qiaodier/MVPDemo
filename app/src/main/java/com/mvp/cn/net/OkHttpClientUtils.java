@@ -4,7 +4,7 @@ package com.mvp.cn.net;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mvp.cn.BuildConfig;
 import com.mvp.cn.utils.JsonUtil;
-import com.orhanobut.logger.Logger;
+import com.tencent.mars.xlog.Log;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 公用的okhttp对象
  * 该类增加了okhttp 的网络请求日志，便于调试
  * 增加https的忽略验证
+ *
+ * @author iqiao
  */
 
 public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
@@ -49,6 +51,11 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
         iHttpRequestService = this.init();
     }
 
+    /**
+     * 网络请求对象
+     *
+     * @return
+     */
     public IHttpRequestService getRequest() {
         return iHttpRequestService;
     }
@@ -58,7 +65,6 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
     }
 
     private IHttpRequestService init() {
-        IHttpRequestService iHttpRequestService;
         okHttpClient = new OkHttpClient.Builder();
         okHttpClient.connectTimeout(10, TimeUnit.SECONDS);
         okHttpClient.readTimeout(10, TimeUnit.SECONDS);
@@ -84,7 +90,7 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-        iHttpRequestService = retrofit.create(IHttpRequestService.class);
+        IHttpRequestService iHttpRequestService = retrofit.create(IHttpRequestService.class);
         return iHttpRequestService;
     }
 
@@ -104,8 +110,7 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
         mMessage.append(message.concat("\n"));
         // 请求或者响应结束，打印整条日志
         if (message.startsWith("<-- END HTTP")) {
-            Logger.e(mMessage.toString());
+            Log.e("REQUEST_LOG",mMessage.toString());
         }
-
     }
 }

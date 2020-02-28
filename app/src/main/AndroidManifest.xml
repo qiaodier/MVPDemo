@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".mvp.view.LoginActivity">
+        <activity android:name=".mvp.view.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".mvp.view.MainActivity" />
+        <activity android:name=".mvp.view.LoginActivity" />
 
 
         <!--        这里如果当前已适配Android 10  则使用 androidx.core.content.FileProvider    -->

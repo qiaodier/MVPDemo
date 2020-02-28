@@ -13,20 +13,21 @@ import com.mvp.cn.mvp.base.BaseActivity;
 import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.LoginModel;
 import com.mvp.cn.mvp.presenter.LoginPresnter;
-import com.mvp.cn.router.RouterManager;
-import com.mvp.cn.utils.LogUtil;
 import com.mvp.cn.utils.Utils;
 import com.mvp.compile.Route;
+import com.tencent.mars.xlog.Log;
 import com.tencent.mmkv.MMKV;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Optional;
 
+/**
+ * @author iqiao
+ */
 @Route("/login")
 public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.View> implements LoginContract.View {
 
-    private static final int REQUEST_CODE_WRITE_SETTINGS = 10000;
-    private static final String TAG = "umeng登录测试";
+    private final String TAG = this.getLocalClassName();
     private EditText mUserName, mUserPwd;
     private Button mLoginBtn;
     private int count;
@@ -53,19 +54,19 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
 
     private void testMMKV() {
         MMKV mmkv = MMKV.defaultMMKV();
-        LogUtil.e("test", "testMMKV");
+        Log.e(TAG, "testMMKV");
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
             mmkv.encode("" + i, "" + i);
         }
         //耗时11ms
-        LogUtil.e("test", (System.currentTimeMillis() - start) + "ms");
+        Log.e(TAG, (System.currentTimeMillis() - start) + "ms");
     }
 
     private void testSP() {
         SharedPreferences sp = getSharedPreferences("test", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        LogUtil.e("test", "testSP");
+        Log.e(TAG, "testSP");
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
             editor.putString("" + i, "" + i);
@@ -74,20 +75,19 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
 //            使用apply 耗时 187ms
 //            editor.apply();
         }
-        LogUtil.e("test", (System.currentTimeMillis() - start) + "ms");
+        Log.e(TAG, (System.currentTimeMillis() - start) + "ms");
     }
 
 
     private void initData() {
         mUserName = findViewById(R.id.et_user_name);
-//        mUserName.setText(JNIUtil.getAPPInfo(this));
         mUserPwd = findViewById(R.id.et_user_pwd);
         mLoginBtn = findViewById(R.id.btn_login_qq);
         mLoginBtn.setOnClickListener((View v) -> {
             //测试路由页面跳转
-            RouterManager.getInstance().navigation("/main");
+//            RouterManager.getInstance().navigation("/main");
             //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
-//            mPrensenter.login(mUserName.getText().toString(), mUserPwd.getText().toString());
+            mPrensenter.login(mUserName.getText().toString(), mUserPwd.getText().toString());
 //                authorization(SHARE_MEDIA.QQ);
             //调用自动安装逻辑之前，需要引导用户开启智能安装服务，否则无法实现自动安装
             //Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -98,6 +98,7 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
 //            installService = new Intent(this, InstallService.class);
 //            startService(installService);
         });
+
     }
 
     @Override

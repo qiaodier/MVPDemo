@@ -1,5 +1,7 @@
 package com.mvp.cn.mvp.presenter;
 
+import android.os.Build;
+
 import com.mvp.cn.mvp.model.bean.BaseRespEntity;
 import com.mvp.cn.mvp.model.bean.LoginEntity;
 import com.mvp.cn.mvp.base.BasePresenter;
@@ -40,17 +42,36 @@ public class LoginPresnter extends BasePresenter<LoginContract.Model, LoginContr
                     @Override
                     public void onNext(BaseRespEntity baseRespEntity) {
                         LogUtil.e("LoginPresenter", "onNext");
-                        int status = Optional
-                                .ofNullable(baseRespEntity)
-                                .map(BaseRespEntity::getStatus)
-                                .orElse(0);
+                        int status = 0;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            status = Optional
+                                    .ofNullable(baseRespEntity)
+                                    .map(BaseRespEntity::getStatus)
+                                    .orElse(0);
+                        } else {
+                            if (baseRespEntity != null) {
+                                status = baseRespEntity.getStatus();
+                            } else {
+                                status = 0;
+                            }
+                        }
+
                         if (status == 1) {
                             mView.get().requestSuccess();
                         } else {
-                            String msg = Optional
-                                    .ofNullable(baseRespEntity)
-                                    .map(BaseRespEntity::getMessage)
-                                    .orElse("请求失败");
+                            String msg = "";
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                msg = Optional
+                                        .ofNullable(baseRespEntity)
+                                        .map(BaseRespEntity::getMessage)
+                                        .orElse("请求失败");
+                            } else {
+                                if (baseRespEntity != null) {
+                                    msg = baseRespEntity.getMessage();
+                                } else {
+                                    msg = "请求失败";
+                                }
+                            }
                             mView.get().requestFail(msg);
                         }
                     }
@@ -59,10 +80,20 @@ public class LoginPresnter extends BasePresenter<LoginContract.Model, LoginContr
                     public void onError(Throwable e) {
                         mView.get().hideLoading();
                         LogUtil.e("LoginPresenter", "onError");
-                        mView.get().requestFail(Optional
-                                .ofNullable(e)
-                                .map(Throwable::getLocalizedMessage)
-                                .orElse("请求错误"));
+                        String error = "";
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            error = Optional
+                                    .ofNullable(e)
+                                    .map(Throwable::getLocalizedMessage)
+                                    .orElse("请求错误");
+                        } else {
+                            if (e != null) {
+                                error = e.getMessage();
+                            } else {
+                                error = "请求错误";
+                            }
+                        }
+                        mView.get().requestFail(error);
                     }
 
                     @Override
