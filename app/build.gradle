@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-apply from: "/pgyerUpload.gradle"
+apply from: "/upload2Pgyer.gradle"
 // 打包时间
 static def buildTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))

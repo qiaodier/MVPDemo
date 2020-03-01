@@ -4,7 +4,7 @@ project.ext {
             //在这里获取: https://www.pgyer.com/doc/view/api#uploadApp
             String pgyerApiKey = 'bb5f8630dc80cf9c8f8b5bec26c620b3'
             //assembleDebug 打debug包  assembleRelease 打release包
-            task upload2Pgyer(group: 'upload2Pgyer', description: 'upload apk to pgyer', dependsOn: 'assembleDebug') {//release修改这里
+            task u2p(group: 'upload2Pgyer', description: 'upload apk to pgyer', dependsOn: 'assembleDebug') {//release修改这里
                 doLast {
                     applicationVariants.all {
                         it.outputs.each { out ->
