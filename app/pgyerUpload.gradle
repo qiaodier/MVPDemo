@@ -3,11 +3,13 @@ project.ext {
         extension.android {
             //在这里获取: https://www.pgyer.com/doc/view/api#uploadApp
             String pgyerApiKey = 'bb5f8630dc80cf9c8f8b5bec26c620b3'
+            //assembleDebug 打debug包  assembleRelease 打release包
             task upload2Pgyer(group: 'upload2Pgyer', description: 'upload apk to pgyer', dependsOn: 'assembleDebug') {//release修改这里
                 doLast {
                     applicationVariants.all {
                         it.outputs.each { out ->
                             def outputFile = out.outputFile
+                            //1.0-1-20200301-MVPDemo-dev-debug.apk 我的apk输出名字
                             if (outputFile != null &&  outputFile.name.endsWith('MVPDemo-dev-debug.apk')) {//release修改这里
                                 println("> Task: upload2Pgyer======>start up load apk file : ${outputFile.absolutePath}")
                                 def uploadCommand = "curl " +
