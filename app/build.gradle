@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-
+apply from: "/pgyerUpload.gradle"
 // 打包时间
 static def buildTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
 }
 
 android {
+
+    project.ext.upload2d project,"初次上传"
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     aaptOptions.cruncherEnabled = false
@@ -76,7 +78,7 @@ android {
         }
 
         variant.outputs.all { output ->
-            outputFileName = "${outputName}-${productName}-${buildType.name}-${variant.versionName}-${variant.versionCode}-${buildTime()}.apk"
+            outputFileName = "${variant.versionName}-${variant.versionCode}-${buildTime()}-${outputName}-${productName}-${buildType.name}.apk"
         }
     }
     //渠道配置

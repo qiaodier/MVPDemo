@@ -1,0 +1,50 @@
+project.ext {
+    upload2d = { extension, desc ->
+        extension.android {
+            //在这里获取: https://www.pgyer.com/doc/view/api#uploadApp
+            String pgyerApiKey = 'bb5f8630dc80cf9c8f8b5bec26c620b3'
+            task upload2Pgyer(group: 'upload2Pgyer', description: 'upload apk to pgyer', dependsOn: 'assembleDebug') {//release修改这里
+                doLast {
+                    applicationVariants.all {
+                        it.outputs.each { out ->
+                            def outputFile = out.outputFile
+                            if (outputFile != null &&  outputFile.name.endsWith('MVPDemo-dev-debug.apk')) {//release修改这里
+                                println("> Task: upload2Pgyer======>start up load apk file : ${outputFile.absolutePath}")
+                                def uploadCommand = "curl " +
+                                        "-F \"file=@${outputFile.absolutePath}\"" +
+                                        " -F \"_api_key=$pgyerApiKey\" " +
+                                        "-F \"buildUpdateDescription=$desc\" " +
+                                        "-F \"buildInstallType=2\" " +
+                                        "-F \"buildPassword=123\" " +
+                                        "https://www.pgyer.com/apiv2/app/upload"
+                                Runtime runtime = Runtime.getRuntime()
+                                Process p = runtime.exec(uploadCommand)
+                                InputStream fis = p.getInputStream()
+                                InputStreamReader isr = new InputStreamReader(fis)
+                                BufferedReader br = new BufferedReader(isr)
+                                String line = null
+                                println("> Task: upload2Pgyer======>upload result :")
+                                while ((line = br.readLine()) != null) {
+                                    println('> Task: upload2Pgyer======>'+line)
+                                    def startStr = "\"buildShortcutUrl\":\""
+                                    int start = line.indexOf(startStr) + startStr.length()
+                                    int end = line.indexOf("\"", start)
+                                    if (start > 0 && end > 0) {
+                                        String sUrl = line.substring(start, end)
+//                                        runtime.exec("cmd   /c   start  https://www.pgyer.com/$sUrl")
+                                        println('> Task: upload2Pgyer======> apk上传完成！本次更新内容：>>>'+desc+'<<<。点击查看：https://www.pgyer.com/'+sUrl)
+                                    }
+                                }
+                                br.close()
+                                isr.close()
+                                fis.close()
+                            }else{
+                                println('> Task: upload2Pgyer======>未找到对应的apk文件！！！')
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
