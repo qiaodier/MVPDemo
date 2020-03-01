@@ -16,7 +16,7 @@
      + InstallService 模拟用户点击的服务类
      + accessibility_service_config.xml 配置Android系统的无障碍服务，具体参数文件里有说明
    * 新增打包自动上传蒲公英插件upload2Pgyer
-     + 使用命令    gradlew upload2Pgyer
+     + 使用命令`gradlew upload2Pgyer`
 
 
 
