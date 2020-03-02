@@ -2,9 +2,11 @@
 apply from : "config.gradle"
 buildscript {
     repositories {
-        google()
-        jcenter()
-
+//        google()
+//        jcenter()
+        maven{
+            url 'http://localhost:8081/artifactory/android_depend/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -16,8 +18,12 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
-        google()
+//        jcenter()
+//        google()
+
+        maven{
+            url 'http://localhost:8081/artifactory/android_depend/'
+        }
         maven { url 'https://jitpack.io' }
     }
 }
