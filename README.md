@@ -17,6 +17,7 @@
      + `accessibility_service_config.xml` 配置Android系统的无障碍服务，具体参数文件里有说明
    * 新增打包自动上传蒲公英插件upload2Pgyer
      + 使用命令`gradlew u2p`
+   * 使用`Artifactory`创建本地私有库，加快项目构建速度
 
 
 
