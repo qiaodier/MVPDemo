@@ -36,10 +36,6 @@ public class LoadingActivity extends BaseActivity {
 
     private RxPermissions rxPermissions;
 
-    static {
-        System.loadLibrary("c++_shared");
-        System.loadLibrary("marsxlog");
-    }
 
     @Override
     protected int layoutResID() {
@@ -147,6 +143,8 @@ public class LoadingActivity extends BaseActivity {
 
 
     private void initXLog() {
+        System.loadLibrary("c++_shared");
+        System.loadLibrary("marsxlog");
         final String SDCARD = Environment.getExternalStorageDirectory().getPath();
         final String logPath = SDCARD + "/mvpDemo_xlog/log";
         // this is necessary, or may crash for SIGBUS

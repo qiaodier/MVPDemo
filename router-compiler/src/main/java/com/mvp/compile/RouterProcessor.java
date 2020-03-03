@@ -41,6 +41,11 @@ public class RouterProcessor extends AbstractProcessor {
         mMessager.printMessage(Diagnostic.Kind.NOTE, "Router: init...");
     }
 
+    /**
+     * class --> TypeElement
+     * method --> ExecutableElement
+     * filed  --> VariableElement
+     */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         //get printer
@@ -48,11 +53,15 @@ public class RouterProcessor extends AbstractProcessor {
             Set<? extends Element> elementsAnnotatedWith = roundEnv.getElementsAnnotatedWith(Route.class);
             mMessager.printMessage(Diagnostic.Kind.NOTE, "Router: Found routes, start... " + elementsAnnotatedWith.size());
             for (Element element : elementsAnnotatedWith) {
+                //get this class packageName
+                String packageName = processingEnv.getElementUtils().getPackageOf(element).toString();
+                //get root packageName
+                String rootPackageName = processingEnv.getElementUtils().getPackageElement("com.mvp.cn").toString();
                 String value = element.getAnnotation(Route.class).value();
-                String content = "package com.mvp.cn.register;\n" +
+                String content = "package "+rootPackageName+".register;\n" +
                         "\n" +
-                        "import com.mvp.cn.mvp.view." + element.getSimpleName() + ";\n" +
-                        "import com.mvp.cn.router.IRouterListener;\n" +
+                        "import "+packageName+"." + element.getSimpleName() + ";\n" +
+                        "import "+rootPackageName+".router.IRouterListener;\n" +
                         "\n" +
                         "import java.util.Map;\n" +
                         "\n" +
@@ -90,12 +99,12 @@ public class RouterProcessor extends AbstractProcessor {
 
 
 //    private String createJavaFile(String className, String routerKey) {
-//        //构建类
+//        // build class
 //        ClassName superClassName = ClassName.bestGuess("com.mvp.cn.router.IRouterListener");
 //        TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className + "RouterImp")
 //                .addModifiers(Modifier.PUBLIC)
 //                .addSuperinterface(superClassName);
-//        //构建方法
+//        //build method
 //        ClassName override = ClassName.get("java.lang", "Override");
 //        MethodSpec register = MethodSpec.methodBuilder("register")
 //                .addAnnotation(override)
@@ -103,7 +112,7 @@ public class RouterProcessor extends AbstractProcessor {
 //                .addModifiers(Modifier.PUBLIC)
 //                .addParameter(Map.class, "routerMap")
 //                .addStatement("routerMap.put(\"" + routerKey + "\"," + className + ".class)").build();
-//        //整合整个类
+//        // build class
 //        TypeSpec impClass = classBuilder
 //                .addMethod(register)
 //                .build();

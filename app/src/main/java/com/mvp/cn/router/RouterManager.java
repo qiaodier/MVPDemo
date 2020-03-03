@@ -3,7 +3,7 @@ package com.mvp.cn.router;
 import android.app.Application;
 import android.content.Intent;
 
-import com.mvp.cn.utils.LogUtil;
+import com.tencent.mars.xlog.Log;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -31,7 +31,6 @@ public class RouterManager {
         routerMap = new HashMap<>();
         this.application = application;
         try {
-
             loadInfo();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -79,11 +78,15 @@ public class RouterManager {
     public void navigation(String routeName) {
         if (routerMap != null && application != null) {
             Class<?> routeClass = this.routerMap.get(routeName);
-            Intent routeIntent = new Intent(application, routeClass);
-            routeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            application.startActivity(routeIntent);
+            if (routeClass!=null){
+                Intent routeIntent = new Intent(application, routeClass);
+                routeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                application.startActivity(routeIntent);
+            }else{
+                Log.e("RouterManager","navigation error");
+            }
         }else{
-            LogUtil.e("RouterManager","RouterManager Uninitialized");
+            Log.e("RouterManager","RouterManager Uninitialized");
         }
     }
 
@@ -96,14 +99,15 @@ public class RouterManager {
      * @throws InstantiationException
      */
     private void loadInfo() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        //获得所有 apt生成的路由类的(路由表)
+        //获得所有 apt生成的路由注册类的(路由表)
         Set<String> routerSetMap = getClassName(application.getPackageName()+".register");
+        Log.e("RouterManager",application.getPackageName()+".register"+"      " + routerSetMap.size()+"");
         for (String className : routerSetMap) {
+            Log.e("RouterManager","" + className);
             //root中注册的是分组信息 将分组信息加入仓库中
             try {
                 IRouterListener iRouterListener = ((IRouterListener) Class.forName(className).getConstructor().newInstance());
                 iRouterListener.register(routerMap);
-                LogUtil.e("RouterManager", "" + className);
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -111,7 +115,7 @@ public class RouterManager {
     }
 
 
-    public Set<String> getClassName(String packageName) {
+    private Set<String> getClassName(String packageName) {
         Set<String> classNameList = new HashSet<>();
         try {
             //通过DexFile查找当前的APK中可执行文件
@@ -120,9 +124,9 @@ public class RouterManager {
             Enumeration<String> enumeration = df.entries();
             //遍历
             while (enumeration.hasMoreElements()) {
-                String className = (String) enumeration.nextElement();
+                String className = enumeration.nextElement();
                 //在当前所有可执行的类里面查找包含有该包名的所有类
-                if (className.contains(packageName)) {
+                if (className.startsWith(packageName)) {
                     classNameList.add(className);
                 }
             }
