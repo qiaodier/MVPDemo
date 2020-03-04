@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MVPDemo</string>
     <string name="accessibility_service_description">自动安装服务，无需用户的任何操作就可以自动安装程序。</string>
+    <string name="first_main">主页</string>
+    <string name="second_main">列表</string>
+    <string name="third_main">个人中心</string>
 </resources>

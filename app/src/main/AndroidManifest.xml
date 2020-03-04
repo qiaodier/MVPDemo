@@ -48,6 +48,8 @@
         </activity>
 
         <activity android:name=".mvp.view.LoginActivity" />
+        <activity android:name=".mvp.view.MainActivity"
+            />
 
 
         <!--        这里如果当前已适配Android 10  则使用 androidx.core.content.FileProvider    -->

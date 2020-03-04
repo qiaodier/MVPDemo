@@ -3,15 +3,8 @@ package com.mvp.cn.mvp.base;
 
 import android.os.Build;
 
-import com.tencent.mars.xlog.Log;
-
 import java.lang.ref.WeakReference;
 import java.util.Optional;
-
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.OnLifecycleEvent;
 
 /**
  * 作者： qiaohao
@@ -19,7 +12,7 @@ import androidx.lifecycle.OnLifecycleEvent;
  * 说明：BasePresenter
  * 实现LifecycleObserver接口的类，既有能力监听activity和fragment的生命周期
  */
-public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> implements LifecycleObserver {
+public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
 
 
     protected M mModel;
@@ -70,40 +63,7 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> i
     }
 
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    void onCreate(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getClass().getName(), "onCreate");
-    }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    void onStart(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getClass().getName(), "onStart");
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    void onResume(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getClass().getName(), "onResume");
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    void onPause(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getClass().getName(), "onPause");
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    void onStop(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getClass().getName(), "onStop");
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    void onDestroy(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getClass().getName(), "onDestroy");
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
-    void onAny(LifecycleOwner owner) {
-        Log.i(mView.get().getActivity().getClass().getName(), "onAny");
-    }
 
 
 }

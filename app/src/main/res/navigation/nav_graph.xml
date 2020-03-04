@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/firstFragment">
+
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="com.mvp.cn.mvp.view.FirstFragment"
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_first" />
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="com.mvp.cn.mvp.view.SecondFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_second" />
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="com.mvp.cn.mvp.view.ThirdFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_third">
+        <action
+            android:id="@+id/action_thirdFragment_to_third2Fragment"
+            app:destination="@id/third2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/third2Fragment"
+        android:name="com.mvp.cn.mvp.view.Third2Fragment"
+        android:label="fragment_third2"
+        tools:layout="@layout/fragment_third2">
+        <action
+            android:id="@+id/action_third2Fragment_to_thirdFragment"
+            app:destination="@id/thirdFragment" />
+    </fragment>
+</navigation>

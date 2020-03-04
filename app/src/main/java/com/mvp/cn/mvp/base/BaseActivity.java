@@ -3,20 +3,30 @@ package com.mvp.cn.mvp.base;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mvp.cn.utils.CustomDialogUtils;
+import com.tencent.mars.xlog.Log;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Optional;
+
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
+import butterknife.ButterKnife;
 
 
 /**
  * 作者： qiaohao
  * 时间： 2017/4/27 13:19
  * 说明：BaseActivity
+ *
+ * @author iqiao
  */
-public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView> extends RxAppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView> extends RxAppCompatActivity implements LifecycleObserver {
 
 
     public Dialog mLoadding;
@@ -28,14 +38,14 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
         super.onCreate(savedInstanceState);
         setContentView(layoutResID());
         mPrensenter = initPresenter();
+        getLifecycle().addObserver(this);
+        ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Optional.ofNullable(mPrensenter).ifPresent(prensenter -> {
-                getLifecycle().addObserver(prensenter);
                 prensenter.attachView((V) this);
             });
         } else {
             if (mPrensenter != null) {
-                getLifecycle().addObserver(mPrensenter);
                 mPrensenter.attachView((V) this);
             }
         }
@@ -88,6 +98,12 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
         }
     }
 
+    public void setTranslucentStatus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+    }
+
     /**
      * 取消loadding 对话框的显示
      */
@@ -99,5 +115,40 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
 
     }
 
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    void onCreate(LifecycleOwner owner) {
+        Log.i(this.getClass().getName(), "onCreate");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    void onStart(LifecycleOwner owner) {
+        Log.i(this.getClass().getName(), "onStart");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    void onResume(LifecycleOwner owner) {
+        Log.i(this.getClass().getName(), "onResume");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    void onPause(LifecycleOwner owner) {
+        Log.i(this.getClass().getName(), "onPause");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    void onStop(LifecycleOwner owner) {
+        Log.i(this.getClass().getName(), "onStop");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    void onDestroy(LifecycleOwner owner) {
+        Log.i(this.getClass().getName(), "onDestroy");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
+    void onAny(LifecycleOwner owner) {
+        Log.i(this.getClass().getName(), "onAny");
+    }
 
 }

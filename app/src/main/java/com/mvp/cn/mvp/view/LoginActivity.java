@@ -13,6 +13,7 @@ import com.mvp.cn.mvp.base.BaseActivity;
 import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.LoginModel;
 import com.mvp.cn.mvp.presenter.LoginPresnter;
+import com.mvp.cn.router.RouterManager;
 import com.mvp.cn.utils.Utils;
 import com.mvp.compile.Route;
 import com.tencent.mars.xlog.Log;
@@ -47,6 +48,7 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
 //        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
 //        intent.setData(Uri.parse("package:" + getPackageName()));
 //        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS );
+        setTranslucentStatus();
         initData();
         testMMKV();
         testSP();
@@ -84,10 +86,15 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
         mUserPwd = findViewById(R.id.et_user_pwd);
         mLoginBtn = findViewById(R.id.btn_login_qq);
         mLoginBtn.setOnClickListener((View v) -> {
+
+            //跳转MainActivity
+            RouterManager.getInstance().navigation("/main");
+
+
             //测试路由页面跳转
 //            RouterManager.getInstance().navigation("/main");
             //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
-            mPrensenter.login(mUserName.getText().toString(), mUserPwd.getText().toString());
+//            mPrensenter.login(mUserName.getText().toString(), mUserPwd.getText().toString());
 //                authorization(SHARE_MEDIA.QQ);
             //调用自动安装逻辑之前，需要引导用户开启智能安装服务，否则无法实现自动安装
             //Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);

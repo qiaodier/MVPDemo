@@ -39,11 +39,12 @@ public class LoadingActivity extends BaseActivity {
 
     @Override
     protected int layoutResID() {
-        return R.layout.activity_main;
+        return R.layout.activity_loading;
     }
 
     @Override
     protected void initViews() {
+        setTranslucentStatus();
         rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .flatMap((Boolean aBoolean) -> {
