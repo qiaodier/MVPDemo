@@ -3,7 +3,7 @@ package com.mvp.cn.mvp.model;
 import com.mvp.cn.mvp.model.bean.BaseRespEntity;
 import com.mvp.cn.mvp.model.bean.LoginEntity;
 import com.mvp.cn.mvp.contract.LoginContract;
-import com.mvp.cn.net.OkHttpClientUtils;
+import com.mvp.cn.http.OkHttpClientUtils;
 
 import io.reactivex.Observable;
 

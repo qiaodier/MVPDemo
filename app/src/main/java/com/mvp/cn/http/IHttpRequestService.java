@@ -1,4 +1,4 @@
-package com.mvp.cn.net;
+package com.mvp.cn.http;
 
 
 import com.mvp.cn.mvp.model.bean.BaseRespEntity;

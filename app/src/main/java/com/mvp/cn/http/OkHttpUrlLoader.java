@@ -1,4 +1,4 @@
-package com.mvp.cn.net;
+package com.mvp.cn.http;
 
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;
