@@ -11,6 +11,7 @@ import java.util.Optional;
  * 时间： 2017/4/27 13:22
  * 说明：BasePresenter
  * 实现LifecycleObserver接口的类，既有能力监听activity和fragment的生命周期
+ * @author iqiao
  */
 public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
 

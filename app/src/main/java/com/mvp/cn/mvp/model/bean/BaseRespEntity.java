@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 响应实体基类
+ *
  * @param <T>
  */
 public class BaseRespEntity<T> implements Serializable {
@@ -38,5 +39,9 @@ public class BaseRespEntity<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public boolean isOk() {
+        return status == 1;
     }
 }

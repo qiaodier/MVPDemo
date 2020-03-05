@@ -3,6 +3,7 @@ package com.mvp.cn.http;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mvp.cn.BuildConfig;
+import com.mvp.cn.http.api.IHttpRequestService;
 import com.mvp.cn.utils.JsonUtil;
 import com.tencent.mars.xlog.Log;
 

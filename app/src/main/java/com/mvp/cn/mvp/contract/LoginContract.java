@@ -10,6 +10,7 @@ import io.reactivex.Observable;
 /**
  * Created by iqiao on 2020-02-22 11:56
  * Desc:
+ * @author iqiao
  */
 public interface LoginContract {
 

@@ -6,6 +6,7 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
  * 作者： qiaohao
  * 时间： 2017/4/27 13:40
  * 说明：IBaseView
+ * @author iqiao
  */
 public interface IBaseView {
     /**
