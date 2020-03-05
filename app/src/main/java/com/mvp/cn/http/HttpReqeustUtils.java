@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by iqiao on 2020-03-05 09:07
  * Desc: 网络工具封装类
+ * @author iqiao
  */
 public class HttpReqeustUtils {
 

@@ -69,13 +69,23 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
 
     }
 
-    // 该方法必须重写，返回acitivity中对应的xml的id
+    /**
+     * 该方法必须重写
+     *
+     * @return 返回activity中对应的xml的id
+     */
     protected abstract int layoutResID();
 
-    // 初始化组件的方法
+    /**
+     * 初始化组件的方法
+     */
     protected abstract void initViews();
 
-    //初始化presenter操作类
+    /**
+     * 该方法必须重写
+     *
+     * @return 初始化presenter操作类
+     */
     protected abstract T initPresenter();
 
 
@@ -107,7 +117,7 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
     /**
      * 取消loadding 对话框的显示
      */
-    public void dismissLoaddingDialog() {
+    public void dismissLoadingDialog() {
         if (mLoadding != null && mLoadding.isShowing()) {
             mLoadding.cancel();
             mLoadding = null;

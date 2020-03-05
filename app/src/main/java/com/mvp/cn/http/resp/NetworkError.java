@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 /**
  * @author iqiao
- * desc ：网络统一异常处理
+ * @desc ：网络统一异常处理
  */
 public class NetworkError {
 

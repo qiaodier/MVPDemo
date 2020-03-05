@@ -6,9 +6,9 @@ import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
 
 
-
 /**
- * Created by qiaohao on 2016/9/13.
+ * @author qiaohao
+ * @date 2016/9/13
  * 说明：获取手机信息的管理类
  */
 public class APPUtils {
@@ -28,16 +28,16 @@ public class APPUtils {
     /**
      * 获取手机IMEI
      *
-     * @return
+     * @return imei
      */
     public String getIMEI() {
-         return !tm.getDeviceId().equals("") ? tm.getDeviceId() : "";
+        return !tm.getDeviceId().equals("") ? tm.getDeviceId() : "";
     }
 
     /**
-     * 2  * 获取版本号
-     * 3  * @return 当前应用的版本号
-     * 4
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
      */
     public String getAPPVersion() {
         try {

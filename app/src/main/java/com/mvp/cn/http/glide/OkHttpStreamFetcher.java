@@ -21,6 +21,7 @@ import okhttp3.ResponseBody;
 
 /**
  * Fetches an {@link InputStream} using the okhttp library.
+ * @author iqiao
  */
 public class OkHttpStreamFetcher implements DataFetcher<InputStream> {
   private static final String TAG = "OkHttpFetcher";

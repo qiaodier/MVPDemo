@@ -6,6 +6,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.mvp.cn.utils.LogUtil;
+import com.tencent.mars.xlog.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,14 +39,16 @@ public class InstallService extends AccessibilityService {
 
     }
 
-    // 遍历节点，模拟点击安装按钮
+    /**
+     * 遍历节点，模拟点击安装按钮
+     */
     private boolean iterateNodesAndHandle(AccessibilityNodeInfo nodeInfo) {
         LogUtil.e("InstallService", "iterateNodesAndHandle()");
         if (nodeInfo != null) {
             int childCount = nodeInfo.getChildCount();
             if ("android.widget.Button".equals(nodeInfo.getClassName())) {
                 String nodeCotent = nodeInfo.getText().toString();
-                LogUtil.e("InstallService", "content is: " + nodeCotent);
+                Log.e("InstallService", "content is: " + nodeCotent);
                 //继续安装是华为的手机
                 if ("继续安装".equals(nodeCotent) || "完成".equals(nodeCotent) || "确定".equals(nodeCotent) || "安装".equals(nodeCotent)) {
                     nodeInfo.performAction(AccessibilityNodeInfo.ACTION_CLICK);
@@ -74,25 +77,25 @@ public class InstallService extends AccessibilityService {
 
     @Override
     public void onCreate() {
-        LogUtil.e("InstallService", "onCreate()");
+        Log.e("InstallService", "onCreate()");
         super.onCreate();
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
-        LogUtil.e("InstallService", "onStart()");
+        Log.e("InstallService", "onStart()");
         super.onStart(intent, startId);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        LogUtil.e("InstallService", "onStartCommand()");
+        Log.e("InstallService", "onStartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
-        LogUtil.e("InstallService", "onDestroy()");
+        Log.e("InstallService", "onDestroy()");
         super.onDestroy();
     }
 }

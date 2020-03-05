@@ -51,7 +51,7 @@ public abstract class BasePresenter<M extends IBaseModel, V extends IBaseView> {
                 mView.clear();
             }
         }
-
+        releasePrensenter();
     }
 
 

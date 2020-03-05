@@ -2,19 +2,19 @@ package com.mvp.cn.utils;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.mvp.cn.R;
 
 
 /**
- * Created by qiaohao on 2016/10/14.
+ *
+ * @author qiaohao
+ * @date 2016/10/14
  * 说明：负责显示对话框
  */
 public class CustomDialogUtils {

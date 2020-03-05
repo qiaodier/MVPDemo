@@ -4,18 +4,31 @@ import java.io.Serializable;
 
 /**
  * 请求实体类基类
+ *
  * @param <T>
+ * @author iqiao
  */
 
 public class BaseReqEntity<T> implements Serializable {
 
-    //app版本号
+    /**
+     * app版本号
+     */
     private String clientVersion;
-    //客户端类型 0：android   1:ios
+    /**
+     * 客户端类型
+     * 0：android
+     * 1:ios
+     */
+
     private String clientType;
-    //手机号
+    /**
+     * 手机号
+     */
     private String msisdn;
-    //请求参数
+    /**
+     * 请求数据
+     */
     private T data;
 
     public String getClientVersion() {

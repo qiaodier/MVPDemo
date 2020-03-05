@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 /**
  * Created by iqiao on 2020-01-09 11:04
  * Desc: 改工厂类是负责通过传入的type来执行不同的SwitchRunTaskManager中注解对应的方法的
+ * @author iqiao
  */
 
 public class RunTaskFactory {

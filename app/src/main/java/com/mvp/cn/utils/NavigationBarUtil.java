@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 
 /**
  * 适配底部虚拟导航按键机型
+ * @author iqiao
  */
 
 public class NavigationBarUtil {

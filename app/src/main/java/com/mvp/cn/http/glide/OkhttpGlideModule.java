@@ -14,6 +14,11 @@ import java.io.InputStream;
 
 import androidx.annotation.NonNull;
 
+/**
+ *
+ * @author iqiao
+ * @desc glide 使用okhttp请求配置类
+ */
 @GlideModule
 public final class OkhttpGlideModule extends AppGlideModule {
 

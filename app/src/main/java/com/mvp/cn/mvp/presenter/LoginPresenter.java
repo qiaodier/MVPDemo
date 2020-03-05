@@ -19,10 +19,10 @@ import java.util.Optional;
  *
  * @author iqiao
  */
-public class LoginPresnter extends BasePresenter<LoginContract.Model, LoginContract.View> {
+public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
 
 
-    public LoginPresnter(LoginContract.Model model) {
+    public LoginPresenter(LoginContract.Model model) {
         init(model);
     }
 

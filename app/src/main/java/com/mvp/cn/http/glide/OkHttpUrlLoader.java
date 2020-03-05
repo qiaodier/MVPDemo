@@ -13,6 +13,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * A simple model loader for fetching media over http/https using OkHttp.
+ * @author iqiao
  */
 public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 

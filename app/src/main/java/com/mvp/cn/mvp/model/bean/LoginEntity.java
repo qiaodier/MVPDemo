@@ -1,12 +1,13 @@
 package com.mvp.cn.mvp.model.bean;
 
 /**
- * Created by qiaohao on 2016/9/20.
+ * @author qiaohao
+ * @date 2016/9/20
  * 说明：
  */
 public class LoginEntity {
-   private String name;
-   private String pwd;
+    private String name;
+    private String pwd;
 
     public LoginEntity(String name, String pwd) {
         this.name = name;

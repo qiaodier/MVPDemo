@@ -154,10 +154,11 @@ public class LoadingActivity extends BaseActivity {
         if (BuildConfig.DEBUG) {
             Xlog.appenderOpen(Xlog.LEVEL_VERBOSE, Xlog.AppednerModeAsync, cachePath, logPath, "mvpDemo", 0, "");
             Xlog.setConsoleLogOpen(true);
+            Log.setLogImp(new Xlog());
         } else {
-            Xlog.appenderOpen(Xlog.LEVEL_INFO, Xlog.AppednerModeAsync, cachePath, logPath, "mvpDemo", 0, "");
-            Xlog.setConsoleLogOpen(false);
+//            Xlog.appenderOpen(Xlog.LEVEL_INFO, Xlog.AppednerModeAsync, cachePath, logPath, "mvpDemo", 0, "");
+//            Xlog.setConsoleLogOpen(false);
         }
-        Log.setLogImp(new Xlog());
+
     }
 }

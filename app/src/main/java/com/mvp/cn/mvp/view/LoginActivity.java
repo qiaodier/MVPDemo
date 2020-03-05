@@ -12,7 +12,7 @@ import com.mvp.cn.R;
 import com.mvp.cn.mvp.base.BaseActivity;
 import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.LoginModel;
-import com.mvp.cn.mvp.presenter.LoginPresnter;
+import com.mvp.cn.mvp.presenter.LoginPresenter;
 import com.mvp.cn.utils.Utils;
 import com.mvp.compile.Route;
 import com.tencent.mars.xlog.Log;
@@ -25,7 +25,7 @@ import java.util.Optional;
  * @author iqiao
  */
 @Route("/login")
-public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.View> implements LoginContract.View {
+public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.View> implements LoginContract.View {
 
     private final String TAG = LoginActivity.this.getClass().getName();
     private EditText mUserName, mUserPwd;
@@ -124,8 +124,8 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
 
 
     @Override
-    protected LoginPresnter initPresenter() {
-        return new LoginPresnter(new LoginModel());
+    protected LoginPresenter initPresenter() {
+        return new LoginPresenter(new LoginModel());
     }
 
 
@@ -149,7 +149,7 @@ public class LoginActivity extends BaseActivity<LoginPresnter, LoginContract.Vie
 
     @Override
     public void hideLoading() {
-        dismissLoaddingDialog();
+        dismissLoadingDialog();
     }
 
     /**

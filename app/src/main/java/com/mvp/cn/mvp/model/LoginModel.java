@@ -10,6 +10,7 @@ import io.reactivex.Observable;
 /**
  * Created by iqiao on 2020-02-22 12:20
  * Desc: 实现登录网络请求
+ * @author iqiao
  */
 public class LoginModel implements LoginContract.Model {
 

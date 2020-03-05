@@ -1,17 +1,26 @@
 package com.mvp.cn.mvp.model.bean;
 
 /**
- * Created by qiaohao on 2016/9/13.
+ * @author qiaohao
+ * @date 2016/9/13
  * 说明：
  */
 public class BaseResponseEntity<T> {
-    //接口协议版本号
+    /**
+     * 接口协议版本号
+     */
     private String version;
-    //状态
+    /**
+     * 状态
+     */
     private Integer status;
-    //操作描述
+    /**
+     * 响应描述
+     */
     private String desc;
-    //响应报文实体
+    /**
+     * 响应报文实体
+     */
     private T busiRespInfo;
 
     public BaseResponseEntity(String version, Integer status, String desc, T busiRespInfo) {

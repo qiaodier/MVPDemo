@@ -141,7 +141,7 @@ dependencies {
     annotationProcessor 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
     //logger
-    implementation 'com.orhanobut:logger:1.15'
+    implementation 'com.orhanobut:logger:2.2.0'
     //glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     // mmkv

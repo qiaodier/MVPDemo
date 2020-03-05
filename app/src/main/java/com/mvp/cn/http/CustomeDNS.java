@@ -10,6 +10,7 @@ import okhttp3.Dns;
 /**
  * Created by iqiao on 2020-02-27 09:15
  * Desc: 自定义dns解析
+ * @author iqiao
  */
 public class CustomeDNS implements Dns {
 

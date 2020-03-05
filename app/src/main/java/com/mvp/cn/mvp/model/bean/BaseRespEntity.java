@@ -6,14 +6,21 @@ import java.io.Serializable;
  * 响应实体基类
  *
  * @param <T>
+ * @author iqiao
  */
 public class BaseRespEntity<T> implements Serializable {
 
-    //响应状态码
+    /**
+     * 响应状态码
+     */
     private int status;
-    //响应状态描述
+    /**
+     * 响应状态描述
+     */
     private String message;
-    //响应提体
+    /**
+     * 响应提体
+     */
     private T data;
 
 

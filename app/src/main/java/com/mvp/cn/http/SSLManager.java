@@ -21,6 +21,7 @@ import javax.net.ssl.X509TrustManager;
 
 /**
  * https证书管理类
+ * @author iqiao
  */
 public class SSLManager {
 

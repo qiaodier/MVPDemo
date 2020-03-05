@@ -5,7 +5,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mvp.cn.BuildConfig;
 import com.mvp.cn.http.api.IHttpRequestService;
 import com.mvp.cn.utils.JsonUtil;
-import com.tencent.mars.xlog.Log;
+import com.orhanobut.logger.Logger;
 
 import java.util.concurrent.TimeUnit;
 
@@ -98,7 +98,6 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
 
     @Override
     public void log(String message) {
-//        Log.e("",mMessage.toString());
         // 请求或者响应开始
         if (message.startsWith("--> POST") || message.startsWith("--> GET")) {
             mMessage.setLength(0);
@@ -111,7 +110,7 @@ public class OkHttpClientUtils implements HttpLoggingInterceptor.Logger {
         mMessage.append(message.concat("\n"));
         // 请求或者响应结束，打印整条日志
         if (message.startsWith("<-- END HTTP")) {
-            Log.e("REQUEST_LOG",mMessage.toString());
+            Logger.e(mMessage.toString());
         }
     }
 }

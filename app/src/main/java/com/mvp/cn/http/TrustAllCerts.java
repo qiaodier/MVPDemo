@@ -9,6 +9,7 @@ import javax.net.ssl.X509TrustManager;
  * Author:qiaohao
  * Time:2018/12/3 14:40
  * Description:TrustAllCerts
+ * @author iqiao
  */
 public class TrustAllCerts implements X509TrustManager {
     @Override
