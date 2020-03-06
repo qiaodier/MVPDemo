@@ -1,0 +1,23 @@
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.tools.build:gradle:3.5.3'
+    implementation gradleApi()
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
+
+
+publishing {
+    publications {
+        plugin(MavenPublication) {
+            from components.java
+            groupId 'com.mvp.plugin'
+            artifactId 'JiaguPlugin'
+            version '1.0.0'
+        }
+    }
+}
+

@@ -61,7 +61,7 @@ public class RouterProcessor extends AbstractProcessor {
                 String content = "package "+rootPackageName+".register;\n" +
                         "\n" +
                         "import "+packageName+"." + element.getSimpleName() + ";\n" +
-                        "import "+rootPackageName+".router.IRouterListener;\n" +
+                        "import  com.mvp.master.router.IRouterListener;\n" +
                         "\n" +
                         "import java.util.Map;\n" +
                         "\n" +

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.mvp.cn.R;
-import com.mvp.cn.mvp.base.BaseActivity;
+import com.mvp.master.mvp.base.BaseActivity;
 import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.LoginModel;
 import com.mvp.cn.mvp.presenter.LoginPresenter;

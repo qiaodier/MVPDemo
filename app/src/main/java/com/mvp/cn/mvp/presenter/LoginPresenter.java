@@ -2,12 +2,12 @@ package com.mvp.cn.mvp.presenter;
 
 import android.os.Build;
 
-import com.mvp.cn.http.resp.BaseObserver;
-import com.mvp.cn.http.HttpReqeustUtils;
-import com.mvp.cn.mvp.base.BasePresenter;
 import com.mvp.cn.mvp.contract.LoginContract;
-import com.mvp.cn.mvp.model.bean.BaseRespEntity;
 import com.mvp.cn.mvp.model.bean.LoginEntity;
+import com.mvp.master.http.HttpRequestUtils;
+import com.mvp.master.http.bean.BaseRespEntity;
+import com.mvp.master.http.resp.BaseObserver;
+import com.mvp.master.mvp.base.BasePresenter;
 import com.tencent.mars.xlog.Log;
 
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     }
 
     public void login(String name, String pwd) {
-        HttpReqeustUtils.applyScheduler(mModel.login(new LoginEntity(name, pwd)), mView.get())
+        HttpRequestUtils.applyScheduler(mModel.login(new LoginEntity(name, pwd)), mView.get())
                 .subscribe(new BaseObserver<BaseRespEntity>(mView.get()) {
                     @Override
                     public void onSuccess(BaseRespEntity baseRespEntity) {

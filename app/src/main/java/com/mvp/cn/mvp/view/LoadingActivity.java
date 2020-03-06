@@ -5,10 +5,10 @@ import android.os.Environment;
 
 import com.mvp.cn.BuildConfig;
 import com.mvp.cn.R;
-import com.mvp.cn.mvp.base.BaseActivity;
-import com.mvp.cn.mvp.base.BasePresenter;
-import com.mvp.cn.router.RouterManager;
 import com.mvp.compile.Route;
+import com.mvp.master.mvp.base.BaseActivity;
+import com.mvp.master.mvp.base.BasePresenter;
+import com.mvp.master.router.RouterManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.mars.xlog.Log;
 import com.tencent.mars.xlog.Xlog;
@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author iqiao
  */
-@Route("/main")
+@Route("/loading")
 public class LoadingActivity extends BaseActivity {
 
     private RxPermissions rxPermissions;

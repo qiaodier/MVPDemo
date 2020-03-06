@@ -2,8 +2,8 @@ package com.mvp.cn;
 
 import android.app.Application;
 
-import com.mvp.cn.router.RouterManager;
 import com.mvp.cn.utils.CustomLogCatStrategy;
+import com.mvp.master.router.RouterManager;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;

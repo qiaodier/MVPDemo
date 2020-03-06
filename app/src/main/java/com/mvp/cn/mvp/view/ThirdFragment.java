@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mvp.cn.R;
-import com.mvp.cn.mvp.base.BaseFragment;
+import com.mvp.master.mvp.base.BaseFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

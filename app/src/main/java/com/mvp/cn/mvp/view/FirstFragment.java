@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mvp.cn.R;
-import com.mvp.cn.mvp.base.BaseFragment;
+import com.mvp.master.mvp.base.BaseFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

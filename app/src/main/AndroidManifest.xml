@@ -79,12 +79,12 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
         <!--        前台service保活    提高应用adj优先级-->
-        <service android:name=".keep.foreground.ForegroundService" />
-        <service android:name=".keep.foreground.ForegroundService$InnerService" />
+        <service android:name="com.mvp.master.keep.foreground.ForegroundService" />
+        <service android:name="com.mvp.master.keep.foreground.ForegroundService$InnerService" />
 
-        <service android:name=".keep.sticky.StickyService" />
+        <service android:name="com.mvp.master.keep.sticky.StickyService" />
         <service
-            android:name=".keep.jobservice.JobService"
+            android:name="com.mvp.master.keep.jobservice.JobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>

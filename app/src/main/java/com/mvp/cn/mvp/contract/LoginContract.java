@@ -1,15 +1,17 @@
 package com.mvp.cn.mvp.contract;
 
-import com.mvp.cn.mvp.model.bean.BaseRespEntity;
+
 import com.mvp.cn.mvp.model.bean.LoginEntity;
-import com.mvp.cn.mvp.base.IBaseModel;
-import com.mvp.cn.mvp.base.IBaseView;
+import com.mvp.master.http.bean.BaseRespEntity;
+import com.mvp.master.mvp.base.IBaseModel;
+import com.mvp.master.mvp.base.IBaseView;
 
 import io.reactivex.Observable;
 
 /**
  * Created by iqiao on 2020-02-22 11:56
  * Desc:
+ *
  * @author iqiao
  */
 public interface LoginContract {

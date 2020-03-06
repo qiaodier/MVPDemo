@@ -1,10 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from : "config.gradle"
+apply from: "config.gradle"
 buildscript {
     repositories {
 //        google()
 //        jcenter()
-        maven{
+        mavenLocal()
+        maven {
             url 'http://118.190.36.140:8081/artifactory/android/'
         }
     }
@@ -13,6 +14,7 @@ buildscript {
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc2'
         def nav_version = "2.3.0-alpha01"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+        classpath 'com.mvp.plugin:JiaguPlugin:1.0.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -22,8 +24,8 @@ allprojects {
     repositories {
 //        jcenter()
 //        google()
-
-        maven{
+        mavenLocal()
+        maven {
             url 'http://118.190.36.140:8081/artifactory/android/'
         }
         maven { url 'https://jitpack.io' }

@@ -2,8 +2,8 @@ package com.mvp.cn.mvp.view;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mvp.cn.R;
-import com.mvp.cn.mvp.base.BaseActivity;
-import com.mvp.cn.mvp.base.BasePresenter;
+import com.mvp.master.mvp.base.BaseActivity;
+import com.mvp.master.mvp.base.BasePresenter;
 import com.mvp.compile.Route;
 
 import androidx.appcompat.widget.Toolbar;
