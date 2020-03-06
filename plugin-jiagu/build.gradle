@@ -6,18 +6,42 @@ dependencies {
     implementation gradleApi()
 }
 
+
+
 sourceCompatibility = "8"
 targetCompatibility = "8"
 
+apply plugin: 'maven'
+def jks = rootProject.file("safeinfo.properties")
+def configinfo = new Properties()
+configinfo.load(new FileInputStream(jks))
 
-publishing {
-    publications {
-        plugin(MavenPublication) {
-            from components.java
-            groupId 'com.mvp.plugin'
-            artifactId 'JiaguPlugin'
-            version '1.0.0'
+//上传到Maven仓库的task
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //指定maven仓库url 如果使用快照库需要注意版本号的后缀
+            repository(url: "http://118.190.36.140:8081/artifactory/gradle_plugins/") {
+                //nexus登录默认用户名和密码 userName大小写要匹配
+                authentication(userName: configinfo['ARTIFACTORY_NAME'], password: configinfo['ARTiFACTORY_PASS'])
+            }
+            pom.groupId = 'com.mvp.plugin'
+            pom.artifactId = 'JiaguPlugin'
+            pom.version = '1.1.0'
         }
     }
 }
+
+
+//publishing {
+//    publications {
+//
+//        plugin(MavenPublication) {
+//            from components.java
+//            groupId 'com.mvp.plugin'
+//            artifactId 'JiaguPlugin'
+//            version '1.0.0'
+//        }
+//    }
+//}
 

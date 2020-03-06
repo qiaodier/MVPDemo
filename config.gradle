@@ -11,13 +11,6 @@ ext {
             "flavorDimensions"         : "versionCode",
             "testInstrumentationRunner": "android.support.test.runner.AndroidJUnitRunner"
     ]
-    //签名相关
-    signing = [
-            "release-store-file"   : "../aaa.jks",
-            "release-storePassword": "aaa",
-            "release-keyAlias"     : "aaa",
-            "release-keyPassword"  : "aaa"
-    ]
 
 
 }

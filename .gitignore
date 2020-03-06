@@ -9,3 +9,4 @@
 *.jks
 /captures
 .externalNativeBuild
+/safeinfo.properties

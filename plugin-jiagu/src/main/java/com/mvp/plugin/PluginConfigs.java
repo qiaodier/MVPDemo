@@ -6,16 +6,9 @@ package com.mvp.plugin;
  * @desc 插件扩展信息
  */
 public class PluginConfigs {
+/******************************dabao***************************************/
     /**
-     * userName
-     */
-    String userName;
-    /**
-     * pwd
-     */
-    String pwd;
-    /**
-     *  jiagu.jar file path
+     * jiagu.jar file path
      */
     String qihuPath;
     /**
@@ -42,6 +35,12 @@ public class PluginConfigs {
      * outputpath
      */
     String outputPath;
+    /****************************upload 2 pgyer*******************************************/
 
+    String apiKey;
+
+    String desc;
+    String pwd;
+    String uKey;
 
 }
