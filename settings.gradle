@@ -1,1 +1,1 @@
-include ':app', ':router-compiler', ':mvp_master', ':plugin-jiagu'
+include ':app', ':router-compiler', ':mvp_master', ':plugins'
