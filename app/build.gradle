@@ -11,6 +11,7 @@ apply plugin: com.mvp.plugin.JiaguPlugin
 static def buildTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
 }
+
 def jks = rootProject.file("safeinfo.properties")
 def configinfo = new Properties()
 configinfo.load(new FileInputStream(jks))
@@ -86,27 +87,26 @@ android {
         }
         //开发版本配置
         debug {
-            storeFile file(configinfo['STORE_FILE'])
-            storePassword configinfo['STORE_PASSWORD']
-            keyAlias configinfo['KEY_ALIAS']
-            keyPassword configinfo['KEY_ALIAS_PASSWORD']
+
         }
     }
     //打包后apk重命名
-    android.applicationVariants.all { variant ->
-        def outputName
-        def productName
-        if (project.hasProperty("APK_NAME")) {
-            outputName = APK_NAME
-        } else {
-            outputName = parent.name
-        }
-        variant.productFlavors.each { product ->
-            productName = product.name
-        }
+    android {
+        applicationVariants.all { variant ->
+            def outputName
+            def productName
+            if (project.hasProperty("APK_NAME")) {
+                outputName = APK_NAME
+            } else {
+                outputName = parent.name
+            }
+            variant.productFlavors.each { product ->
+                productName = product.name
+            }
 
-        variant.outputs.all { output ->
-            outputFileName = "${variant.versionName}-${variant.versionCode}-${buildTime()}-${outputName}-${productName}-${buildType.name}.apk"
+            variant.outputs.all { output ->
+                outputFileName = "${variant.versionName}-${variant.versionCode}-${buildTime()}-${outputName}-${productName}-${buildType.name}.apk"
+            }
         }
     }
 

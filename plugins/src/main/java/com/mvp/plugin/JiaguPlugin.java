@@ -7,7 +7,6 @@ import com.android.build.gradle.api.BaseVariantOutput;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 
 import java.io.File;
 
@@ -33,44 +32,7 @@ public class JiaguPlugin implements Plugin<Project> {
                         File outputFile = baseVariantOutput.getOutputFile();
                         String name = baseVariantOutput.getName();
                         //create jiagu task
-                        project.getTasks().create(name + "-jiagu", JiaguTask.class, outputFile, pluginConfigs).doLast(new Action<Task>() {
-                            @Override
-                            public void execute(Task task) {
-
-
-                            }
-                        });
-
-//                        Set<File> files = outputs.getPreviousOutputFiles();
-//                        files.forEach(new Consumer<File>() {
-//                            @Override
-//                            public void accept(File file) {
-//                                if (file.getName().endsWith("sign.apk")) {
-//                                    project.exec(new Action<ExecSpec>() {
-//                                        @Override
-//                                        public void execute(ExecSpec execSpec) {
-//                                            /*def uploadCommand = "curl " +
-//                                        "-F \"file=@${outputFile.absolutePath}\"" +
-//                                        " -F \"_api_key=$pgyerApiKey\" " +
-//                                        "-F \"buildUpdateDescription=$desc\" " +
-//                                        "-F \"buildInstallType=2\" " +
-//                                        "-F \"buildPassword=123\" " +
-//                                        "https://www.pgyer.com/apiv2/app/upload"*/
-//                                            ExecSpec execSpec1 = execSpec.commandLine("curl", "-k", "http://www.pgyer.com/apiv1/app/upload", "-F", "file=@" + file.getAbsolutePath(), "-F", "_api_key", pluginConfigs.apiKey, "-F", "buildUpdateDescription=" + pluginConfigs.desc, "-F", "buildInstallType=2", "-F", "buildPassword=" + pluginConfigs.pwd);
-//                                            List<String> args = execSpec1.getArgs();
-//                                            args.forEach(new Consumer<String>() {
-//                                                @Override
-//                                                public void accept(String s) {
-//                                                    project.getLogger().log(LogLevel.DEBUG, s);
-//                                                }
-//                                            });
-//
-//                                        }
-//                                    });
-//                                }
-//                            }
-//                        });
-
+                        project.getTasks().create(name + "-jiagu", JiaguTask.class, outputFile, pluginConfigs);
                     });
                 });
             }

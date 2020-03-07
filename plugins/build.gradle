@@ -27,7 +27,7 @@ uploadArchives {
             }
             pom.groupId = 'com.mvp.plugin'
             pom.artifactId = 'JiaguPlugin'
-            pom.version = '1.1.0'
+            pom.version = '1.1.8'
         }
     }
 }
