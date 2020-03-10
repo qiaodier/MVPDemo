@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.mvp.cn.utils.CustomLogCatStrategy;
 import com.mvp.master.router.RouterManager;
+import com.mvp.master.ui.UIUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -19,13 +20,23 @@ import com.tencent.mars.xlog.Log;
 public class BaseApplication extends Application {
 
 
+    private static BaseApplication baseApplication;
+
+
+    public static BaseApplication getInstance() {
+        return baseApplication;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        baseApplication = this;
         //注册路由框架,所有Activity都必须使用@Route注解
         RouterManager.getInstance().init(this);
         //日志打印框架
         initLogger();
+        //屏幕适配工具类
+        UIUtils.getInstance().init(this, 1080, 1920);
         //当前测试代码的设备是夜神模拟器Android7.1.2、Android5.1,三星 SM-G8750 Android8.0，
 //        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
 //            //启动保活进程（前台进程保活法） 1

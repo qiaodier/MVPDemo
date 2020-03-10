@@ -1,20 +1,24 @@
 package com.mvp.cn.mvp.view;
 
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mvp.cn.BaseApplication;
 import com.mvp.cn.R;
-import com.mvp.master.mvp.base.BaseActivity;
 import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.LoginModel;
 import com.mvp.cn.mvp.presenter.LoginPresenter;
 import com.mvp.cn.utils.Utils;
 import com.mvp.compile.Route;
+import com.mvp.master.mvp.base.BaseActivity;
 import com.tencent.mars.xlog.Log;
 import com.tencent.mmkv.MMKV;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -51,6 +55,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         initData();
         testMMKV();
         testSP();
+        Log.e("===========", getClipContent());
+    }
+
+    /**
+     * 获取系统剪贴板内容
+     */
+    public static String getClipContent() {
+        ClipboardManager manager = (ClipboardManager) BaseApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+        if (manager != null) {
+            if (manager.hasPrimaryClip() && manager.getPrimaryClip().getItemCount() > 0) {
+                CharSequence addedText = manager.getPrimaryClip().getItemAt(0).getText();
+                String addedTextString = String.valueOf(addedText);
+                if (!TextUtils.isEmpty(addedTextString)) {
+                    return addedTextString;
+                }
+            }
+        }
+        return "";
     }
 
     private void testMMKV() {

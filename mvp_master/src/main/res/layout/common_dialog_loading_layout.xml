@@ -5,7 +5,7 @@
     android:layout_height="130dp"
     android:layout_gravity="center"
     android:gravity="center"
-    android:background="@mipmap/bg_pop"
+    android:background="@drawable/bg_pop"
     android:orientation="vertical" >
 
 
@@ -21,7 +21,7 @@
             android:padding="7dp"
             android:layout_height="60dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/icon_load" />
+            android:src="@drawable/icon_load" />
     </RelativeLayout>
 
 
@@ -44,7 +44,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="正在加载"
-            android:textColor="@color/white"
+            android:textColor="@color/master_white"
             android:textSize="14sp" />
 
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="..."
-            android:textColor="@color/white"
+            android:textColor="@color/master_white"
             android:textSize="14sp" />
     </RelativeLayout>
 </LinearLayout>

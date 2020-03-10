@@ -4,4 +4,7 @@
     <string name="first_main">主页</string>
     <string name="second_main">列表</string>
     <string name="third_main">个人中心</string>
+    <string name="user_name">用户名</string>
+    <string name="pass">密码</string>
+    <string name="login">登录</string>
 </resources>
