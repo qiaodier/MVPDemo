@@ -64,7 +64,8 @@ public class JiaguTask extends DefaultTask {
             getProject().exec((ExecSpec execSpec) -> {
                 getProject().getLogger().error("=========>>>>>upload starting ...\n");
                 ExecSpec curl = execSpec.commandLine("curl", "-F", "file=@" + files[0].getAbsolutePath(), "-F", "_api_key=" + pluginConfigs.apiKey, "-F", "uKey=" + pluginConfigs.uKey, "-F", "buildUpdateDescription=" + pluginConfigs.desc, "-F", "buildInstallType=2", "-F", "buildPassword=" + pluginConfigs.pwd, "http://www.pgyer.com/apiv1/app/upload");
-//                OutputStream fos = curl.getStandardOutput();
+
+                //                OutputStream fos = curl.getStandardOutput();
 //                OutputStreamWriter writer = new OutputStreamWriter(fos);
 //                BufferedReader br = new BufferedReader(writer);
 //                String line;

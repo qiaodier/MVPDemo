@@ -96,28 +96,20 @@ android {
 
 
     //打包后apk重命名
-
     applicationVariants.all { variant ->
         variant.outputs.all {
             // 输出apk名称
-            def fileName = "${defaultConfig.versionName}(${defaultConfig.versionCode})-${buildTime()}-${variant.productFlavors[0].name}-${buildType.name}.apk"
-            outputFileName = fileName
+            def buildType = variant.buildType.name
+            def channel = variant.productFlavors[0].name
+            outputFileName = "${variant.versionName}(${variant.versionCode})-${buildTime()}-${channel}-${buildType}.apk"
+//            variant.packageApplicationProvider.get().outputDirectory = new File("${project.projectDir.absolutePath}/build/outputs/apk/${buildType}")
         }
     }
 
 
     //渠道配置
     productFlavors {
-        pro {
-
-
-            //服务器商用url
-            buildConfigField "String", "BASE_URL", '"https:www.baidu.com/"'
-        }
-
         dev {
-
-
             //服务器测试url
             buildConfigField "String", "BASE_URL", '"https:www.baidu.com/"'
         }
@@ -128,6 +120,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
 
 }
 
@@ -146,7 +139,7 @@ dependencies {
     //rxpermissions
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     //navigation
-    def nav_version = "2.3.0-alpha01"
+    def nav_version = "2.3.0-alpha03"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
     // mvp架构+网络请求+自定义注解+
@@ -158,3 +151,6 @@ dependencies {
     annotationProcessor "com.neenbedankt.gradle.plugins:android-apt:1.8"
 //    implementation 'com.mvp.plugin:JiaguPlugin:1.0.0'
 }
+
+
+
