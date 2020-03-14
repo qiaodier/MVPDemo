@@ -67,4 +67,8 @@ dependencies {
     //logger
     api 'com.orhanobut:logger:2.2.0'
 
+    //自定义注解处理器
+    api project(':router-compiler')
+    annotationProcessor project(':router-compiler')
+
 }

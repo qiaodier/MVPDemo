@@ -3,7 +3,7 @@ apply plugin: 'com.jakewharton.butterknife'
 apply from: "/upload2Pgyer.gradle"
 apply plugin: "androidx.navigation.safeargs"
 
-//这里不写单引号，写上会报错找不到
+//这里不写单引号，写上会报错找不到,加单引号的话需要插件本身用meta-inf注册为插件
 apply plugin: com.mvp.plugin.JiaguPlugin
 
 
@@ -106,7 +106,6 @@ android {
         }
     }
 
-
     //渠道配置
     productFlavors {
         dev {
@@ -144,8 +143,6 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$nav_version"
     // mvp架构+网络请求+自定义注解+
     implementation project(path: ':mvp_master')
-    //自定义注解处理器
-    implementation project(':router-compiler')
     annotationProcessor project(':router-compiler')
     //apt
     annotationProcessor "com.neenbedankt.gradle.plugins:android-apt:1.8"

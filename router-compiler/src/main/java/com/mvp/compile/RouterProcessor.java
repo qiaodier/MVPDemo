@@ -56,12 +56,12 @@ public class RouterProcessor extends AbstractProcessor {
                 //get this class packageName
                 String packageName = processingEnv.getElementUtils().getPackageOf(element).toString();
                 //get root packageName
-                String rootPackageName = processingEnv.getElementUtils().getPackageElement("com.mvp.cn").toString();
+//                String rootPackageName = processingEnv.getElementUtils().getPackageElement("com.compile.router").toString();
                 String value = element.getAnnotation(Route.class).value();
-                String content = "package "+rootPackageName+".register;\n" +
+                String content = "package com.compile.register;\n" +
                         "\n" +
                         "import "+packageName+"." + element.getSimpleName() + ";\n" +
-                        "import  com.mvp.master.router.IRouterListener;\n" +
+                        "import com.mvp.compile.IRouterListener;\n" +
                         "\n" +
                         "import java.util.Map;\n" +
                         "\n" +
@@ -77,7 +77,7 @@ public class RouterProcessor extends AbstractProcessor {
                         "}";
                 mMessager.printMessage(Diagnostic.Kind.NOTE, "Router: " + element.getSimpleName());
                 try {
-                    JavaFileObject javaFileObject = mFiler.createSourceFile("com.mvp.cn.register." + element.getSimpleName() + "RouterImp");
+                    JavaFileObject javaFileObject = mFiler.createSourceFile("com.compile.router." + element.getSimpleName() + "RouterImp");
                     Writer writer = javaFileObject.openWriter();
 //                    writer.write(createJavaFile(element.getSimpleName().toString(), value));
                     writer.write(content);

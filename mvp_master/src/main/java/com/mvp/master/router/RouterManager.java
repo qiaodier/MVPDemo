@@ -3,6 +3,7 @@ package com.mvp.master.router;
 import android.app.Application;
 import android.content.Intent;
 
+import com.mvp.compile.IRouterListener;
 import com.tencent.mars.xlog.Log;
 
 import java.io.IOException;
@@ -100,8 +101,8 @@ public class RouterManager {
      */
     private void loadInfo() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         //获得所有 apt生成的路由注册类的(路由表)
-        Set<String> routerSetMap = getClassName(application.getPackageName()+".register");
-        Log.e("RouterManager",application.getPackageName()+".register"+"      " + routerSetMap.size()+"");
+        Set<String> routerSetMap = getClassName("com.compile.router");
+        Log.e("RouterManager","com.compile.router"+"      " + routerSetMap.size()+"");
         for (String className : routerSetMap) {
             Log.e("RouterManager","" + className);
             //root中注册的是分组信息 将分组信息加入仓库中
