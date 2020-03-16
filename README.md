@@ -28,6 +28,9 @@
 ### plugins
    * 实现360加固、签名、上传蒲公英（上传功能还待优化，不影响上传）一键完成。
 
+## 阿里云推广链接
+   *[【采购季】上云￥223/3年](https://www.aliyun.com/sale-season/2020/procurement-new-members?userCode=vrdfg70n)
+
 
 
 
