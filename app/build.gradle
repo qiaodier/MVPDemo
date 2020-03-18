@@ -135,10 +135,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     testImplementation 'junit:junit:4.12'
-    //glide
-    def glide_version = "4.11.0"
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
     //rxpermissions
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     //navigation

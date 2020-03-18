@@ -1,4 +1,4 @@
-package com.mvp.cn.http.glide;
+package com.mvp.master.image.glide;
 
 import android.util.Log;
 

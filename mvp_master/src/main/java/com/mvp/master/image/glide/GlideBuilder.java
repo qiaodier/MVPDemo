@@ -1,4 +1,4 @@
-package com.mvp.cn.http.glide;
+package com.mvp.master.image.glide;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -17,7 +17,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
  * @desc GlideBuilder 封装类
  * 加载动画和缩略图未实现
  */
-public class GlideBuilder<T> {
+public class GlideBuilder {
     /**
      * 上下文
      */

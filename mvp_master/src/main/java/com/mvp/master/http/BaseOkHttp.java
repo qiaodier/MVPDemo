@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @author iqiao
  */
 
-public abstract class BaseOkHttpUtil {
+public abstract class BaseOkHttp {
 
     private OkHttpClient.Builder okHttpClient;
     private StringBuilder mMessage = new StringBuilder();
@@ -40,7 +40,7 @@ public abstract class BaseOkHttpUtil {
      */
 
 
-    public BaseOkHttpUtil() {
+    public BaseOkHttp() {
         retrofit = this.init();
     }
 

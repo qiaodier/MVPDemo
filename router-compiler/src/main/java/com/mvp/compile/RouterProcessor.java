@@ -58,7 +58,7 @@ public class RouterProcessor extends AbstractProcessor {
                 //get root packageName
 //                String rootPackageName = processingEnv.getElementUtils().getPackageElement("com.compile.router").toString();
                 String value = element.getAnnotation(Route.class).value();
-                String content = "package com.compile.register;\n" +
+                String content = "package com.compile.router;\n" +
                         "\n" +
                         "import "+packageName+"." + element.getSimpleName() + ";\n" +
                         "import com.mvp.compile.IRouterListener;\n" +

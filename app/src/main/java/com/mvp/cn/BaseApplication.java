@@ -3,6 +3,8 @@ package com.mvp.cn;
 import android.app.Application;
 
 import com.mvp.cn.utils.CustomLogCatStrategy;
+import com.mvp.master.image.ImageLoaderProxy;
+import com.mvp.master.image.glide.GlideImageLoaderImpl;
 import com.mvp.master.router.RouterManager;
 import com.mvp.master.ui.UIUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -31,9 +33,11 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         baseApplication = this;
+        //注册图片加载的实现类
+        ImageLoaderProxy.getInstance().init(new GlideImageLoaderImpl());
         //注册路由框架,所有Activity都必须使用@Route注解
         RouterManager.getInstance().init(this);
-        //日志打印框架
+        //网络请求日志打印框架
         initLogger();
         //屏幕适配工具类
         UIUtils.getInstance().init(this, 1080, 1920);
