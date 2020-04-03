@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-apply from: "/upload2Pgyer.gradle"
+apply from: "./upload2Pgyer.gradle"
 apply plugin: "androidx.navigation.safeargs"
 
 //这里不写单引号，写上会报错找不到,加单引号的话需要插件本身用meta-inf注册为插件
@@ -18,7 +18,7 @@ configinfo.load(new FileInputStream(jks))
 
 //360 加固+打包配置+自动上传蒲公英
 jiagu {
-    qihuPath = 'E:\\chromeDownload\\360jiagubao_windows_64\\jiagu\\jiagu.jar'
+    qihuPath = '../jiagu.jar'
     keyStorePath = configinfo['STORE_FILE']
     keyStorePass = configinfo['STORE_PASSWORD']
     keyStoreKeyAlias = configinfo['KEY_ALIAS']
