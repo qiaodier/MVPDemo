@@ -2,8 +2,6 @@
 apply from: "config.gradle"
 buildscript {
     repositories {
-//        google()
-//        jcenter()
         maven {
             url 'http://118.190.36.140:8081/artifactory/android/'
         }
@@ -21,8 +19,7 @@ buildscript {
 
 allprojects {
     repositories {
-//        jcenter()
-//        google()
+
         maven {
             url 'http://118.190.36.140:8081/artifactory/android/'
         }
