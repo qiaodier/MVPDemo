@@ -1,1 +1,1 @@
-include ':app', ':router-compiler', ':mvp_master', ':plugins'
+include ':app', ':router-compiler', ':mvp_master', ':plugins', ':router-api'

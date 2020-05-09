@@ -1,8 +1,8 @@
 package com.mvp.compile;
 
 import com.google.auto.service.AutoService;
+import com.mvp.router.api.Route;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -36,7 +36,7 @@ import javax.tools.JavaFileObject;
  * @author iqiao
  */
 @AutoService(Processor.class)
-@SupportedAnnotationTypes({"com.mvp.compile.Route"})
+@SupportedAnnotationTypes({"com.mvp.router.api.Route"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class RouterProcessor extends AbstractProcessor {
     Filer mFiler;
@@ -127,7 +127,6 @@ public class RouterProcessor extends AbstractProcessor {
                 .addSuperinterface(superClassName)
                 .addMethod(register)
                 .addField(activity);
-
 
         JavaFile javaFile = JavaFile.builder("com.compile.router", classBuilder.build()).build();
         return javaFile.toString();
