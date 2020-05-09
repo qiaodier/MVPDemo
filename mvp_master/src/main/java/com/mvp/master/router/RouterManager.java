@@ -3,7 +3,7 @@ package com.mvp.master.router;
 import android.app.Application;
 import android.content.Intent;
 
-import com.mvp.compile.IRouterListener;
+import com.mvp.router.api.IRouterListener;
 import com.tencent.mars.xlog.Log;
 
 import java.io.IOException;
@@ -31,6 +31,9 @@ public class RouterManager {
     public void init(Application application) {
         routerMap = new HashMap<>();
         this.application = application;
+        /**
+         * 这里的弊端是在application启动的时候注册所有的路由注解类，会影响启动速度
+         */
         try {
             loadInfo();
         } catch (ClassNotFoundException e) {
