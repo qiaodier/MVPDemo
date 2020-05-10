@@ -41,12 +41,15 @@ import javax.tools.JavaFileObject;
 public class RouterProcessor extends AbstractProcessor {
     Filer mFiler;
     Messager mMessager;
+    String packageName;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         mFiler = processingEnv.getFiler();
         mMessager = processingEnv.getMessager();
+        Map<String,String> map = processingEnv.getOptions();
+        packageName = map.get("packageName");
         mMessager.printMessage(Diagnostic.Kind.NOTE, "Router: init...");
     }
 
@@ -86,7 +89,7 @@ public class RouterProcessor extends AbstractProcessor {
 //                        "}";
                 mMessager.printMessage(Diagnostic.Kind.NOTE, "Router: " + element.getSimpleName());
                 try {
-                    JavaFileObject javaFileObject = mFiler.createSourceFile("com.compile.router." + element.getSimpleName() + "RouterImp");
+                    JavaFileObject javaFileObject = mFiler.createSourceFile(packageName+".router." + element.getSimpleName() + "RouterImp");
                     Writer writer = javaFileObject.openWriter();
                     writer.write(createJavaFile(packageName, element.getSimpleName().toString(), value));
 //                    writer.write(content);
@@ -118,7 +121,7 @@ public class RouterProcessor extends AbstractProcessor {
                 .addStatement("routerMap.put(\"" + routerKey + "\"," + className + ".class)")
                 .build();
         // build class
-        ClassName superClassName = ClassName.get("com.mvp.compile", "IRouterListener");
+        ClassName superClassName = ClassName.get("com.mvp.router.api", "IRouterListener");
         ClassName activityClassName = ClassName.get(packageName, className);
         FieldSpec activity = FieldSpec.builder(activityClassName, "activity", Modifier.PRIVATE).build();
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className + "RouterImp")
@@ -128,7 +131,7 @@ public class RouterProcessor extends AbstractProcessor {
                 .addMethod(register)
                 .addField(activity);
 
-        JavaFile javaFile = JavaFile.builder("com.compile.router", classBuilder.build()).build();
+        JavaFile javaFile = JavaFile.builder(packageName+".router", classBuilder.build()).build();
         return javaFile.toString();
     }
 

@@ -4,7 +4,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mvp.cn.R;
 import com.mvp.master.mvp.base.BaseActivity;
 import com.mvp.master.mvp.base.BasePresenter;
-import com.mvp.compile.Route;
+import com.mvp.router.api.Route;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
