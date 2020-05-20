@@ -1,0 +1,36 @@
+@startuml
+package 开闭原则 <<Frame>> {
+'图片加载工具类
+class ImageLoader{
+ -ImageCache mImageCache
+
+ +displayImage(url,imageView):void
+ +setImageCache(imageCache):void
+}
+'抽象接口
+interface ImageCache{
+    + put(url,bitmap):void
+    + get(url):Bitmap
+}
+'内存缓存的实现类
+class MemoryCache implements ImageCache {
+ + put(url,bitmap):void
+ + get(url):Bitmap
+}
+'sd缓存的实现类
+class DiskCache implements ImageCache{
+ + put(url,bitmap):void
+ + get(url):Bitmap
+}
+'双缓存的实现类
+class DoubleCache implements ImageCache{
+ - MemoryCache mMemoryCache
+ - DiskCache mDiskCache
+ + put(url,bitmap):void
+ + get(url):Bitmap
+}
+'聚合
+ImageCache o-  ImageLoader
+
+}
+@enduml

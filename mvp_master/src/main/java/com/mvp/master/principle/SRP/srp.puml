@@ -1,0 +1,13 @@
+@startuml
+package 单一职责原则 <<Frame>> {
+ class ImageCache{
+    + put(url,bitmap):void
+    + get(url):Bitmap
+}
+
+class ImageLoader{
+  + displayImage(url,imageView):void
+}
+ImageLoader - ImageCache :  <
+}
+@enduml
