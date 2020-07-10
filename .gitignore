@@ -12,3 +12,4 @@
 .externalNativeBuild
 /safeinfo.properties
 jiagu/.cache
+jiagu/output
