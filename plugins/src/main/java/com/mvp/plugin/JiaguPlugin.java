@@ -18,7 +18,7 @@ public class JiaguPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
         // find gradle file
-        final PluginConfigs pluginConfigs = project.getExtensions().create("jiagu", PluginConfigs.class);
+        final PluginConfigs pluginConfigs = project.getExtensions().create("jiaguAndUpload", PluginConfigs.class);
         // listener
         project.afterEvaluate(new Action<Project>() {
             @Override
@@ -32,7 +32,8 @@ public class JiaguPlugin implements Plugin<Project> {
                         File outputFile = baseVariantOutput.getOutputFile();
                         String name = baseVariantOutput.getName();
                         //create jiagu task
-                        project.getTasks().create(name + "-jiagu", JiaguTask.class, outputFile, pluginConfigs);
+                       String command = pluginConfigs.jiaguFlag.equals("0")?"-jiagu-upload":"-upload";
+                        project.getTasks().create(name + ""+command, JiaguTask.class, outputFile, pluginConfigs);
                     });
                 });
             }

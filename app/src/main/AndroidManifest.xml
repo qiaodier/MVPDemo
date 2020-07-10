@@ -13,9 +13,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.BIND_JOB_SERVICE" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+<!--    <uses-permission android:name="android.permission.WRITE_SETTINGS" />-->
+<!--    <uses-permission android:name="android.permission.BIND_JOB_SERVICE" />-->
+<!--    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />-->
 
 
     <application
@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".mvp.view.LoadingActivity">
+        <activity android:name="com.mvp.cn.mvp.view.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,8 +48,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".mvp.view.LoginActivity" />
-        <activity android:name=".mvp.view.MainActivity"
+        <activity android:name="com.mvp.cn.mvp.view.LoginActivity" />
+        <activity android:name="com.mvp.cn.mvp.view.MainActivity"
             />
 
 

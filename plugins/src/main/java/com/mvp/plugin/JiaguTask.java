@@ -22,7 +22,7 @@ public class JiaguTask extends DefaultTask {
 
     @Inject
     public JiaguTask(File apk, PluginConfigs pluginConfigs) {
-        setGroup("jiagu");
+        setGroup("jiaguandupload");
         this.apk = apk;
         this.pluginConfigs = pluginConfigs;
     }
@@ -33,21 +33,47 @@ public class JiaguTask extends DefaultTask {
     @TaskAction
     public void doTask() {
 
-        getProject().exec(new Action<ExecSpec>() {
-            @Override
-            public void execute(ExecSpec execSpec) {
-                //导入签名
-                execSpec.commandLine("java", "-jar", pluginConfigs.qihuPath, "-importsign", pluginConfigs.keyStorePath, pluginConfigs.keyStorePass, pluginConfigs.keyStoreKeyAlias, pluginConfigs.keyStoreKeyAliasPass);
+        if (pluginConfigs.jiaguFlag.equals("0")){
+            if (pluginConfigs.qihuPath==null||pluginConfigs.qihuPath.length()==0){
+                getProject().getLogger().error("jiagu.jar path not find");
+                return;
             }
-        });
+            if (pluginConfigs.userName360==null||pluginConfigs.userPwd360==null){
+                getProject().getLogger().error("userName360 or userPwd360 is null");
+                return;
+            }
+            getProject().exec(new Action<ExecSpec>() {
+                @Override
+                public void execute(ExecSpec execSpec) {
+                    //导入签名
+                    execSpec.commandLine("java", "-jar", pluginConfigs.qihuPath, "-login", pluginConfigs.userName360, pluginConfigs.userPwd360);
+                }
+            });
+            if (pluginConfigs.qihuPath==null||pluginConfigs.qihuPath.length()==0){
+                getProject().getLogger().error("jiagu.jar path not find");
+                return;
+            }
+            if (pluginConfigs.keyStorePath==null||pluginConfigs.keyStorePass==null||pluginConfigs.keyStoreKeyAlias==null||pluginConfigs.keyStoreKeyAliasPass==null){
+                getProject().getLogger().error("please check your keyStore config");
+                return;
+            }
+            getProject().exec(new Action<ExecSpec>() {
+                @Override
+                public void execute(ExecSpec execSpec) {
+                    //导入签名
+                    execSpec.commandLine("java", "-jar", pluginConfigs.qihuPath, "-importsign", pluginConfigs.keyStorePath, pluginConfigs.keyStorePass, pluginConfigs.keyStoreKeyAlias, pluginConfigs.keyStoreKeyAliasPass);
+                }
+            });
 
-        getProject().exec(new Action<ExecSpec>() {
-            @Override
-            public void execute(ExecSpec execSpec) {
-                //加固+签名
-                execSpec.commandLine("java", "-jar", pluginConfigs.qihuPath, "-jiagu", apk.getAbsolutePath(), apk.getParent(), "-autosign");
-            }
-        });
+            getProject().exec(new Action<ExecSpec>() {
+                @Override
+                public void execute(ExecSpec execSpec) {
+                    //加固+签名
+                    execSpec.commandLine("java", "-jar", pluginConfigs.qihuPath, "-jiagu", apk.getAbsolutePath(), apk.getParent(), "-autosign");
+                }
+            });
+        }
+
         File file = new File(apk.getParent());
         if (!file.exists()) {
             getProject().getLogger().error("file path not find");
@@ -58,7 +84,7 @@ public class JiaguTask extends DefaultTask {
             return;
         }
         File[] files = file.listFiles((File pathname) -> {
-            return pathname.getAbsolutePath().endsWith("sign.apk");
+            return pathname.getAbsolutePath().endsWith(".apk");
         });
         if (files.length > 0) {
             getProject().exec((ExecSpec execSpec) -> {

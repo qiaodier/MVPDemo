@@ -17,13 +17,15 @@ def configinfo = new Properties()
 configinfo.load(new FileInputStream(jks))
 
 //360 加固+打包配置+自动上传蒲公英
-jiagu {
-    qihuPath = '../jiagu.jar'
+jiaguAndUpload {
+    qihuPath = configinfo['JIAGU_JAR_PATH']
     keyStorePath = configinfo['STORE_FILE']
     keyStorePass = configinfo['STORE_PASSWORD']
     keyStoreKeyAlias = configinfo['KEY_ALIAS']
     keyStoreKeyAliasPass = configinfo['KEY_ALIAS_PASSWORD']
-
+    userName360 = configinfo['USER_NAME']
+    userPwd360 = configinfo['USER_PWD']
+    jiaguFlag = configinfo['JIAGU_FLAG']
     apiKey = configinfo['API_KEY']
     uKey = configinfo['U_KEY']
     desc = configinfo['DESC']
@@ -45,10 +47,9 @@ android {
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
-
         testInstrumentationRunner rootProject.ext.android["testInstrumentationRunner"]
 //        multiDexEnabled true
-        javaCompileOptions.annotationProcessorOptions.arguments = [packageName:rootProject.ext.android["applicationId"]]
+        javaCompileOptions.annotationProcessorOptions.arguments = [packageName: rootProject.ext.android["applicationId"]]
         ndk {
             moduleName "InfoJni"          //生成的so名字,这个可以随意取名
             abiFilters "armeabi", "armeabi-v7a", "x86" //输出指定三种abi体系结构下的so库，目前可有可无。

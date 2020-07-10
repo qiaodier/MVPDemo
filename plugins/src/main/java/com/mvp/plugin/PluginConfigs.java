@@ -35,6 +35,18 @@ public class PluginConfigs {
      * outputpath
      */
     String outputPath;
+    /*********************************jiagu**********************************/
+    /**
+     * 360平台账号密码
+     */
+    String userName360;
+    String userPwd360;
+    /**
+     *  jiaguFlag
+     *  0: run jiagu and upload
+     *  1: only run upload
+     */
+    String jiaguFlag;
     /****************************upload 2 pgyer*******************************************/
 
     String apiKey;
