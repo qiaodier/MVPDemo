@@ -20,7 +20,6 @@ public class RequestManager {
      * 线程池任务
      */
     private ThreadPoolExecutor threadPoolExecutor;
-
     /**
      * 添加任务
      *
@@ -29,7 +28,6 @@ public class RequestManager {
     public void addTask(Runnable runnable) {
         tasks.add(runnable);
     }
-
 
     /**
      * 构造器
@@ -40,7 +38,6 @@ public class RequestManager {
         });
         threadPoolExecutor.execute(runnable);
     }
-
     /**
      * 具体执行任务
      */
