@@ -21,7 +21,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             //指定maven仓库url 如果使用快照库需要注意版本号的后缀
-            repository(url: "http://118.190.36.140:8081/artifactory/gradle_plugins/") {
+            repository(url: "http://81.69.1.172:8081/artifactory/gradle_plugins/") {
                 //nexus登录默认用户名和密码 userName大小写要匹配
                 authentication(userName: configinfo['ARTIFACTORY_NAME'], password: configinfo['ARTiFACTORY_PASS'])
             }

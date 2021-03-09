@@ -51,7 +51,7 @@ dependencies {
     api 'com.tencent.mars:mars-xlog:1.2.3'
     //butterknife
     api 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     //okhttp + retrofit
     api 'com.squareup.okhttp3:okhttp:3.4.1'
     api 'com.squareup.okio:okio:1.10.0'

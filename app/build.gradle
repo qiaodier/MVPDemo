@@ -4,7 +4,7 @@ apply from: "./upload2Pgyer.gradle"
 apply plugin: "androidx.navigation.safeargs"
 
 //这里不写单引号，写上会报错找不到,加单引号的话需要插件本身用meta-inf注册为插件
-apply plugin: com.mvp.plugin.JiaguPlugin
+//apply plugin: com.mvp.plugin.JiaguPlugin
 
 
 // 打包时间
@@ -17,21 +17,21 @@ def configinfo = new Properties()
 configinfo.load(new FileInputStream(jks))
 
 //360 加固+打包配置+自动上传蒲公英
-jiaguAndUpload {
-    qihuPath = configinfo['JIAGU_JAR_PATH']
-    keyStorePath = configinfo['STORE_FILE']
-    keyStorePass = configinfo['STORE_PASSWORD']
-    keyStoreKeyAlias = configinfo['KEY_ALIAS']
-    keyStoreKeyAliasPass = configinfo['KEY_ALIAS_PASSWORD']
-    userName360 = configinfo['USER_NAME']
-    userPwd360 = configinfo['USER_PWD']
-    jiaguFlag = configinfo['JIAGU_FLAG']
-    apiKey = configinfo['API_KEY']
-    uKey = configinfo['U_KEY']
-    desc = configinfo['DESC']
-    pwd = configinfo['PWD']
-
-}
+//jiaguAndUpload {
+//    qihuPath = configinfo['JIAGU_JAR_PATH']
+//    keyStorePath = configinfo['STORE_FILE']
+//    keyStorePass = configinfo['STORE_PASSWORD']
+//    keyStoreKeyAlias = configinfo['KEY_ALIAS']
+//    keyStoreKeyAliasPass = configinfo['KEY_ALIAS_PASSWORD']
+//    userName360 = configinfo['USER_NAME']
+//    userPwd360 = configinfo['USER_PWD']
+//    jiaguFlag = configinfo['JIAGU_FLAG']
+//    apiKey = configinfo['API_KEY']
+//    uKey = configinfo['U_KEY']
+//    desc = configinfo['DESC']
+//    pwd = configinfo['PWD']
+//
+//}
 
 
 android {
@@ -133,9 +133,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //约束布局
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
     testImplementation 'junit:junit:4.12'
 
     //rxpermissions

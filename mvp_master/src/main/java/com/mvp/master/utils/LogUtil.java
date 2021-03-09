@@ -5,7 +5,6 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.yctcard.service.BuildConfig;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -225,8 +224,8 @@ public final class LogUtil {
     }
 
     private static void printDeviceInfo(final String filePath) {
-        String versionName = BuildConfig.VERSION_NAME;
-        long versionCode = BuildConfig.VERSION_CODE;
+//        String versionName = BuildConfig.VERSION_NAME;
+//        long versionCode = BuildConfig.VERSION_CODE;
         String time = filePath.substring(filePath.length() - 9, filePath.length() - 4);
         final String head = "************* Log Head ****************" +
                 "\nDate of Log        : " + time +
@@ -234,8 +233,8 @@ public final class LogUtil {
                 "\nDevice Model       : " + Build.MODEL +
                 "\nAndroid Version    : " + Build.VERSION.RELEASE +
                 "\nAndroid SDK        : " + Build.VERSION.SDK_INT +
-                "\nApp VersionName    : " + versionName +
-                "\nApp VersionCode    : " + versionCode +
+//                "\nApp VersionName    : " + versionName +
+//                "\nApp VersionCode    : " + versionCode +
                 "\n************* Log Head ****************\n\n";
         input2File(head, filePath);
     }
