@@ -20,13 +20,12 @@
 
     <application
         android:name="com.mvp.cn.BaseApplication"
-        android:appComponentFactory=""
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:appComponentFactory">
+        >
         <activity android:name="com.mvp.cn.mvp.view.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

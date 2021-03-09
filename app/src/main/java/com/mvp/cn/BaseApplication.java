@@ -33,12 +33,14 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         baseApplication = this;
+        //网络请求日志打印框架
+        initLogger();
         //注册图片加载的实现类
         ImageLoaderProxy.getInstance().init(new GlideImageLoaderImpl());
         //注册路由框架,所有Activity都必须使用@Route注解
         RouterManager.getInstance().init(this);
-        //网络请求日志打印框架
-        initLogger();
+        Logger.e("BaseApplication","onCreate()");
+
         //屏幕适配工具类
         UIUtils.getInstance().init(this, 1080, 1920);
         //当前测试代码的设备是夜神模拟器Android7.1.2、Android5.1,三星 SM-G8750 Android8.0，

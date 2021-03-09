@@ -2,9 +2,10 @@ package com.mvp.master.router;
 
 import android.app.Application;
 import android.content.Intent;
+import android.util.Log;
 
 import com.mvp.router.api.IRouterListener;
-import com.tencent.mars.xlog.Log;
+
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -31,6 +32,7 @@ public class RouterManager {
     public void init(Application application) {
         routerMap = new HashMap<>();
         this.application = application;
+        Log.e("RouterManager","init");
         /**
          * 这里的弊端是在application启动的时候注册所有的路由注解类，会影响启动速度
          */
@@ -104,8 +106,8 @@ public class RouterManager {
      */
     private void loadInfo() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         //获得所有 apt生成的路由注册类的(路由表)
-        Set<String> routerSetMap = getClassName("com.compile.router");
-        Log.e("RouterManager","com.compile.router"+"      " + routerSetMap.size()+"");
+        Set<String> routerSetMap = getClassName("com.mvp.cn.mvp.view.router");
+        Log.e("RouterManager","com.mvp.cn.mvp.view.router"+"      " + routerSetMap.size()+"");
         for (String className : routerSetMap) {
             Log.e("RouterManager","" + className);
             //root中注册的是分组信息 将分组信息加入仓库中

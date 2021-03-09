@@ -6,7 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +62,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         initData();
         testMMKV();
         testSP();
-        Log.e("===========", getClipContent());
     }
 
     /**
@@ -83,7 +86,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         Log.e(TAG, "testMMKV");
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
-            mmkv.encode("" + i, "" + i);
+            mmkv.putString("" + i, "" + i);
         }
         //耗时11ms
         Log.e(TAG, (System.currentTimeMillis() - start) + "ms");
@@ -104,12 +107,28 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         Log.e(TAG, (System.currentTimeMillis() - start) + "ms");
     }
 
+     class EmojiExcludeFilter implements InputFilter {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            for (int i = start; i < end; i++) {
+                int type = Character.getType(source.charAt(i));
+                if (type == Character.SURROGATE || type == Character.OTHER_SYMBOL) {
+                    return "";
+                }
+            }
+            return null;
+        }
+    }
+
 
     private void initData() {
         mUserName = findViewById(R.id.et_user_name);
         mUserPwd = findViewById(R.id.et_user_pwd);
         mLoginBtn = findViewById(R.id.btn_login_qq);
         imageView = findViewById(R.id.image);
+        mUserName.setFilters(new InputFilter[]{new EmojiExcludeFilter()});
+
         ImageLoaderProxy.getInstance().showImage(this, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584506380577&di=88f7e3ac60f687b33e1a1bcf81e96f8d&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D2857883419%2C1187496708%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D763", imageView);
         mLoginBtn.setOnClickListener((View v) -> {
 

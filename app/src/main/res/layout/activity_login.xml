@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mvp.master.ui.precent.ResizeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -15,32 +16,44 @@
         android:id="@+id/et_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:autofillHints=""
         android:hint="@string/user_name"
         android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="o" />
 
     <EditText
         android:id="@+id/et_user_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:hint="@string/pass"
         android:importantForAutofill="no"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/et_user_name"
+        app:layout_constraintStart_toStartOf="@+id/et_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_user_name" />
 
     <Button
         android:id="@+id/btn_login_qq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login" />
+        android:layout_marginTop="20dp"
+        android:text="@string/login"
+        app:layout_constraintEnd_toEndOf="@+id/et_user_pwd"
+        app:layout_constraintStart_toStartOf="@+id/et_user_pwd"
+        app:layout_constraintTop_toBottomOf="@+id/et_user_pwd" />
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login_qq"
+        app:layout_constraintStart_toStartOf="@+id/btn_login_qq"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login_qq" />
 
-</com.mvp.master.ui.precent.ResizeLinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

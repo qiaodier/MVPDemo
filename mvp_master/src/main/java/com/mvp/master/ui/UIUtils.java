@@ -1,6 +1,7 @@
 package com.mvp.master.ui;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -131,11 +132,17 @@ public class UIUtils {
      */
     private int getValue(Context context, String attrGroupClass, String attrName, int i) {
         try {
-            Class e = Class.forName(attrGroupClass);
-            Object object = e.newInstance();
-            Field field = e.getField(attrName);
-            int height = Integer.parseInt(field.get(object).toString());
-            return context.getResources().getDimensionPixelOffset(height);
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.P){
+                int resourceId  = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+                return context.getResources().getDimensionPixelSize(resourceId);
+            }else{
+                Class e = Class.forName(attrGroupClass);
+                Object object = e.newInstance();
+                Field field = e.getField(attrName);
+                int height = Integer.parseInt(field.get(object).toString());
+                return context.getResources().getDimensionPixelOffset(height);
+            }
+
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (IllegalAccessException e) {
