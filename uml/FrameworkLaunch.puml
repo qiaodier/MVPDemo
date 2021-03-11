@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+partition JavaFrameworkLaunch(Android10) {
+(*) --> "ZygoteInit.main"
+-->"Zygote进程"
+note right:Zygote是Android系统的第一个Java进程，是所有Java进程的父进程。
+--> "forkSystemServer()"
+note left: Zygote.forkSystemServer()实际上是调用了native层的forkSystemServer()来fork子进程
+    -right-> "handleSystemServerProcess()"
+    note right: 最后调用handleSystemServerProcess()来处理SystemServer进程
+    --> "ZygoteInit.zygoteInit()"
+    note left: Zygote 的初始化调用了native方法 ZygoteInit.nativeZygoteInit();创建一个新的binder线程，调用talkWithDriver()不断地跟驱动交互
+    -right-> "RuntimeInit:
+    applicationInit(targetSdkVersion, argv, classLoader);"
+    --> "invokeStaticMain()"
+    note right: 这里调用了caller.run()，也就是执行了SystemServer的main方法
+--> "SystemServer.main():
+new SystemServer().run()"
+--> "Looper.mainPreparLooper()"
+--> "createSystemContext():"
+    -right-> "ActivityThread activityThread = ActivityThread.systemMain();
+                      mSystemContext = activityThread.getSystemContext();
+    final Context systemUiContext = activityThread.getSystemUiContext();"
+note right: 创建SystemContext 和 SystemUiContext
+"createSystemContext():"--> "mSystemServiceManager = new SystemServiceManager(mSystemContext);
+LocalServices.addService(SystemServiceManager.class, mSystemServiceManager);"
+note right: 创建SystemServiceManager
+--> "startBootstrapServices():"
+    -right-> "ActivityTaskManagerService atm = mSystemServiceManager.startService(
+                              ActivityTaskManagerService.Lifecycle.class).getService();
+                      mActivityManagerService = ActivityManagerService.Lifecycle.startService(
+                              mSystemServiceManager, atm);"
+note right: 启动AMS
+ --> "mPowerManagerService = mSystemServiceManager.startService(PowerManagerService.class);"
+ note right: 启动PowerManagerService
+ --> "mSystemServiceManager.startService(ThermalManagerService.class);"
+ note right: 启动ThermalManager
+ --> "Watchdog.getInstance().pauseWatchingCurrentThread('packagemanagermain');
+                  mPackageManagerService = PackageManagerService.main(mSystemContext, installer,
+                          mFactoryTestMode != FactoryTest.FACTORY_TEST_OFF, mOnlyCore);"
+note right: 启动PMS
+--> " mSystemServiceManager.startService(UserManagerService.LifeCycle.class);"
+note right: 启动用户管理器服务
+"startBootstrapServices():" --> "startCoreServices()"
+note right: 启动核心服务(SystemConfigService、BatteryService、BinderCallsStatsService、LooperStatsService、GpuService...)
+--> "startOtherServices()"
+note right: 启动其他服务()
+--> "Looper.loop();"
+--> (*)
+
+
+}
+
+@enduml
