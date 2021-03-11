@@ -1,7 +1,7 @@
 
 
 # 功能概要
-   * 使用`Artifactory`创建私有库，加快项目构建速度
+   * ~~使用`Artifactory`创建私有库，加快项目构建速度~~
 
 ### app
    * ~~增加日志打印类（包括将log输出到文件中功能）~~
@@ -28,6 +28,9 @@
 
 ### plugins
    * 实现360加固、签名、上传蒲公英（上传功能还待优化，不影响上传）一键完成。（注意：使用时请拷贝加固文件夹到自己项目中）
+
+### uml
+   * 陆续更新uml图
 
 ## 阿里云推广链接
    * [【采购季】上云￥223/3年](https://www.aliyun.com/sale-season/2020/procurement-new-members?userCode=vrdfg70n)
