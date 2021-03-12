@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+'launcher启动第一阶段：SystemServer完成启动Launcher Activity的调用。
+
+partition LauncherStartActivity_1(Android10){
+(*) --> ActivityTaskManagerService.java#startHomeOnAllDisplays()
+--> RootActivityContainer.java#startHomeOnDisplay()
+    -right-> "1.mService.getHomeIntent()
+              2.resolveHomeActivity(userId, homeIntent)
+              3.mService.getActivityStartController().startHomeActivity(homeIntent, aInfo, myReason,displayId);"
+    note right: 1.构建一个category为CATEGORY_HOME的Intent，表明是Home Activity \n 2.resolveHomeActivity(userId, homeIntent); \n 3.启动Home Activity
+"RootActivityContainer.java#startHomeOnDisplay()" --> "ActivityStartController.java#startHomeActivity()"
+    note right: 1.obtainStarter 返回一个ActivityStarter对象 \n 2.一系列set方法传入启动所需的各种参数 \n 3.最后执行 ActivityStarter的execute方法
+--> "ActivityStarter.java#execute()"
+--> "ActivityStarter.java#startActivity()"
+--> "RootActivityContainer.java#resumeFocusedStacksTopActivities"
+--> "ActivityStackSupervisor.java#startSpecificActivityLocked"
+--> "ActivityManagerService.java#startProcess()"
+--> "ProcessList.java#startProcessLocked()"
+--> "Process.java#start()"
+--> "ZygoteProcess.java#start()"
+--> "ZygoteProcess.java#attemptZygoteSendArgsAndGetResult()"
+--> (*)
+
+
+}
+
+
+@enduml

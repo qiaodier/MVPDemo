@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+'launcher启动第三阶段：进入ActivityThread的main()，完成最终Launcher的onCreate操作。
+
+partition LauncherStartActivity_3(Android10){
+(*)--> ActivityThread.java #main()
+-right-> 1.Looper.prepareMainLooper();\n 2.ActivityThread thread = new ActivityThread();\n thread.attach(false, startSeq); \n 3.Looper.loop();
+note right:1.主线程处理 \n 2. 创建ActivityThread对象，调用attach进行处理 \n 3.最终进入Looper循环
+"ActivityThread.java #main()"--> ActivityManagerService.java#attachApplicaiton()
+note right:调用ActivityStackSupervisor.java的realStartActivityLocked，进行Activity的启动
+--> TransactionExecutor.java#execute()
+note right:执行之前realStartActivityLocked中的clientTransaction.addCallBack \n 最终调用到ActivityThread的handleLaunchActivity()
+--> ActivityThread.java#handleLaunchActivity()
+-right-> 1. WindowManagerGlobal.initialize(); \n 2. final Activity a = performLaunchActivity(r, customIntent);
+note right:1.初始化WindowManagerGlobal \n 2.调用performLaunchActivity,来处理Activity
+"ActivityThread.java#handleLaunchActivity()" --> "ActivityThread.java#perfromLaunchActivity"
+-right-> 1.ComponentName component = r.intent.getComponent(); \n 2.ContextImpl appContext = createBaseContextForActivity(r); \n 3.java.lang.ClassLoader cl = appContext.getClassLoader(); \n activity = mInstrumentation.newActivity(cl, component.getClassName(), r.intent); \n 4.Application app = r.packageInfo.makeApplication(false, mInstrumentation); \n 5.activity.attach \n 6.activity.setTheme(theme); \n 7. mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);/mInstrumentation.callActivityOnCreate(activity, r.state); \n 8.r.setState(ON_CREATE);
+note right:1.获取ComponentName \n 2.获取Context \n 3.反射创建Activity \n 4.获取Application \n 5. Activity数据准备 \n 6.设置主题 \n 7.执行onCreate( \n 8.设置当前状态未ON_CREATE
+ "ActivityThread.java#perfromLaunchActivity"--> (*)
+}
+
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+'launcher启动第二阶段：Zygote()进行Launcher进程的Fork操作。
+
+partition LauncherStartActivity_2(Android10){
+(*) --> ZygoteInit.java#main()
+-right-> 1.forkSystemServer(abiList, zygoteSocketName, zygoteServer) \n 2.caller.run();
+note right:1.Zygote Fork出的第一个进程 SystmeServer \n 2.执行返回的Runnable对象，进入子进程
+"ZygoteInit.java#main()" --> ZygoteConnection.java#processOneCommand()
+--> ZygoteConneciton.java#handleChildProc()
+--> ZygoteInit.zygoteInit(parsedArgs.mTargetSdkVersion,parsedArgs.mRemainingArgs, null /* classLoader */);
+note right: 1.ZygoteInit进行一些环境的初始化，启动Binder进程等操作 \n 2.把之前传来的"android.app.ActivityThread"传给findStaticMain: \n 3.通过反射，拿到ActivityThread的main()方法: \n 4.把反射得来的ActivityThread main入口返回给ZygoteInit的main，通过caller.run()进行调用.
+-->(*)
+
+
+}
+
+
+@enduml

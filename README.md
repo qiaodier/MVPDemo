@@ -30,7 +30,8 @@
    * 实现360加固、签名、上传蒲公英（上传功能还待优化，不影响上传）一键完成。（注意：使用时请拷贝加固文件夹到自己项目中）
 
 ### uml
-   * 陆续更新uml图
+   * FrameworkLaunch:java层framework启动流程
+   * LauncherStartActivity_(1-3):Android 10.0 Launcher启动Activity流程
 
 ## 阿里云推广链接
    * [【采购季】上云￥223/3年](https://www.aliyun.com/sale-season/2020/procurement-new-members?userCode=vrdfg70n)
