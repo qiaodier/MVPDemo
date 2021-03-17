@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+partition RecyclerViewScrollProcess(Android10){
+(*) --> onTouchEvent()
+note right: 触摸事件-MotionEvent.ACTION_MOVE
+--> scrollByInternal()
+--> scrollStep()
+note right: 区分方向
+--> mLayout.scrollHorizontallyBy() \n mLayout.scrollVerticallyBy()
+note right:调用LinearLayoutManager/GridLayoutManager \n 的对应滑动方向的方法
+--> scrollBy()
+note right:最终调用LinearLayoutManager/GridLayoutManager \n 的scrollBy()方法
+--> fill()
+note right:填充由LayoutState给定的布局
+--> layoutChunk()
+note right:while循环获取布局并addView/addDisappearingView
+--> layoutState.next(recycler)
+note right:获取下一个布局元素
+--> recycler.getViewForPosition(mCurrentPosition)
+note right:根据给定的position获取对应的View
+--> tryGetViewHolderForPositionByDeadline()
+note right:核心方法，会从4中缓存中陆续获取ViewHolder
+--> getChangedScrapViewForPosition()
+note right:如果有修改的scrap,则从中获取
+--> getScrapOrHiddenOrCachedHolderForPosition()
+note right:根据position从mAttachedScrap、mCachedViews获取对应的ViewHolder
+--> getScrapOrCachedViewForId()
+note right:根据ID从mAttachedScrap、mCachedViews获取对应的ViewHolder
+--> mViewCacheExtension.getViewForPositionAndType()
+note right:从自定义缓存中获取对应的ViewHolder(此缓存完全由开发操作，源码不对此缓存添加ViewHolder)
+--> getRecycledViewPool().getRecycledView(type)
+note right:从ViewHolder缓存池中获取，没有则return null
+--> mAdapter.createViewHolder(RecyclerView.this, type)
+note right:创建一个新的ViewHolder
+--> tryBindViewHolderByDeadline(holder, offsetPosition, position, deadlineNs)
+note right:尝试绑定视图，并作一些计时相关信息
+--> mAdapter.bindViewHolder(holder, offsetPosition);
+note right:调用开发者实现的onBindViewHolder(),更新ViewHolder的itemView
+-->(*)
+
+}
+@enduml
