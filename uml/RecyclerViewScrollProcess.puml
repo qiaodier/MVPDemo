@@ -1,5 +1,9 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+'1:mChangeScrap、mAttachedScrap用来缓存还在屏幕内的ViewHolder
+'2:mCacheViews用来缓存屏幕之外的ViewHolder
+'3:mViewCacheExtension 该缓存的创建和缓存完全由开发者自己控制，源码不会给它添加数据
+'4:RecycledViewPool ViewHolder缓存池
 
 partition RecyclerViewScrollProcess(Android10){
 (*) --> onTouchEvent()
@@ -21,16 +25,16 @@ note right:获取下一个布局元素
 note right:根据给定的position获取对应的View
 --> tryGetViewHolderForPositionByDeadline()
 note right:核心方法，会从4种缓存中陆续获取ViewHolder
---> 1:getChangedScrapViewForPosition()
-note right:1:如果有修改的scrap,则从中获取
---> 2:getScrapOrHiddenOrCachedHolderForPosition()
-note right:2:根据position从mAttachedScrap、mCachedViews获取对应的ViewHolder
---> 2:getScrapOrCachedViewForId()
-note right:2:根据ID从mAttachedScrap、mCachedViews获取对应的ViewHolder
---> 3:mViewCacheExtension.getViewForPositionAndType()
-note right:3:从自定义缓存中获取对应的ViewHolder(此缓存完全由开发操作，源码不对此缓存添加ViewHolder)
---> 4:getRecycledViewPool().getRecycledView(type)
-note right:4:从ViewHolder缓存池中获取，没有则return null
+--> getChangedScrapViewForPosition()
+note right:如果有修改的mChangedScrap,则从中获取
+--> getScrapOrHiddenOrCachedHolderForPosition()
+note right:根据position从mAttachedScrap、mCachedViews获取对应的ViewHolder(从mCacheViews中移除该ViewHolder)
+--> getScrapOrCachedViewForId()
+note right:根据ID从mAttachedScrap、mCachedViews获取对应的ViewHolder(从mCacheViews中移除该ViewHolder)
+--> mViewCacheExtension.getViewForPositionAndType()
+note right:从自定义缓存中获取对应的ViewHolder(此缓存完全由开发操作，源码不对此缓存添加ViewHolder)
+--> getRecycledViewPool().getRecycledView(type)
+note right:从ViewHolder缓存池中获取，没有则return null
 --> mAdapter.createViewHolder(RecyclerView.this, type)
 note right:创建一个新的ViewHolder
 --> tryBindViewHolderByDeadline(holder, offsetPosition, position, deadlineNs)
