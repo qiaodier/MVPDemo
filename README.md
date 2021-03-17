@@ -32,6 +32,7 @@
 ### uml
    * FrameworkLaunch:java层framework启动流程
    * LauncherStartActivity_(1-3):Android 10.0 Launcher启动Activity流程
+   * RecyclerViewScrollProcess:Android 10.0 RecyclerView滑动机制
 
 ## 阿里云推广链接
    * [【采购季】上云￥223/3年](https://www.aliyun.com/sale-season/2020/procurement-new-members?userCode=vrdfg70n)
