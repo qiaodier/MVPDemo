@@ -30,6 +30,11 @@ import com.tencent.mmkv.MMKV;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * @author iqiao
@@ -39,10 +44,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
 
     private final String TAG = LoginActivity.this.getClass().getName();
     private EditText mUserName, mUserPwd;
-    private Button mLoginBtn,mBackBtn;
+    private Button mLoginBtn,mBackBtn,button3,button4;
     private ImageView imageView;
     private int count;
     private Intent installService;
+    private Disposable disposable;
     /**
      * upadateApkPath 更新apk存放路径  /data/cache/update.apk
      */
@@ -60,8 +66,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
 //        startActivityForResult(intent, REQUEST_CODE_WRITE_SETTINGS );
         setTranslucentStatus();
         initData();
-        testMMKV();
-        testSP();
+//        testMMKV();
+//        testSP();
     }
 
     /**
@@ -128,6 +134,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         mLoginBtn = findViewById(R.id.btn_login_qq);
         mBackBtn = findViewById(R.id.button2);
         imageView = findViewById(R.id.image);
+        button3 = findViewById(R.id.button3);
+        button3.setOnClickListener((View v)->{
+            disposable = Observable
+                    .interval(1, TimeUnit.SECONDS)
+                    .subscribe(new Consumer<Long>() {
+                        @Override
+                        public void accept(Long aLong) throws Exception {
+                            android.util.Log.e("rxjava",""+aLong);
+                        }
+                    });
+        });
+        button4 = findViewById(R.id.button4);
+        button4.setOnClickListener((View v)->{
+            if (!disposable.isDisposed()){
+                disposable.dispose();
+            }
+        });
         mUserName.setFilters(new InputFilter[]{new EmojiExcludeFilter()});
         mBackBtn.setOnClickListener((View v) ->{
             onBackPressed();

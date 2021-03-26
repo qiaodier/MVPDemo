@@ -20,9 +20,14 @@ import com.tencent.mmkv.MMKVRecoverStrategic;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -83,6 +88,49 @@ public class LoadingActivity extends BaseActivity {
                         finish();
                     }
                 });
+
+
+
+
+        Observable.just(1,2,3).flatMap(new Function<Integer, ObservableSource<Integer>>() {
+            @Override
+            public ObservableSource<Integer> apply(Integer integer) throws Exception {
+                if (integer == 2){
+                    return Observable.create(new ObservableOnSubscribe<Integer>() {
+                        @Override
+                        public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                            emitter.onError(new Throwable("aaabbb"));
+                        }
+                    });
+                }
+                return Observable.just(integer);
+            }
+        }).flatMap(new Function<Integer, ObservableSource<Integer>>() {
+            @Override
+            public ObservableSource<Integer> apply(Integer o) throws Exception {
+                return Observable.just(o);
+            }
+        }).subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                android.util.Log.e("rxjava","onNext   "+integer+"");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                android.util.Log.e("rxjava","onError   ");
+            }
+
+            @Override
+            public void onComplete() {
+                android.util.Log.e("rxjava","onComplete   ");
+            }
+        });
 
 
     }
