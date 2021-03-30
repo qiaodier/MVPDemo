@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import butterknife.BindView;
+
 
 /**
  * Created by iqiao on 2020-03-04 10:35
@@ -21,9 +21,8 @@ import butterknife.BindView;
 @Route("/main")
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.bottomNavigationView)
+
     BottomNavigationView bottomNavigationView;
-    @BindView(R.id.toolbar2)
     Toolbar toolbar;
 
     @Override
@@ -31,15 +30,17 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        return Navigation.findNavController(this, R.id.fragment).navigateUp();
-//    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        return Navigation.findNavController(this, R.id.fragment).navigateUp();
+    }
 
     @Override
     protected void initViews() {
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         NavController navController = Navigation.findNavController(this, R.id.fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);

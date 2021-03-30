@@ -16,7 +16,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
-import butterknife.ButterKnife;
+
 
 
 /**
@@ -39,7 +39,6 @@ public abstract class BaseActivity<T extends BasePresenter, V extends IBaseView>
         setContentView(layoutResID());
         mPrensenter = initPresenter();
         getLifecycle().addObserver(this);
-        ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Optional.ofNullable(mPrensenter).ifPresent(prensenter -> {
                 prensenter.attachView((V) this);

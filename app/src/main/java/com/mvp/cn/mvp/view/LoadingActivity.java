@@ -2,6 +2,7 @@ package com.mvp.cn.mvp.view;
 
 import android.Manifest;
 import android.os.Environment;
+import android.widget.Toast;
 
 import com.mvp.cn.BuildConfig;
 import com.mvp.cn.R;
@@ -79,7 +80,8 @@ public class LoadingActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Toast.makeText(LoadingActivity.this,"未授权",Toast.LENGTH_LONG).show();
+                        finish();
                     }
 
                     @Override

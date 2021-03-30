@@ -18,9 +18,9 @@ import androidx.annotation.Nullable;
  * @author iqiao
  */
 public class FirstFragment extends BaseFragment {
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_first,container, false);
+    protected int layoutResID() {
+        return R.layout.fragment_first;
     }
+
 }

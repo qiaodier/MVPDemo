@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mvp.master.R;
 import com.tencent.mars.xlog.Log;
 
 import androidx.annotation.NonNull;
@@ -15,20 +16,28 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
+
 /**
  * Created by iqiao on 2020-03-04 14:17
  * Desc:
  * @author iqiao
  */
-public class BaseFragment extends Fragment implements LifecycleObserver {
+public abstract class BaseFragment extends Fragment implements LifecycleObserver {
 
-
+    /**
+     * 该方法必须重写
+     *
+     * @return 返回activity中对应的xml的id
+     */
+    protected abstract int layoutResID();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(layoutResID(), container, false);
+        return view;
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
