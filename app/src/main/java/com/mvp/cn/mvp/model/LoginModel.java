@@ -22,4 +22,6 @@ public class LoginModel implements LoginContract.Model {
     public Observable<BaseRespEntity> login(LoginEntity entity) {
         return OkHttpClientUtils.getInstance().get(HttpApi.class).login(entity);
     }
+
+
 }

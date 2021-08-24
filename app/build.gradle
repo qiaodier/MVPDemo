@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.jakewharton.butterknife'
 apply from: "./upload2Pgyer.gradle"
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-android-extensions'
 
 //这里不写单引号，写上会报错找不到,加单引号的话需要插件本身用meta-inf注册为插件
 //apply plugin: com.mvp.plugin.JiaguPlugin
@@ -125,6 +127,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    ndkVersion '21.0.6113669'
 
 
 }
@@ -137,11 +140,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     testImplementation 'junit:junit:4.12'
-
     //rxpermissions
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     //navigation
-    def nav_version = "2.3.0-alpha03"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
     // mvp架构+网络请求+自定义注解+
@@ -150,7 +151,20 @@ dependencies {
     //apt
     annotationProcessor "com.neenbedankt.gradle.plugins:android-apt:1.8"
 //    implementation 'com.mvp.plugin:JiaguPlugin:1.0.0'
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.2.0'
+//    def anko_version = '0.10.1'
+//    // Anko Commons
+//    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+//    // Anko Layouts
+//    implementation "org.jetbrains.anko:anko-sdk25:$anko_version" // sdk15, sdk19, sdk21, sdk23 are also available
+//    implementation "org.jetbrains.anko:anko-support-v4:$anko_version"
+//    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+//    // Coroutine listeners for Anko Layouts
+//    implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+//    implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
+//    // Anko SQLite
+//    implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
 }
 
 

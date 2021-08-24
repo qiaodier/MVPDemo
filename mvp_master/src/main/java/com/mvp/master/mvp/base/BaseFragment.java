@@ -30,10 +30,13 @@ public abstract class BaseFragment extends Fragment implements LifecycleObserver
      * @return 返回activity中对应的xml的id
      */
     protected abstract int layoutResID();
+
+    protected abstract void initViews(View view);
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(layoutResID(), container, false);
+        initViews(view);
         return view;
     }
 

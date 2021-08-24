@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+
 import com.mvp.cn.BaseApplication;
 import com.mvp.cn.R;
 import com.mvp.cn.mvp.contract.LoginContract;
@@ -30,12 +32,18 @@ import com.tencent.mars.xlog.Log;
 import com.tencent.mmkv.MMKV;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author iqiao
@@ -45,7 +53,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
 
     private final String TAG = LoginActivity.this.getClass().getName();
     private EditText mUserName, mUserPwd;
-    private Button mLoginBtn,mBackBtn,button3,button4;
+    private Button mLoginBtn, mBackBtn, button3, button4;
     private ImageView imageView;
     private int count;
     private Intent installService;
@@ -114,7 +122,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         Log.e(TAG, (System.currentTimeMillis() - start) + "ms");
     }
 
-     class EmojiExcludeFilter implements InputFilter {
+    class EmojiExcludeFilter implements InputFilter {
 
         @Override
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
@@ -136,35 +144,35 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         mBackBtn = findViewById(R.id.button2);
         imageView = findViewById(R.id.image);
         button3 = findViewById(R.id.button3);
-        button3.setOnClickListener((View v)->{
+        button3.setOnClickListener((View v) -> {
             disposable = Observable
                     .interval(1, TimeUnit.SECONDS)
                     .subscribe(new Consumer<Long>() {
                         @Override
                         public void accept(Long aLong) throws Exception {
-                            android.util.Log.e("rxjava",""+aLong);
+                            android.util.Log.e("rxjava", "" + aLong);
                         }
                     });
         });
         button4 = findViewById(R.id.button4);
-        button4.setOnClickListener((View v)->{
-            if (!disposable.isDisposed()){
+        button4.setOnClickListener((View v) -> {
+            if (!disposable.isDisposed()) {
                 disposable.dispose();
             }
         });
         mUserName.setFilters(new InputFilter[]{new EmojiExcludeFilter()});
-        mBackBtn.setOnClickListener((View v) ->{
+        mBackBtn.setOnClickListener((View v) -> {
             onBackPressed();
         });
         ImageLoaderProxy.getInstance().showImage(this, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584506380577&di=88f7e3ac60f687b33e1a1bcf81e96f8d&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D2857883419%2C1187496708%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D763", imageView);
         mLoginBtn.setOnClickListener((View v) -> {
 
             //跳转MainActivity
-            RouterManager.getInstance().navigation("/main");
+//            RouterManager.getInstance().navigation("/main");
             //测试路由页面跳转
 //            RouterManager.getInstance().navigation("/main");
             //为按钮添加了点击事件，触发点击事件时，则会执行Emitter的onNext方法
-//            mPrensenter.login(mUserName.getText().toString(), mUserPwd.getText().toString());
+            mPrensenter.login(mUserName.getText().toString(), mUserPwd.getText().toString());
 //                authorization(SHARE_MEDIA.QQ);
             //调用自动安装逻辑之前，需要引导用户开启智能安装服务，否则无法实现自动安装
             //Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
@@ -175,6 +183,71 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
 //            installService = new Intent(this, InstallService.class);
 //            startService(installService);
         });
+
+//        TestClass testClass = new TestClass();
+//        testClass.setList(null);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            int result = Optional
+//                    .of(testClass)
+//                    .flatMap(manager -> {
+//                        return Optional.ofNullable(testClass.getList());
+//                    })
+//                    .map(List::size)
+//                    .orElse(0);
+//            android.util.Log.e(TAG, "initData: "+result);
+//        }
+
+
+        Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> observableEmitter) throws Exception {
+                Log.i(TAG, "create:" + Thread.currentThread().getName());
+                observableEmitter.onNext(1);
+                observableEmitter.onComplete();
+            }
+        });
+        observable
+
+                .map(new Function<Integer, Integer>() {
+                    @Override
+                    public Integer apply(@NonNull Integer integer) throws Exception {
+                        Log.i(TAG, "map1:" + Thread.currentThread().getName());
+                        return integer;
+                    }
+                })
+//                .subscribeOn(Schedulers.io())
+
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<Integer, Integer>() {
+                    @Override
+                    public Integer apply(@io.reactivex.annotations.NonNull Integer integer) throws Exception {
+                        Log.i(TAG, "map2:" + Thread.currentThread().getName());
+                        return integer;
+                    }
+                })
+                .observeOn(Schedulers.io())
+                .map(new Function<Integer, Integer>() {
+                    @Override
+                    public Integer apply(@io.reactivex.annotations.NonNull Integer integer) throws Exception {
+                        Log.i(TAG, "map3:" + Thread.currentThread().getName());
+                        return integer;
+                    }
+                })
+//                .observeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSubscribe(new Consumer<Disposable>() {
+//                    @Override
+//                    public void accept(@NonNull Disposable disposable) throws Exception {
+//                        Log.i(TAG, "doOnSubscribe:" + Thread.currentThread().getName());
+//                    }
+//                })
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(@NonNull Integer integer) throws Exception {
+                        Log.i(TAG, "subscribe:" + Thread.currentThread().getName());
+                    }
+                });
 
     }
 

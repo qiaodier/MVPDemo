@@ -29,15 +29,19 @@ public class ThirdFragment extends BaseFragment {
         return R.layout.fragment_third;
     }
 
+    @Override
+    protected void initViews(View view) {
+        button = view.findViewById(R.id.button);
+        button.setOnClickListener((View v) -> {
+            Navigation.findNavController(v).navigate(R.id.action_thirdFragment_to_third2Fragment);
+        });
+    }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        button = view.findViewById(R.id.button);
-        button.setOnClickListener((View v) -> {
-            Navigation.findNavController(v).navigate(R.id.action_thirdFragment_to_third2Fragment);
-        });
+
     }
 
 

@@ -22,4 +22,9 @@ public class Third2Fragment extends BaseFragment {
         return R.layout.fragment_third2;
     }
 
+    @Override
+    protected void initViews(View view) {
+
+    }
+
 }
