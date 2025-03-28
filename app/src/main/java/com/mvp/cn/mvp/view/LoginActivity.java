@@ -11,6 +11,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,7 @@ import com.mvp.master.image.ImageLoaderProxy;
 import com.mvp.master.mvp.base.BaseActivity;
 import com.mvp.master.router.RouterManager;
 import com.mvp.router.api.Route;
-import com.tencent.mars.xlog.Log;
+
 import com.tencent.mmkv.MMKV;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 

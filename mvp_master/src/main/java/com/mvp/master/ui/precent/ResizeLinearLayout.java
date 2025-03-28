@@ -3,11 +3,12 @@ package com.mvp.master.ui.precent;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.mvp.master.ui.UIUtils;
-import com.tencent.mars.xlog.Log;
+
 
 /**
  * @author iqiao

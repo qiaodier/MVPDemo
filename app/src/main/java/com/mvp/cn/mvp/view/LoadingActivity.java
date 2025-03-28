@@ -2,17 +2,19 @@ package com.mvp.cn.mvp.view;
 
 import android.Manifest;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.mvp.cn.BuildConfig;
 import com.mvp.cn.R;
 import com.mvp.master.mvp.base.BaseActivity;
 import com.mvp.master.mvp.base.BasePresenter;
 import com.mvp.master.router.RouterManager;
 import com.mvp.router.api.Route;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.tencent.mars.xlog.Log;
-import com.tencent.mars.xlog.Xlog;
+
 import com.tencent.mmkv.MMKV;
 import com.tencent.mmkv.MMKVHandler;
 import com.tencent.mmkv.MMKVLogLevel;
@@ -27,7 +29,6 @@ import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -42,7 +43,6 @@ public class LoadingActivity extends BaseActivity {
 
     private RxPermissions rxPermissions;
 
-
     @Override
     protected int layoutResID() {
         return R.layout.activity_loading;
@@ -50,13 +50,40 @@ public class LoadingActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        Log.e("LoadingActivity", "initViews: 1" );
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                //网络请求，网不好，数据长
+
+                //1s   3s
+
+                //保存图片 5M 10M
+
+
+                Log.e("LoadingActivity", "initViews: 2" );
+                //准备
+                Looper.prepare();
+                Handler handler1 = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                    }
+                };
+                //开启循环
+                Looper.loop();
+            }
+        }).start();
+        Log.e("LoadingActivity", "initViews: 3" );
+
         setTranslucentStatus();
         rxPermissions = new RxPermissions(this);
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .flatMap((Boolean aBoolean) -> {
                     if (aBoolean) {
                         //初始化xlog
-                        initXLog();
+//                        initXLog();
                         //初始化mmkv
                         initMMKV();
                         return Observable
@@ -201,14 +228,14 @@ public class LoadingActivity extends BaseActivity {
         // this is necessary, or may crash for SIGBUS
         final String cachePath = this.getFilesDir() + "/xlog";
         //init xlog
-        if (BuildConfig.DEBUG) {
-            Xlog.appenderOpen(Xlog.LEVEL_VERBOSE, Xlog.AppednerModeAsync, cachePath, logPath, "mvpDemo", 0, "");
-            Xlog.setConsoleLogOpen(true);
-            Log.setLogImp(new Xlog());
-        } else {
-//            Xlog.appenderOpen(Xlog.LEVEL_INFO, Xlog.AppednerModeAsync, cachePath, logPath, "mvpDemo", 0, "");
-//            Xlog.setConsoleLogOpen(false);
-        }
+//        if (BuildConfig.DEBUG) {
+//            Xlog.appenderOpen(Xlog.LEVEL_VERBOSE, Xlog.AppednerModeAsync, cachePath, logPath, "mvpDemo", 0, "");
+//            Xlog.setConsoleLogOpen(true);
+//            Log.setLogImp(new Xlog());
+//        } else {
+////            Xlog.appenderOpen(Xlog.LEVEL_INFO, Xlog.AppednerModeAsync, cachePath, logPath, "mvpDemo", 0, "");
+////            Xlog.setConsoleLogOpen(false);
+//        }
 
     }
 }

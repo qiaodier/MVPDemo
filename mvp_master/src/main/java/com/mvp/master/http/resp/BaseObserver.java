@@ -1,8 +1,10 @@
 package com.mvp.master.http.resp;
 
+import android.util.Log;
+
 import com.mvp.master.http.bean.BaseRespEntity;
 import com.mvp.master.mvp.base.IBaseView;
-import com.tencent.mars.xlog.Log;
+
 
 import java.lang.ref.WeakReference;
 import io.reactivex.Observer;

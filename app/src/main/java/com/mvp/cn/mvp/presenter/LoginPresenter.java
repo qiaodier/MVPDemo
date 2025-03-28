@@ -1,6 +1,7 @@
 package com.mvp.cn.mvp.presenter;
 
 import android.os.Build;
+import android.util.Log;
 
 import com.mvp.cn.mvp.contract.LoginContract;
 import com.mvp.cn.mvp.model.bean.LoginEntity;
@@ -8,7 +9,7 @@ import com.mvp.master.http.HttpRequestUtils;
 import com.mvp.master.http.bean.BaseRespEntity;
 import com.mvp.master.http.resp.BaseObserver;
 import com.mvp.master.mvp.base.BasePresenter;
-import com.tencent.mars.xlog.Log;
+
 
 import java.util.Optional;
 

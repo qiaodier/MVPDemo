@@ -8,9 +8,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
-
-import com.tencent.mars.xlog.Log;
 
 import androidx.annotation.RequiresApi;
 

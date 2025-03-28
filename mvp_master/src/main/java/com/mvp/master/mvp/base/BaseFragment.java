@@ -1,12 +1,13 @@
 package com.mvp.master.mvp.base;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mvp.master.R;
-import com.tencent.mars.xlog.Log;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

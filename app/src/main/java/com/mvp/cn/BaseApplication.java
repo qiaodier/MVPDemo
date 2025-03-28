@@ -11,7 +11,7 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
-import com.tencent.mars.xlog.Log;
+
 
 
 /**
@@ -75,7 +75,7 @@ public class BaseApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        Log.appenderClose();
+//        Log.appenderClose();
     }
 
 

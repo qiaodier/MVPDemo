@@ -31,6 +31,7 @@ public class RouterManager {
 
     public void init(Application application) {
         routerMap = new HashMap<>();
+
         this.application = application;
         Log.e("RouterManager","init");
         /**

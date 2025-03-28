@@ -3,8 +3,8 @@ package com.mvp.master.keep.sticky;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
-import com.tencent.mars.xlog.Log;
 
 import androidx.annotation.Nullable;
 

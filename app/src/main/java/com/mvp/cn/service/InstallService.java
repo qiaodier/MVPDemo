@@ -2,11 +2,12 @@ package com.mvp.cn.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.mvp.cn.utils.LogUtil;
-import com.tencent.mars.xlog.Log;
+
 
 import java.util.HashMap;
 import java.util.Map;

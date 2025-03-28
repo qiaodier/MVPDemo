@@ -3,11 +3,12 @@ package com.mvp.master.mvp.base;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.mvp.master.utils.CustomDialogUtils;
-import com.tencent.mars.xlog.Log;
+
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.Optional;

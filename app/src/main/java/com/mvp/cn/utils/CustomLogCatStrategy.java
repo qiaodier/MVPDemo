@@ -1,5 +1,7 @@
 package com.mvp.cn.utils;
 
+import android.util.Log;
+
 import com.orhanobut.logger.LogStrategy;
 
 import androidx.annotation.Nullable;
@@ -14,7 +16,7 @@ public class CustomLogCatStrategy implements LogStrategy {
     @Override
     public void log(int priority, @Nullable String tag, @NonNull String message) {
 //        Log.println(priority, randomKey() + tag, message);
-        com.tencent.mars.xlog.Log.e(randomKey() + tag, message);
+        Log.e(randomKey() + tag, message);
     }
 
     private int last;
